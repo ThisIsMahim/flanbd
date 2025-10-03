@@ -1,0 +1,55 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "eyegears",
+  "alternateName": ["EyeGears Bangladesh", "eyegearsbd", "EyeGears"],
+  "url": "https://eyegearsbd.com",
+  "logo": "https://eyegearsbd.com/logo512.png",
+  "description": "eyegears - Leading eyewear supplier in Bangladesh. Premium glasses, sunglasses, contact lenses, and optical solutions.",
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "BD",
+    "addressLocality": "Dhaka",
+    "addressRegion": "Dhaka"
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+880-XXX-XXX-XXXX",
+    "contactType": "customer service",
+    "email": "support@eyegearsbd.com"
+  },
+  "sameAs": [
+    "https://www.facebook.com/eyegearsbd",
+    "https://www.linkedin.com/company/eyegearsbd"
+  ],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Eyewear Products",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Product",
+          "name": "Premium Glasses",
+          "description": "High-quality prescription glasses and frames"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Product",
+          "name": "Sunglasses",
+          "description": "Stylish sunglasses for UV protection and fashion"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Product",
+          "name": "Contact Lenses",
+          "description": "Comfortable contact lenses for clear vision"
+        }
+      }
+    ]
+  }
+} 

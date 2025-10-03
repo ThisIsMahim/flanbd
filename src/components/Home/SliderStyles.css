@@ -1,0 +1,1268 @@
+/* Enhanced Slider Styles for Notebook Shop */
+.enhanced-slider .slick-slide {
+  padding: 8px;
+  transition: transform 0.3s ease;
+}
+
+.enhanced-slider .slick-track {
+  display: flex;
+  align-items: stretch;
+  width: auto !important;
+}
+
+.enhanced-slider .slick-slide > div {
+  height: 100%;
+}
+
+.enhanced-slider .slick-dots li button:before {
+  color: var(--primary-blue-dark);
+  opacity: 0.5;
+}
+
+.enhanced-slider .slick-dots li.slick-active button:before {
+  color: var(--primary-blue-dark);
+  opacity: 1;
+}
+
+.enhanced-slider .slick-prev,
+.enhanced-slider .slick-next {
+  width: 35px;
+  height: 35px;
+  background-color: rgba(255, 255, 255, 0.8);
+  z-index: 1;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.enhanced-slider .slick-prev:hover,
+.enhanced-slider .slick-next:hover {
+  background-color: var(--primary-blue-light);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+.enhanced-slider .slick-prev:before,
+.enhanced-slider .slick-next:before {
+  color: var(--primary-blue-dark);
+  font-size: 18px;
+  opacity: 0.8;
+}
+
+.enhanced-slider .slick-prev {
+  left: -12px;
+}
+
+.enhanced-slider .slick-next {
+  right: -12px;
+}
+
+.glass-container {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.glow-border {
+  box-shadow: 0 8px 20px rgba(95, 111, 82, 0.05);
+  border: 1px solid var(--primary-blue-light);
+}
+
+.glass-button {
+  background: var(--button-bg);
+  color: var(--text-light);
+  border: none;
+  box-shadow: 0 2px 8px rgba(95, 111, 82, 0.08);
+  padding: 0.7rem 1.8rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  transition: background 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+}
+
+.glass-button:hover {
+  background: var(--button-hover);
+  box-shadow: 0 4px 16px rgba(95, 111, 82, 0.15);
+}
+
+.product-card {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  background-color: #fff;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+  margin: 0 auto;
+  width: 100%;
+  box-shadow: 0 4px 12px rgba(95, 111, 82, 0.05);
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 16px rgba(95, 111, 82, 0.1);
+}
+
+.product-card .product-image {
+  position: relative;
+  overflow: visible;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+  min-height: 120px;
+  padding: 8px;
+  background-color: #f8f9fa;
+}
+
+.product-card .product-image img {
+  transition: transform 0.5s ease;
+  max-height: none;
+  max-width: 80%;
+  object-fit: contain;
+  width: auto;
+  height: auto;
+}
+
+.product-card:hover .product-image img {
+  transform: scale(1.05);
+}
+
+.product-card .product-details {
+  padding: 16px 0;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-between;
+}
+
+.product-card .product-name {
+  color: var(--primary-blue-dark);
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  height: 3rem;
+  line-height: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.product-card .current-price {
+  color: var(--primary-blue-dark);
+  font-weight: 700;
+}
+
+.product-card .discount {
+  background-color: var(--primary-blue-light);
+  color: #fff;
+  padding: 2px 8px;
+  font-size: 0.9rem;
+  margin-left: 0.5rem;
+}
+
+.add-to-cart {
+  background: var(--primary-blue-dark);
+  color: #fff;
+  padding: 0.5rem 1.2rem;
+  font-weight: 600;
+  border: none;
+  transition: background 0.2s;
+  cursor: pointer;
+}
+
+.add-to-cart:hover {
+  background: var(--primary-blue-light);
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+  .enhanced-slider .slick-slide {
+    padding: 5px;
+  }
+
+  .product-card .product-image {
+    height: 120px;
+  }
+
+  .product-card .product-name {
+    font-size: 0.9rem;
+    -webkit-line-clamp: 1;
+    height: auto;
+  }
+
+  .product-card .price-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .product-card .original-price,
+  .product-card .discount {
+    margin-left: 0;
+    margin-top: 3px;
+  }
+}
+
+/* Animation for content loading */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.section-content {
+  animation: fadeIn 0.6s ease-out;
+}
+
+/* Page scroll button smooth effect */
+.scroll-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: var(--primary-blue-dark);
+  color: white;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 10px rgba(0, 0, 100, 0.15);
+  z-index: 99;
+}
+
+.scroll-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.scroll-to-top:hover {
+  background-color: var(--primary-blue-light);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 100, 0.2);
+}
+
+/* Add specific styling for the slider arrows to make them visible */
+.custom-slider .slick-prev,
+.custom-slider .slick-next {
+  z-index: 1;
+  width: 40px;
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.8);
+  z-index: 1;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+.custom-slider .slick-prev {
+  left: -5px;
+}
+
+.custom-slider .slick-next {
+  right: -5px;
+}
+
+.custom-slider .slick-prev:hover,
+.custom-slider .slick-next:hover {
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.custom-slider .slick-prev:before,
+.custom-slider .slick-next:before {
+  color: #1976d2;
+  opacity: 0.8;
+  font-size: 24px;
+}
+
+/* Enhance responsiveness */
+@media (max-width: 768px) {
+  .custom-slider .slick-prev {
+    left: 0;
+  }
+
+  .custom-slider .slick-next {
+    right: 0;
+  }
+
+  .grid-cols-1 {
+    gap: 1rem;
+  }
+}
+
+/* Make sure dots are visible on mobile */
+.custom-slider .slick-dots {
+  bottom: -30px;
+}
+
+.custom-slider .slick-dots li button:before {
+  font-size: 10px;
+  color: #1976d2;
+  opacity: 0.5;
+}
+
+.custom-slider .slick-dots li.slick-active button:before {
+  opacity: 1;
+}
+
+/* Fixed card dimensions for consistent appearance */
+.custom-slider .slick-slide {
+  width: 100% !important;
+  padding: 0 10px;
+}
+
+.custom-slider .slick-track {
+  display: flex;
+  align-items: stretch;
+  margin: 0 -10px;
+}
+
+.custom-slider .slick-slide > div {
+  width: 100% !important;
+  display: flex !important;
+  justify-content: center;
+}
+
+.custom-slider .product-card {
+  width: calc(100% - 20px) !important;
+  max-width: 100%;
+  min-width: 250px;
+  height: 470px;
+  margin: 0 10px;
+  background-color: white;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+/* Arrow positioning fix */
+.custom-slider .slick-prev {
+  left: -5px !important;
+}
+
+.custom-slider .slick-next {
+  right: -5px !important;
+}
+
+@media (max-width: 768px) {
+  .custom-slider .slick-prev {
+    left: -2px !important;
+  }
+
+  .custom-slider .slick-next {
+    right: -2px !important;
+  }
+}
+
+/* Hide arrows when disabled */
+.slick-disabled {
+  opacity: 0 !important;
+  pointer-events: none;
+}
+
+/* Ensure proper slide width */
+.slick-slide > div {
+  width: 100% !important;
+  display: flex !important;
+  justify-content: center;
+}
+
+/* Prevent image overflow */
+.product-image {
+  position: relative;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #f9f9f9;
+  padding: 10px;
+}
+
+.product-image img {
+  max-height: 160px;
+  width: auto !important;
+  max-width: 100%;
+}
+
+/* Better arrow styling */
+.custom-slider .slick-prev:before,
+.custom-slider .slick-next:before {
+  color: #1976d2 !important;
+  font-size: 30px !important;
+  opacity: 0.75 !important;
+}
+
+.custom-slider .slick-prev:hover:before,
+.custom-slider .slick-next:hover:before {
+  opacity: 1 !important;
+}
+
+/* Ensure consistent height and width */
+@media (min-width: 1280px) {
+  .custom-slider .slick-slide > div {
+    width: 100%;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 1279px) and (min-width: 768px) {
+  .custom-slider .slick-slide > div {
+    width: 100%;
+    margin: 0 auto;
+  }
+}
+
+/* Mobile slider fixes */
+@media (max-width: 767px) {
+  .custom-slider .slick-slide {
+    padding: 5px 0;
+  }
+
+  .custom-slider .slick-slide > div {
+    width: 92%;
+    max-width: 280px;
+    margin: 0 auto;
+  }
+
+  .custom-slider .product-card {
+    height: auto;
+    min-height: 380px;
+    max-height: 420px;
+  }
+
+  .product-card .product-image {
+    height: 160px;
+    padding: 8px;
+  }
+
+  .product-card .product-image img {
+    max-height: 130px;
+  }
+
+  .product-card .product-details {
+    padding: 12px 0;
+  }
+
+  .product-card .action-buttons {
+    margin-top: 8px;
+  }
+
+  /* Better arrow positioning for mobile */
+  .custom-slider .slick-prev {
+    left: -5px;
+    z-index: 10;
+  }
+
+  .custom-slider .slick-next {
+    right: -5px;
+    z-index: 10;
+  }
+}
+
+/* Ensure consistent spacing across slider items */
+.custom-slider .slick-list {
+  overflow: visible;
+}
+
+.custom-slider .slick-track {
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Fix discount badge position */
+.product-card .relative {
+  position: relative;
+  padding: 12px;
+}
+
+@media (max-width: 480px) {
+  .product-card .relative {
+    padding: 10px;
+  }
+
+  .custom-slider .slick-slide > div {
+    width: 85%;
+    max-width: 260px;
+  }
+}
+
+/* Better button placement */
+.product-card .action-buttons {
+  margin-top: auto;
+  display: flex;
+  gap: 8px;
+  width: 100%;
+}
+
+/* Make sure product card images are same height */
+.product-card .product-image-container {
+  aspect-ratio: 1/1;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Enhance category banner styling */
+.md\:col-span-6.lg\:col-span-3.bg-gradient-to-br {
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.md\:col-span-6.lg\:col-span-3.bg-gradient-to-br:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(0, 0, 120, 0.1);
+}
+
+/* Video section styling */
+.space-y-4 iframe {
+  transition: transform 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+}
+
+.space-y-4 iframe:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+}
+
+/* Consistent spacing for section content */
+.section-content {
+  padding-top: 1.5rem;
+  padding-bottom: 2rem;
+}
+
+@media (max-width: 767px) {
+  .section-content {
+    padding-top: 1rem;
+    padding-bottom: 1.5rem;
+  }
+}
+
+/* Slider item specific styling */
+.slider-item {
+  height: 100%;
+  padding: 5px;
+}
+
+@media (max-width: 767px) {
+  .slider-item {
+    padding: 5px 0;
+    height: auto !important;
+  }
+
+  /* Fix for arrows on mobile */
+  .custom-slider .slick-arrow {
+    width: 34px;
+    height: 34px;
+  }
+
+  .custom-slider .slick-arrow:before {
+    font-size: 18px;
+  }
+
+  /* Ensure dots are visible below content */
+  .custom-slider .slick-dots {
+    bottom: -35px;
+  }
+
+  /* Ensure product card details are properly spaced */
+  .product-card .product-name {
+    height: auto;
+    min-height: 2.5rem;
+    margin-bottom: 0.25rem;
+    font-size: 1rem;
+  }
+
+  /* Fix button sizing on mobile */
+  .product-card .action-buttons button {
+    padding: 8px 4px;
+    font-size: 0.75rem;
+  }
+
+  .product-card .action-buttons svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* Prevent overflow on the slider */
+.slick-slider-container {
+  padding-bottom: 30px;
+  overflow: hidden;
+}
+
+/* DealSlider navigation buttons */
+.deals-slider .slick-prev,
+.deals-slider .slick-next {
+  z-index: 10;
+  width: 40px;
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.deals-slider .slick-prev {
+  left: -5px;
+}
+
+.deals-slider .slick-next {
+  right: -5px;
+}
+
+.deals-slider .slick-prev:hover,
+.deals-slider .slick-next:hover {
+  background-color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transform: scale(1.1);
+}
+
+/* Mobile styles for deal slider */
+@media (max-width: 768px) {
+  .deals-slider .slick-prev {
+    left: 5px;
+  }
+
+  .deals-slider .slick-next {
+    right: 5px;
+  }
+
+  .deals-slider .slick-slide {
+    padding: 0 8px;
+  }
+
+  .slider-nav-btn {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.9) !important;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    width: 40px;
+    height: 40px;
+    transition: background 0.2s, box-shadow 0.2s;
+    padding: 0;
+    margin: 0;
+  }
+
+  .slider-nav-btn:hover {
+    background-color: #fff !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+  }
+
+  .prev-btn {
+    left: 5px !important;
+  }
+
+  .next-btn {
+    right: 5px !important;
+  }
+}
+
+/* Add these slider specific styles */
+.slick-slider {
+  width: 100%;
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+  user-select: none;
+  touch-action: pan-y;
+}
+
+.slick-list {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  transform: translate3d(0, 0, 0);
+}
+
+.slick-track {
+  position: relative;
+  top: 0;
+  left: 0;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  transform: translate3d(0, 0, 0);
+}
+
+.slick-slide {
+  float: left;
+  height: auto;
+  min-height: 1px;
+  display: none;
+}
+
+.slick-slide.slick-active {
+  display: block;
+}
+
+.slick-slide > div {
+  height: 100%;
+}
+
+.slider-item {
+  box-sizing: border-box;
+  height: 100%;
+  padding: 8px;
+}
+
+.product-card {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+/* Fixed width for 2 products per slide */
+@media (min-width: 768px) {
+  .custom-slider .slick-slide {
+    width: 50% !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .custom-slider .slick-slide {
+    width: 100% !important;
+  }
+}
+
+/* Make arrows more visible */
+.slick-prev,
+.slick-next {
+  z-index: 10;
+  width: 40px !important;
+  height: 40px !important;
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+  opacity: 0.9 !important;
+}
+
+.slick-prev {
+  left: -10px !important;
+}
+
+.slick-next {
+  right: -10px !important;
+}
+
+.slick-prev:before,
+.slick-next:before {
+  color: #333 !important;
+  font-size: 20px !important;
+  opacity: 1 !important;
+}
+
+.slick-prev:hover,
+.slick-next:hover {
+  background-color: white !important;
+  opacity: 1 !important;
+}
+
+/* Fix product image dimensions */
+.product-image {
+  position: relative;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #f9f9f9;
+  padding: 10px;
+}
+
+.product-image img {
+  max-height: 160px;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+/* Ensure slider dots are visible */
+.slick-dots {
+  bottom: -25px !important;
+  z-index: 1;
+}
+
+.slick-dots li button:before {
+  font-size: 10px !important;
+  color: #1976d2 !important;
+  opacity: 0.5 !important;
+}
+
+.slick-dots li.slick-active button:before {
+  opacity: 1 !important;
+}
+
+/* Fix slider container spacing */
+.slick-slider-container {
+  padding-bottom: 30px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Fix slider details */
+.product-card .product-details {
+  padding: 16px 12px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-between;
+}
+
+/* Enhanced Water-themed Slider Styles */
+
+/* Glass Container Styles */
+.glass-water-container {
+
+}
+
+/* Left Banner Water Effects */
+.banner-water-effect {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.banner-water-gradient {
+  background: linear-gradient(
+    to bottom,
+    rgba(17, 114, 192, 0.7) 0%,
+    rgba(37, 164, 227, 0.8) 55%,
+    rgba(15, 133, 210, 0.9) 100%
+  );
+  z-index: 1;
+}
+
+.water-surface-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(255, 255, 255, 0.8) 50%,
+    rgba(255, 255, 255, 0.2) 100%
+  );
+  animation: shimmer 3s infinite ease-in-out;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Water Particles Animation */
+.water-particles-container {
+  pointer-events: none;
+  z-index: 2;
+}
+
+.water-particle {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  z-index: 2;
+  opacity: 0;
+  animation: float 7s infinite ease-in-out;
+}
+
+.particle1 {
+  width: 20px;
+  height: 20px;
+  top: 20%;
+  left: 30%;
+  animation-delay: 0s;
+}
+
+.particle2 {
+  width: 15px;
+  height: 15px;
+  top: 60%;
+  left: 20%;
+  animation-delay: 2s;
+}
+
+.particle3 {
+  width: 25px;
+  height: 25px;
+  top: 40%;
+  left: 70%;
+  animation-delay: 4s;
+}
+
+.particle4 {
+  width: 10px;
+  height: 10px;
+  top: 30%;
+  left: 40%;
+  animation-delay: 1s;
+}
+
+.particle5 {
+  width: 18px;
+  height: 18px;
+  top: 70%;
+  left: 60%;
+  animation-delay: 3s;
+}
+
+.particle6 {
+  width: 12px;
+  height: 12px;
+  top: 85%;
+  left: 35%;
+  animation-delay: 5s;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(100%) scale(0);
+    opacity: 0;
+  }
+  40% {
+    opacity: 0.6;
+  }
+  80% {
+    opacity: 0.2;
+  }
+  100% {
+    transform: translateY(-100px) scale(1);
+    opacity: 0;
+  }
+}
+
+/* Shimmer effect on banner */
+.water-shimmer-effect {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  animation: shimmerMove 8s infinite linear;
+  transform: skewX(-20deg);
+  z-index: 3;
+}
+
+@keyframes shimmerMove {
+  0% {
+    transform: translateX(-150%) skewX(-20deg);
+  }
+  100% {
+    transform: translateX(250%) skewX(-20deg);
+  }
+}
+
+/* Water divider */
+.water-divider {
+  width: 100%;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.water-divider-inner {
+  position: absolute;
+  height: 100%;
+  width: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  animation: dividerWave 2.5s infinite ease-in-out;
+}
+
+@keyframes dividerWave {
+  0% {
+    left: -50%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* Text effects */
+.banner-title-text {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+.banner-description-text {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Premium Glass Button */
+.water-glass-button-premium {
+  position: relative;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.water-glass-button-premium:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.water-glass-button-premium::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(45deg);
+  animation: buttonShimmer 3s infinite linear;
+  z-index: 1;
+  pointer-events: none;
+}
+
+@keyframes buttonShimmer {
+  0% {
+    transform: rotate(45deg) translateX(-100%);
+  }
+  100% {
+    transform: rotate(45deg) translateX(100%);
+  }
+}
+
+/* Product Cards */
+.water-product-card {
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(17, 114, 192, 0.06);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  height: 100%;
+  border: 1px solid rgba(37, 164, 227, 0.1);
+  background: rgba(255, 255, 255, 0.7);
+  position: relative;
+}
+
+.water-product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(17, 114, 192, 0.15);
+  border-color: rgba(37, 164, 227, 0.25);
+}
+
+.water-product-card-inner {
+  position: relative;
+  z-index: 1;
+}
+
+.water-product-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 120px;
+  padding: 5px;
+  overflow: hidden;
+}
+
+.water-product-image img {
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.water-product-card:hover .water-product-image img {
+  transform: scale(1.12);
+}
+
+/* Water Slider Container */
+.water-slider-container {
+  position: relative;
+}
+
+.water-slider-container::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 20px;
+  background: linear-gradient(to top, rgba(255, 255, 255, 0.6), transparent);
+  pointer-events: none;
+}
+
+/* Custom Slick Arrows */
+.water-slider .slick-arrow {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 2px 8px rgba(17, 114, 192, 0.15);
+  z-index: 5;
+  transition: all 0.3s ease;
+}
+
+.water-slider .slick-arrow:hover {
+  background-color: #1172c0;
+}
+
+.water-slider .slick-arrow::before {
+  color: #1172c0;
+  font-size: 15px;
+  transition: color 0.3s ease;
+}
+
+.water-slider .slick-arrow:hover::before {
+  color: #ffffff;
+}
+
+.water-slider .slick-prev {
+  left: -10px;
+}
+
+.water-slider .slick-next {
+  right: -10px;
+}
+
+/* Enhanced Dots */
+.water-slider .slick-dots {
+  bottom: -5px;
+}
+
+.water-slider .slick-dots li button:before {
+  font-size: 8px;
+  color: rgba(17, 114, 192, 0.3);
+  opacity: 1;
+  transition: all 0.3s ease;
+}
+
+.water-slider .slick-dots li.slick-active button:before {
+  color: #1172c0;
+  transform: scale(1.3);
+}
+
+/* Cart Button */
+.water-cart-button {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.water-cart-button:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: 0.6s;
+}
+
+.water-cart-button:hover:before {
+  left: 100%;
+}
+
+/* Water Icon Animation */
+.water-icon-container {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(5px);
+  animation: pulse 3s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.85;
+  }
+}
+
+/* Section background hover effect */
+.section-content {
+  transition: all 0.4s ease;
+  background-position: 0% 0%;
+  background-size: 200% 200%;
+}
+
+.glass-water-container:hover .section-content {
+  background-position: 100% 100%;
+}
+
+/* Fix for custom arrows in ProductDetails to hide default ::before arrow */
+.slider-nav-btn.slick-arrow::before {
+  content: "" !important;
+}
+
+/* Prevent slider images from being cropped on any device */
+.slick-slide img,
+.slider-item img {
+  max-width: 100% !important;
+  width: 100% !important;
+  height: auto !important;
+  object-fit: contain !important; /* keep full image visible */
+  object-position: center center !important;
+  display: block;
+  padding: 12px 16px; /* add breathing room so edges/text aren't clipped */
+}
+
+/* Center slides vertically and avoid image clipping */
+.slick-track {
+  align-items: center;
+}
+
+/* Reasonable max-heights so big banners scale without cropping */
+@media (min-width: 1024px) {
+  .slick-slide img,
+  .slider-item img {
+    max-height: 72vh;
+  }
+}
+@media (max-width: 1023px) and (min-width: 768px) {
+  .slick-slide img,
+  .slider-item img {
+    max-height: 64vh;
+  }
+}
+@media (max-width: 767px) {
+  .slick-slide img,
+  .slider-item img {
+    max-height: 56vh;
+    padding: 10px 12px;
+  }
+}

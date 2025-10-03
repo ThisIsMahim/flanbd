@@ -1,0 +1,203 @@
+/* HomeBlogSection.css */
+
+.home-blog-card-cover {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  max-width: 370px;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  background-size: cover;
+  background-position: center;
+  box-shadow: none;
+  transition: transform 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.home-blog-card-cover::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0) 60%,
+    rgba(0, 0, 0, 0.48) 100%
+  );
+  pointer-events: none;
+}
+.home-blog-card-cover:hover {
+  transform: scale(1.018) translateY(-2px);
+}
+
+.home-blog-card-overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  background: none;
+  color: #fff;
+  padding: 1.2rem 1.5rem 1.5rem 1.5rem;
+  text-align: left;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  pointer-events: auto;
+}
+.home-blog-card-cover:hover .home-blog-card-overlay,
+.home-blog-card-cover:focus-within .home-blog-card-overlay {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.home-blog-title {
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+  /* text-shadow: 0 2px 8px rgba(0, 0, 0, 0.22); */
+  letter-spacing: 0.01em;
+  color: var(--brand-yellow) !important;
+  pointer-events: auto;
+}
+
+.home-blog-subtitle {
+  margin-bottom: 1.1rem;
+  color: var(--primary-blue-light);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
+  font-weight: 400;
+  pointer-events: auto;
+}
+
+.home-blog-learnmore-btn {
+  background: transparent;
+  color: white;
+  border: 1px solid var(--primary-blue-light);
+  border-radius: 8px;
+  padding: 0.6rem 1.4rem;
+  font-weight: 700;
+  font-size: 0.98rem;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: none;
+  margin-top: 0.2rem;
+  outline: none;
+  width: 100%;
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: auto;
+  transition: background 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+    color 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+    border 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.home-blog-card-cover:hover .home-blog-learnmore-btn,
+.home-blog-card-cover:focus-within .home-blog-learnmore-btn {
+  opacity: 1;
+  transform: translateY(0);
+}
+.home-blog-learnmore-btn:hover,
+.home-blog-learnmore-btn:focus {
+  background: var(--button-bg);
+  color: white;
+  border: 1px solid var(--button-bg);
+}
+
+.home-animated-underline .home-underline-text {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  padding-bottom: 2px;
+}
+.home-animated-underline .home-underline-text::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--primary-blue-light) 100%
+  );
+  border-radius: 2px;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: background 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.home-blog-learnmore-btn:hover .home-underline-text::after,
+.home-blog-learnmore-btn:focus .home-underline-text::after {
+  background: linear-gradient(
+    90deg,
+    var(--primary-blue-light) 0%,
+    var(--primary-blue-light) 100%
+  );
+  transform: scaleX(1);
+}
+
+/* Responsive grid for blog cards */
+.home-blog-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.2rem;
+  justify-items: center;
+}
+@media (min-width: 768px) {
+  .home-blog-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+}
+@media (min-width: 1024px) {
+  .home-blog-grid {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1.5rem;
+  }
+}
+
+/* Additional home- prefixed utility classes for isolation */
+.home-glass-button {
+  /* Add your glass button styles here or import from global if needed */
+}
+.home-text-center {
+  text-align: center;
+}
+/* .home-py-8 {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+.home-2xl\:mx-40 {
+  margin-left: 10rem;
+  margin-right: 10rem;
+} */
+
+.title-decoration {
+  width: 40px;
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    var(--primary-blue-dark),
+    var(--primary-blue-light)
+  );
+  border-radius: 2px;
+  transition: width 1s ease;
+}
+
+.title-decoration.visible {
+  width: 100px;
+}
+
+@media (max-width: 768px) {
+  .home-blog-learnmore-btn {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+  }
+}
+

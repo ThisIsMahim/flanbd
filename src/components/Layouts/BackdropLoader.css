@@ -1,0 +1,100 @@
+.water-backdrop-loader {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+  height: 150px;
+}
+
+.water-wave {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  background-color: transparent;
+  border-radius: 50%;
+  box-shadow: inset 0 0 50px rgba(17, 114, 192, 0.7);
+  overflow: hidden;
+}
+
+.water-wave::before,
+.water-wave::after {
+  content: "";
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -70%);
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.water-wave::before {
+  border-radius: 45%;
+  animation: wave 5s linear infinite;
+}
+
+.water-wave::after {
+  border-radius: 40%;
+  animation: wave 5s linear infinite;
+  animation-delay: 0.5s;
+}
+
+.water-drops {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.backdrop-drop {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #1172c0;
+  top: 50%;
+  opacity: 0;
+  animation: backdropDrop 1.5s infinite ease-in-out;
+}
+
+.backdrop-drop:nth-child(1) {
+  animation-delay: 0s;
+  left: 30%;
+}
+
+.backdrop-drop:nth-child(2) {
+  animation-delay: 0.2s;
+  left: 50%;
+}
+
+.backdrop-drop:nth-child(3) {
+  animation-delay: 0.4s;
+  left: 70%;
+}
+
+@keyframes wave {
+  0% {
+    transform: translate(-50%, -70%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -70%) rotate(360deg);
+  }
+}
+
+@keyframes backdropDrop {
+  0% {
+    opacity: 0.8;
+    transform: translateY(-50px) scale(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(50px) scale(0.5);
+  }
+}
