@@ -4,9 +4,9 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import {
-    clearErrors,
-    loadUser,
-    updatePassword,
+  clearErrors,
+  loadUser,
+  updatePassword,
 } from "../../actions/userAction";
 import { UPDATE_PASSWORD_RESET } from "../../constants/userConstants";
 import BackdropLoader from "../Layouts/BackdropLoader";
@@ -61,7 +61,7 @@ const UpdatePassword = () => {
 
   return (
     <>
-              <MetaData title="Password Update | EyeGears" />
+      <MetaData title="Password Update | FlanBD" />
 
       {loading && <BackdropLoader />}
       <main className="w-full min-h-screen bg-gradient-to-br from-primary-blue-light/5 via-white to-primary-blue-light/10">

@@ -279,7 +279,7 @@ div[ref="bannerRef"] {
 
 /* Skeleton Loader Styles */
 .skeleton {
-  background: var(--primary-blue-light, #e0e0e0);
+  background: var(--primary-blue-dark, #e0e0e0);
   position: relative;
   overflow: hidden;
 }

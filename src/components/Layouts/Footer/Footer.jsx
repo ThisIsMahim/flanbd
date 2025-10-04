@@ -47,7 +47,7 @@ const Footer = () => {
       links: [
         {
           name: "Facebook",
-          redirect: "https://www.facebook.com/eyegearsbd",
+          redirect: "https://www.facebook.com/FlanBDbd",
         },
         {
           name: "Instagram",
@@ -55,7 +55,7 @@ const Footer = () => {
         },
         {
           name: "TikTok",
-          redirect: "https://www.tiktok.com/@eyegears_?_t=ZS-8zSuo0qsf9m&_r=1",
+          redirect: "https://www.tiktok.com/@FlanBD_?_t=ZS-8zSuo0qsf9m&_r=1",
         },
       ],
     },
@@ -63,12 +63,12 @@ const Footer = () => {
 
   const addressContent = {
     mailUs: "More Than Sunglasses",
-    mailAddress: `EyeGears\n Dhaka, Bangladesh`,
+    mailAddress: `FlanBD\n Dhaka, Bangladesh`,
     registeredOffice: "Registered Office Address:",
-    officeAddress: `EyeGears\n Dhaka, Bangladesh`,
+    officeAddress: `FlanBD\n Dhaka, Bangladesh`,
     telephone: "+8801845-556566",
-    copyright: `© 2024-${new Date().getFullYear()} eyegearsbd.com`,
-    sell: "Sell On EyeGears",
+    copyright: `© 2024-${new Date().getFullYear()} flanbd.store`,
+    sell: "Sell On FLanBD",
     advertise: "Advertise",
     giftCards: "Gift Cards",
     helpCenter: "Help Center",
@@ -78,7 +78,7 @@ const Footer = () => {
     {
       name: "Facebook",
       icon: <FacebookIcon />,
-      redirect: "https://www.facebook.com/eyegearsbd",
+      redirect: "https://www.facebook.com/FlanBDbd",
     },
     {
       name: "Instagram",
@@ -88,7 +88,7 @@ const Footer = () => {
     {
       name: "TikTok",
       icon: <TikTokIcon />, // TikTok icon
-      redirect: "https://www.tiktok.com/@eyegears_?_t=ZS-8zSuo0qsf9m&_r=1",
+      redirect: "https://www.tiktok.com/@FlanBD_?_t=ZS-8zSuo0qsf9m&_r=1",
     },
   ];
 
@@ -351,11 +351,10 @@ const Footer = () => {
           </div>
           <button
             onClick={scrollToTop}
-            className={`fixed bottom-8 md:bottom-16 left-8 z-20 p-3 rounded-full shadow-lg transition-all duration-300 transform footer-backtotop hover:scale-110 ${
-              showBackToTop
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-4 pointer-events-none"
-            }`}
+            className={`fixed bottom-8 md:bottom-16 left-8 z-20 p-3 rounded-full shadow-lg transition-all duration-300 transform footer-backtotop hover:scale-110 ${showBackToTop
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 translate-y-4 pointer-events-none"
+              }`}
             style={{
               background: "var(--primary-blue-light)",
               color: "#ffffff",

@@ -127,7 +127,7 @@ const CartItem = ({
               <span className="text-xs text-gray-500 mt-0.5">
                 {language === "english" ? "Made by:" : "বিক্রেতা:"}{" "}
                 <span className="text-[var(--primary-blue-light)] font-medium">
-                  EyeGears
+                  Flanbd
                 </span>
               </span>
             </div>

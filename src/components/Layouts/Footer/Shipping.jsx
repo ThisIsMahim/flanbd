@@ -14,7 +14,7 @@ const ShippingPolicies = () => (
         </h1>
         <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full mx-auto mb-6"></div>
         <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-          At EyeGears, we strive to provide our customers with prompt and reliable shipping services. This Shipping Policy outlines the terms and conditions regarding the shipping and delivery of products purchased from our website.
+          At FlanBD, we strive to provide our customers with prompt and reliable shipping services. This Shipping Policy outlines the terms and conditions regarding the shipping and delivery of products purchased from our website.
         </p>
       </div>
 

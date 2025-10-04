@@ -58,12 +58,12 @@ const UpdateProfile = () => {
             setGender(user.gender || "");
             setAvatarPreview(user.avatar?.url || "");
         }
-        
+
         if (error) {
             enqueueSnackbar(error, { variant: "error" });
             dispatch(clearErrors());
         }
-        
+
         if (isUpdated) {
             enqueueSnackbar("Profile Updated Successfully", { variant: "success" });
             dispatch(loadUser());
@@ -79,7 +79,7 @@ const UpdateProfile = () => {
 
     return (
         <>
-            <MetaData title="Update Profile | EyeGears" />
+            <MetaData title="Update Profile | FlanBD" />
 
             {loading && <BackdropLoader />}
             <main className="w-full mt-12 sm:pt-20 sm:mt-0">
@@ -146,29 +146,29 @@ const UpdateProfile = () => {
                                             aria-labelledby="radio-buttons-group-label"
                                             name="radio-buttons-group"
                                         >
-                                            <FormControlLabel 
-                                                name="gender" 
-                                                value="male" 
-                                                checked={gender === "male"} 
-                                                onChange={(e) => setGender(e.target.value)} 
+                                            <FormControlLabel
+                                                name="gender"
+                                                value="male"
+                                                checked={gender === "male"}
+                                                onChange={(e) => setGender(e.target.value)}
                                                 control={<Radio required sx={{
                                                     '&.Mui-checked': {
                                                         color: '#2874f0',
                                                     },
-                                                }} />} 
-                                                label="Male" 
+                                                }} />}
+                                                label="Male"
                                             />
-                                            <FormControlLabel 
-                                                name="gender" 
-                                                value="female" 
-                                                checked={gender === "female"} 
-                                                onChange={(e) => setGender(e.target.value)} 
+                                            <FormControlLabel
+                                                name="gender"
+                                                value="female"
+                                                checked={gender === "female"}
+                                                onChange={(e) => setGender(e.target.value)}
                                                 control={<Radio required sx={{
                                                     '&.Mui-checked': {
                                                         color: '#2874f0',
                                                     },
-                                                }} />} 
-                                                label="Female" 
+                                                }} />}
+                                                label="Female"
                                             />
                                         </RadioGroup>
                                     </div>
@@ -199,14 +199,14 @@ const UpdateProfile = () => {
                                 </div>
 
                                 <div className="flex flex-col sm:flex-row items-center gap-3 w-full">
-                                    <button 
-                                        type="submit" 
+                                    <button
+                                        type="submit"
                                         className="text-black py-3 px-4 w-full sm:w-auto bg-primary-blue-dark font-medium rounded-sm shadow hover:shadow-lg transition min-w-[150px]"
                                     >
                                         Update Profile
                                     </button>
-                                    <Link 
-                                        className="border border-primary-blue text-primary-blue py-3 px-4 rounded-sm w-full sm:w-auto text-center font-medium hover:bg-blue-50 transition min-w-[150px]" 
+                                    <Link
+                                        className="border border-primary-blue text-primary-blue py-3 px-4 rounded-sm w-full sm:w-auto text-center font-medium hover:bg-blue-50 transition min-w-[150px]"
                                         to="/account"
                                     >
                                         Cancel

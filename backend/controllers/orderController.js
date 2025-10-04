@@ -118,7 +118,7 @@ exports.newOrder = asyncErrorHandler(async (req, res, next) => {
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #f8f9fa; padding: 20px;">
             <!-- Header with Logo -->
             <div style="text-align: center; margin-bottom: 30px; background-color: #0f172a; padding: 20px; border-radius: 8px 8px 0 0;">
-                <img src="https://demo.eyegearsbd.com/logo.jpg" alt="EyeGears" style="height: 50px; margin-bottom: 10px;">
+                <img src="https://flanbd.store/logo.png" alt="Flanbd" style="height: 50px; margin-bottom: 10px;">
                 <h1 style="color: #ffffff; margin: 0; font-size: 24px; font-weight: bold;">Order Placed Successfully!</h1>
             </div>
             
@@ -173,7 +173,7 @@ exports.newOrder = asyncErrorHandler(async (req, res, next) => {
                 <!-- Footer Message -->
                 <div style="text-align: center; margin-top: 30px; padding: 20px; background-color: #f8f9fa; border-radius: 8px;">
                     <p style="color: #4a5568; font-size: 16px; margin-bottom: 15px;">We'll send you another email when your order ships. If you have any questions, please contact our support team.</p>
-                    <p style="color: #0f172a; font-size: 18px; font-weight: bold; margin-bottom: 20px;">Thank you for shopping with eyegears!</p>
+                    <p style="color: #0f172a; font-size: 18px; font-weight: bold; margin-bottom: 20px;">Thank you for shopping with Flanbd!</p>
                     <p style="font-size: 12px; color: #718096; margin: 0;">
                 <strong>Note:</strong> This is an automated email. Please do not reply directly to this message.
             </p>
@@ -199,7 +199,7 @@ exports.newOrder = asyncErrorHandler(async (req, res, next) => {
         <div style="font-family: Arial, sans-serif; max-width: 700px; margin: 0 auto; background-color: #f8f9fa; padding: 20px;">
             <!-- Header with Logo -->
             <div style="text-align: center; margin-bottom: 30px; background-color: #0f172a; padding: 25px; border-radius: 8px 8px 0 0;">
-                <img src="https://demo.eyegearsbd.com/logo.jpg" alt="EyeGears" style="height: 60px; margin-bottom: 15px;">
+                <img src="https://flanbd.store/logo.png" alt="Flanbd" style="height: 60px; margin-bottom: 15px;">
                 <h1 style="color: #ffffff; margin: 0; font-size: 28px; font-weight: bold;">New Order Received</h1>
                 <p style="color: #94a3b8; margin: 10px 0 0 0; font-size: 16px;">Order Management Dashboard</p>
             </div>
@@ -453,7 +453,7 @@ exports.guestOrder = asyncErrorHandler(async (req, res, next) => {
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #f8f9fa; padding: 20px;">
             <!-- Header with Logo -->
             <div style="text-align: center; margin-bottom: 30px; background-color: #0f172a; padding: 20px; border-radius: 8px 8px 0 0;">
-                <img src="https://demo.eyegearsbd.com/logo.jpg" alt="eyegears" style="height: 50px; margin-bottom: 10px;">
+                <img src="https://flanbd.store/logo.png" alt="Flanbd" style="height: 50px; margin-bottom: 10px;">
                 <h1 style="color: #ffffff; margin: 0; font-size: 24px; font-weight: bold;">Order Placed Successfully!</h1>
             </div>
             
@@ -512,7 +512,7 @@ exports.guestOrder = asyncErrorHandler(async (req, res, next) => {
                 <!-- Footer Message -->
                 <div style="text-align: center; margin-top: 30px; padding: 20px; background-color: #f8f9fa; border-radius: 8px;">
                     <p style="color: #4a5568; font-size: 16px; margin-bottom: 15px;">We'll send you another email when your order ships. If you have any questions, please contact our support team.</p>
-                    <p style="color: #0f172a; font-size: 18px; font-weight: bold; margin-bottom: 20px;">Thank you for shopping with EyeGears!</p>
+                    <p style="color: #0f172a; font-size: 18px; font-weight: bold; margin-bottom: 20px;">Thank you for shopping with Flanbd!</p>
                     <p style="font-size: 12px; color: #718096; margin: 0;">
                 <strong>Note:</strong> This is an automated email. Please do not reply directly to this message.
             </p>
@@ -538,7 +538,7 @@ exports.guestOrder = asyncErrorHandler(async (req, res, next) => {
         <div style="font-family: Arial, sans-serif; max-width: 700px; margin: 0 auto; background-color: #f8f9fa; padding: 20px;">
             <!-- Header with Logo -->
             <div style="text-align: center; margin-bottom: 30px; background-color: #0f172a; padding: 25px; border-radius: 8px 8px 0 0;">
-                <img src="https://demo.eyegearsbd.com/logo.jpg" alt="EyeGears" style="height: 60px; margin-bottom: 15px;">
+                <img src="https://flanbd.store/logo.png" alt="Flanbd" style="height: 60px; margin-bottom: 15px;">
                 <h1 style="color: #ffffff; margin: 0; font-size: 28px; font-weight: bold;">New Guest Order Received</h1>
                 <p style="color: #94a3b8; margin: 10px 0 0 0; font-size: 16px;">Order Management Dashboard</p>
             </div>

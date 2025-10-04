@@ -14,7 +14,7 @@ const CancellationReturn = () => (
         </h1>
         <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full mx-auto mb-6"></div>
         <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-      At eyegears, we want you to be completely satisfied with your purchase. If you are not happy with your order for any reason, our Return & Refund Policy outlines your options for returning products and requesting refunds or exchanges.
+      At FLanBD, we want you to be completely satisfied with your purchase. If you are not happy with your order for any reason, our Return & Refund Policy outlines your options for returning products and requesting refunds or exchanges.
     </p>
       </div>
 

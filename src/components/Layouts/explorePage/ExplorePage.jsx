@@ -119,7 +119,7 @@ const ExplorePage = () => {
             />
           </div>
           <h1 className="text-3xl font-bold text-red-500 mb-1">
-            Explore eyegears Services
+            Explore FlanBD Services
           </h1>
           <p className="text-lg text-primary-blue-light">
             Comprehensive Solutions for All Your Stationery Needs
@@ -199,7 +199,7 @@ const ExplorePage = () => {
               <BusinessCenterIcon
                 style={{ fontSize: 28, color: "var(--primary-blue-dark)" }}
               />
-              Partner with EyeGears for Your Next Project!
+              Partner with FlanBD for Your Next Project!
             </h2>
             <p className="text-base text-primary-blue-light mb-4">
               Contact us today to discuss your custom requirements.

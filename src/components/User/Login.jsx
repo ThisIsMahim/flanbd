@@ -207,7 +207,7 @@ const Login = () => {
               Login to Your Account
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              Enter your credentials to access your EyeGears dashboard
+              Enter your credentials to access your FlanBD dashboard
             </Typography>
           </div>
 
@@ -317,7 +317,7 @@ const Login = () => {
         </Box>
       </Paper>
       {loading && <BackdropLoader />}
-              <MetaData title="Login | EyeGears" />
+      <MetaData title="Login | FlanBD" />
     </Box>
   );
 };

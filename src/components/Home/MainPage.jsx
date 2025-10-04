@@ -121,7 +121,7 @@ const MainPage = () => {
 
   return (
     <>
-              <MetaData title="eyegears - Premium Eyewear & Optical Solutions" />
+              <MetaData title="FlanBD - Premium Anime Merchandise Giftshop" />
       <div className="page-water-bg">
         <Banner />
         <main className="flex flex-col gap-3 px-2 mt-16 sm:mt-2">

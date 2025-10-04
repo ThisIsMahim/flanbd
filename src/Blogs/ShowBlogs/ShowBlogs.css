@@ -84,7 +84,7 @@
 
 /* Glass card styling */
 .glass-card {
-  background: var(--glass-bg);
+  /* background: var(--glass-bg); */
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.5);

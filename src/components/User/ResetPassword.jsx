@@ -84,7 +84,7 @@ const ResetPassword = () => {
 
   return (
     <>
-              <MetaData title="Reset Password | EyeGears" />
+      <MetaData title="Reset Password | FlanBD" />
 
       {loading && <BackdropLoader />}
       <main className="w-full min-h-screen bg-gradient-to-b from-blue-50 to-white flex flex-col items-center justify-center p-4 sm:p-8">
@@ -194,7 +194,7 @@ const ResetPassword = () => {
           </div>
 
           <div className="mt-8 text-center text-xs text-gray-500">
-            © {new Date().getFullYear()} EyeGears. All rights reserved.
+            © {new Date().getFullYear()} FlanBD. All rights reserved.
           </div>
         </div>
       </main>

@@ -34,7 +34,7 @@ const Shipping = () => {
   // Enhanced translations with fallbacks
   const translations = {
     metaTitle: {
-              english: "EyeGears: Shipping Details",
+              english: "FlanBD: Shipping Details",
       bangla: "ডাঃ ওয়াটার: শিপিং বিবরণ",
     },
     address: {

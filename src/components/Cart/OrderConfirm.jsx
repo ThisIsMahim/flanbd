@@ -18,7 +18,7 @@ const OrderConfirm = () => {
       <MetaData
         title={
           language === "english"
-            ? "eyegears: Order Confirmation"
+            ? "Flanbd: Order Confirmation"
             : "পেপার ম্যান: অর্ডার নিশ্চিতকরণ"
         }
       />

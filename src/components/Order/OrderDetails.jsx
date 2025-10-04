@@ -25,7 +25,7 @@ const OrderDetails = () => {
 
   return (
     <>
-              <MetaData title="Order Details | EyeGears" />
+      <MetaData title="Order Details | FlanBD" />
 
       <Breadcrumb />
       <main className="w-full mt-20">
@@ -101,8 +101,8 @@ const OrderDetails = () => {
                               order.orderStatus === "Delivered"
                                 ? 2
                                 : order.orderStatus === "Shipped"
-                                ? 1
-                                : 0
+                                  ? 1
+                                  : 0
                             }
                           />
                         </div>

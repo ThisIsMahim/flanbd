@@ -93,7 +93,7 @@ const Home = () => {
 
   return (
     <>
-      <MetaData title="EyeGears - Premium Eyewear & Optical Solutions | Elevate Your Vision Experience" />
+      <MetaData title="FlanBD - The clan for the fans | Premium anime merchandise giftshop" />
 
       {/* Gold User Animation */}
       <GoldUserAnimation

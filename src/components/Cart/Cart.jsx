@@ -42,8 +42,8 @@ const Cart = () => {
       <MetaData
         title={
           language === "bangla"
-                    ? "শপিং কার্ট | EyeGears"
-        : "Shopping Cart | EyeGears"
+                    ? "শপিং কার্ট | Flanbd"
+        : "Shopping Cart | FlanBD"
         }
       />
       <main className="w-full mt-20">

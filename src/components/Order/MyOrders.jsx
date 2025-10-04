@@ -63,7 +63,7 @@ const MyOrders = () => {
       const goldUserDate = new Date(user.goldUserSince);
       const now = new Date();
       const timeDiff = now - goldUserDate;
-      
+
       // Show animation if user became Gold User within the last 24 hours
       if (timeDiff < 24 * 60 * 60 * 1000) {
         setShowGoldAnimation(true);
@@ -200,8 +200,8 @@ const MyOrders = () => {
                     {language === "bangla"
                       ? ordertimeLabels[i]
                       : i === 0
-                      ? "This Month"
-                      : el}
+                        ? "This Month"
+                        : el}
                   </span>
                 }
                 className="mb-1"
@@ -218,15 +218,15 @@ const MyOrders = () => {
       <MetaData
         title={
           language === "bangla"
-                    ? "আমার অর্ডার | EyeGears"
-        : "My Orders | EyeGears"
+            ? "আমার অর্ডার | FlanBD"
+            : "My Orders | FlanBD"
         }
       />
 
       {/* Gold User Animation */}
-      <GoldUserAnimation 
-        isVisible={showGoldAnimation} 
-        onComplete={handleGoldAnimationComplete} 
+      <GoldUserAnimation
+        isVisible={showGoldAnimation}
+        onComplete={handleGoldAnimationComplete}
       />
 
       <main className="w-full sm:mt-0">
@@ -241,12 +241,12 @@ const MyOrders = () => {
                 color: "var(--text-light)",
               }}
               onMouseOver={(e) =>
-                (e.currentTarget.style.backgroundColor =
-                  "var(--primary-blue-light)")
+              (e.currentTarget.style.backgroundColor =
+                "var(--primary-blue-light)")
               }
               onMouseOut={(e) =>
-                (e.currentTarget.style.backgroundColor =
-                  "var(--primary-blue-dark)")
+              (e.currentTarget.style.backgroundColor =
+                "var(--primary-blue-dark)")
               }
             >
               <FilterListIcon fontSize="small" />
@@ -350,7 +350,7 @@ const MyOrders = () => {
                   {/* Simple monthly bars */}
                   <div className="mt-4">
                     <p className="text-sm font-semibold text-[var(--primary-blue-dark)] mb-2">Monthly spend (last 12 months)</p>
-                    <div className="grid grid-cols-12 gap-2 items-end" style={{minHeight: 120}}>
+                    <div className="grid grid-cols-12 gap-2 items-end" style={{ minHeight: 120 }}>
                       {(summary?.months || []).map((m, idx) => {
                         const max = Math.max(1, ...(summary?.months || []).map(mm => mm.total));
                         const heightPct = Math.round((m.total / max) * 100);

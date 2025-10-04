@@ -623,14 +623,14 @@ const Header = () => {
           <div
             className="absolute top-0 left-0 w-80 h-full flex flex-col p-6 gap-4 overflow-y-auto"
             style={{
-              background: "var(--primary-blue-light)",
+              background: "var(--primary-blue-dark)",
               color: "var(--text-light)",
             }}
             onClick={(e) => e.stopPropagation()}
           >
             <button
               className="self-end mb-4"
-              style={{ color: "var(--text-light)" }}
+              style={{ color: "var(--brand-yellow)", backgroundColor: "var(--primary-blue-dark)" }}
               onClick={closeMobileMenu}
               aria-label="Close menu"
             >
@@ -638,13 +638,13 @@ const Header = () => {
             </button>
             <Link
               to="/"
-              className="mb-6 flex items-center justify-center"
+              className="mb-6 flex"
               onClick={closeMobileMenu}
             >
               <img
                 src="/logo.png"
                 alt="Flan"
-                className="header-logo h-16 w-40 object-contain"
+                className="header-logo h-24 object-contain"
               />
             </Link>
             {/* Shop Menu */}
@@ -720,33 +720,6 @@ const Header = () => {
             >
               Contact us
             </Link>
-            <div className="flex gap-4 mt-6">
-              <button
-                className="text-white hover:text-gray-200 p-1"
-                onClick={openSearch}
-              >
-                <SearchIcon fontSize="medium" />
-              </button>
-              <button
-                className="text-white hover:text-gray-200 p-1"
-                onClick={() =>
-                  navigate(isAuthenticated ? "/account" : "/login")
-                }
-              >
-                <AccountCircleIcon fontSize="medium" />
-              </button>
-              <button
-                className="text-white hover:text-gray-200 p-1 relative"
-                onClick={() => navigate("/cart")}
-              >
-                <ShoppingCartIcon fontSize="medium" />
-                {cartItems.length > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5 min-w-[18px] text-center">
-                    {cartItems.length}
-                  </span>
-                )}
-              </button>
-            </div>
           </div>
         </div>
       )}

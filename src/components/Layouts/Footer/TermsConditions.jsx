@@ -13,7 +13,7 @@ const TermsConditions = () => (
       1. Acceptance of Terms
     </h2>
     <p className="text-gray-800 mb-4">
-      By accessing and using the EyeGears website, you accept and agree to be
+      By accessing and using the Flan website, you accept and agree to be
       bound by the terms and provision of this agreement. If you do not agree to
       abide by the above, please do not use this service.
     </p>
@@ -23,7 +23,7 @@ const TermsConditions = () => (
     </h2>
     <p className="text-gray-800 mb-4">
       Permission is granted to temporarily download one copy of the materials
-      (information or software) on EyeGears's website for personal,
+      (information or software) on FlanBD's website for personal,
       non-commercial transitory viewing only. This is the grant of a license,
       not a transfer of title, and under this license you may not:
     </p>
@@ -100,8 +100,8 @@ const TermsConditions = () => (
     </h2>
     <ul className="list-disc pl-6 text-gray-800 mb-4">
       <li>
-        <b>Ownership:</b> All content on the EyeGears website, including text,
-        images, logos, and design, is the property of EyeGears and is
+        <b>Ownership:</b> All content on the FlanBD website, including text,
+        images, logos, and design, is the property of FlanBD and is
         protected by copyright and other intellectual property laws.
       </li>
       <li>
@@ -115,12 +115,12 @@ const TermsConditions = () => (
     </h2>
     <ul className="list-disc pl-6 text-gray-800 mb-4">
       <li>
-        <b>Disclaimer:</b> EyeGears provides the website and products "as is"
+        <b>Disclaimer:</b> FlanBD provides the website and products "as is"
         and "as available" without any warranties, express or implied. We do not
         guarantee that our website will be error-free or uninterrupted.
       </li>
       <li>
-        <b>Limitation:</b> To the fullest extent permitted by law, EyeGears
+        <b>Limitation:</b> To the fullest extent permitted by law, FlanBD
         shall not be liable for any indirect, incidental, special, or
         consequential damages arising out of or related to your use of the
         website or products.

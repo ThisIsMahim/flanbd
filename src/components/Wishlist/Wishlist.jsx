@@ -13,7 +13,7 @@ const Wishlist = () => {
   // Translations
   const translations = {
     english: {
-      title: "Wishlist | EyeGears",
+      title: "Wishlist | FlanBD",
       myWishlist: "My Wishlist",
       emptyWishlist: "Empty Wishlist",
       emptyWishlistMsg: "You have no items in your wishlist. Start adding!",
@@ -31,7 +31,7 @@ const Wishlist = () => {
   return (
     <>
       <MetaData
-        title={"Wishlist | EyeGears"}
+        title={"Wishlist | FlanBD"}
       />
 
       <Breadcrumb />

@@ -181,17 +181,17 @@ const Products = () => {
       ...product,
       categories: Array.isArray(product.categories)
         ? product.categories
-            .map((cat) => {
-              // Handle different category formats
-              if (typeof cat === "string") {
-                return cat;
-              } else if (cat && typeof cat === "object" && cat.name) {
-                return cat.name;
-              } else {
-                return ""; // Skip invalid categories
-              }
-            })
-            .filter((cat) => cat) // Remove empty strings
+          .map((cat) => {
+            // Handle different category formats
+            if (typeof cat === "string") {
+              return cat;
+            } else if (cat && typeof cat === "object" && cat.name) {
+              return cat.name;
+            } else {
+              return ""; // Skip invalid categories
+            }
+          })
+          .filter((cat) => cat) // Remove empty strings
         : [],
     }));
 
@@ -550,11 +550,10 @@ const Products = () => {
           <div className="flex flex-col gap-1">
             {/* All Categories Option */}
             <button
-              className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-200 text-left border-2 ${
-                !selectedParentId && !selectedSubCategory && category === ""
+              className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-200 text-left border-2 ${!selectedParentId && !selectedSubCategory && category === ""
                   ? "font-bold shadow-md"
                   : "shadow-sm"
-              }`}
+                }`}
               style={{
                 backgroundColor:
                   !selectedParentId && !selectedSubCategory && category === ""
@@ -627,11 +626,10 @@ const Products = () => {
                 return (
                   <div key={parent._id}>
                     <button
-                      className={`flex items-center gap-2 px-3 py-2 rounded-lg w-full transition-all duration-200 text-left border-2 ${
-                        isSelectedParent && category === parent.name
+                      className={`flex items-center gap-2 px-3 py-2 rounded-lg w-full transition-all duration-200 text-left border-2 ${isSelectedParent && category === parent.name
                           ? "font-bold shadow-md"
                           : "shadow-sm"
-                      }`}
+                        }`}
                       style={{
                         backgroundColor:
                           isSelectedParent && category === parent.name
@@ -700,19 +698,19 @@ const Products = () => {
                             className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-200 text-left border-2 shadow-sm`}
                             style={
                               selectedSubCategory === sub._id &&
-                              category === sub.name
+                                category === sub.name
                                 ? {
-                                    backgroundColor: "var(--brand-yellow)",
-                                    color: "#ffffff",
-                                    borderColor: "var(--brand-yellow)",
-                                    boxShadow:
-                                      "0 6px 16px rgba(0,0,0,0.1), 0 0 0 2px rgba(255,255,255,0.2) inset",
-                                  }
+                                  backgroundColor: "var(--brand-yellow)",
+                                  color: "#ffffff",
+                                  borderColor: "var(--brand-yellow)",
+                                  boxShadow:
+                                    "0 6px 16px rgba(0,0,0,0.1), 0 0 0 2px rgba(255,255,255,0.2) inset",
+                                }
                                 : {
-                                    backgroundColor: "var(--section-bg)",
-                                    color: "var(--text-dark)",
-                                    borderColor: "var(--border-light)",
-                                  }
+                                  backgroundColor: "var(--section-bg)",
+                                  color: "var(--text-dark)",
+                                  borderColor: "var(--border-light)",
+                                }
                             }
                             onClick={() =>
                               handleCategoryTreeSelect(
@@ -753,9 +751,8 @@ const Products = () => {
           <div className="flex flex-col gap-1">
             {/* All Ratings Option */}
             <button
-              className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-200 text-left border-2 ${
-                ratings === 0 ? "font-bold shadow-md" : "shadow-sm"
-              }`}
+              className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-200 text-left border-2 ${ratings === 0 ? "font-bold shadow-md" : "shadow-sm"
+                }`}
               style={{
                 backgroundColor:
                   ratings === 0 ? "var(--brand-yellow)" : "var(--section-bg)",
@@ -794,17 +791,17 @@ const Products = () => {
                 style={
                   ratings === el
                     ? {
-                        backgroundColor: "var(--brand-yellow)",
-                        color: "#ffffff",
-                        borderColor: "var(--brand-yellow)",
-                        boxShadow:
-                          "0 6px 16px rgba(0,0,0,0.1), 0 0 0 2px rgba(255,255,255,0.2) inset",
-                      }
+                      backgroundColor: "var(--brand-yellow)",
+                      color: "#ffffff",
+                      borderColor: "var(--brand-yellow)",
+                      boxShadow:
+                        "0 6px 16px rgba(0,0,0,0.1), 0 0 0 2px rgba(255,255,255,0.2) inset",
+                    }
                     : {
-                        backgroundColor: "var(--section-bg)",
-                        color: "var(--text-dark)",
-                        borderColor: "var(--border-light)",
-                      }
+                      backgroundColor: "var(--section-bg)",
+                      color: "var(--text-dark)",
+                      borderColor: "var(--border-light)",
+                    }
                 }
                 onClick={() => setRatings(el)}
               >
@@ -914,7 +911,7 @@ const Products = () => {
 
   return (
     <>
-      <MetaData title="All Products | EyeGears" />
+      <MetaData title="All Products | FlanBD" />
       <style>
         {`
           .hide-scrollbar {
@@ -1032,9 +1029,8 @@ const Products = () => {
           </Drawer>
           {/* Products + Video Section Layout */}
           <div
-            className={`flex-1 flex ${
-              isLargeScreen ? "flex-row gap-6" : "flex-col"
-            } w-full`}
+            className={`flex-1 flex ${isLargeScreen ? "flex-row gap-6" : "flex-col"
+              } w-full`}
             style={{ overflowX: "hidden" }}
           >
             {/* Products List and Categories */}

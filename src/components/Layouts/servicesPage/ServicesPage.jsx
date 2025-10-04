@@ -205,40 +205,40 @@ const EyeGearsServices = () => {
   // Translations
   const translations = {
     english: {
-      metaTitle: "Our Services | EyeGears",
-              heroTitle: "Premium Sunglasses Solutions",
+      metaTitle: "Our Services | FlanBD",
+      heroTitle: "Premium Sunglasses Solutions",
       heroSubtitle:
-                  "Advanced sunglasses products and services for your business and personal needs",
+        "Advanced sunglasses products and services for your business and personal needs",
       servicesTitle: "Our Comprehensive Services",
-              whyChooseUs: "Why Choose EyeGears?",
-              featuresTitle: "Advanced Sunglasses Product Features",
+      whyChooseUs: "Why Choose FlanBD?",
+      featuresTitle: "Advanced Sunglasses Product Features",
       ctaTitle: "Experience the Quality Difference",
       ctaSubtitle: "Get your free consultation today",
       ctaButton: "Book a Consultation",
       services: [
         {
-                  title: "Premium Sunglasses Products",
-        description: "High-quality sunglasses for all your needs",
+          title: "Premium Sunglasses Products",
+          description: "High-quality sunglasses for all your needs",
           icon: "📄",
         },
         {
-                  title: "Custom Sunglasses Solutions",
-        description: "Tailored sunglasses for your specific requirements",
+          title: "Custom Sunglasses Solutions",
+          description: "Tailored sunglasses for your specific requirements",
           icon: "⚡",
         },
         {
-                  title: "Bulk Sunglasses Supply",
-        description: "Reliable bulk sunglasses supply for businesses",
+          title: "Bulk Sunglasses Supply",
+          description: "Reliable bulk sunglasses supply for businesses",
           icon: "📦",
         },
         {
-                  title: "Commercial Sunglasses Services",
-        description: "Industrial-grade sunglasses solutions for businesses",
+          title: "Commercial Sunglasses Services",
+          description: "Industrial-grade sunglasses solutions for businesses",
           icon: "🏢",
         },
         {
-                  title: "Sunglasses Consultation",
-        description: "Expert advice on sunglasses selection and usage",
+          title: "Sunglasses Consultation",
+          description: "Expert advice on sunglasses selection and usage",
           icon: "🛠️",
         },
         {

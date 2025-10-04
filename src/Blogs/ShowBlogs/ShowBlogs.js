@@ -119,40 +119,11 @@ const ShowBlogs = () => {
     },
   };
 
-  if (isLoading) {
-    return (
-      <div className="show-blogs-container">
-        <Loader />
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="show-blogs-container">
-        <div className="error-message">
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <p>{error}</p>
-            <button
-              onClick={() => window.location.reload()}
-              className="retry-btn"
-            >
-              {t.retry}
-            </button>
-          </motion.div>
-        </div>
-      </div>
-    );
-  }
-
+  
   return (
-    <div className="show-blogs-bg min-h-screen py-10 px-2 flex flex-col items-center justify-center">
+    <div className="show-blogs-bg min-h-screen py-12 px-4 flex flex-col items-center">
       <div className="max-w-5xl w-full mx-auto glass-container p-6 md:p-12 rounded-2xl shadow-lg">
-        <div className="blogs-header-content">
+        <div className="blogs-header-content flex flex-col items-center">
           <div className="flex items-center justify-center mb-2">
             <AutoStoriesIcon
               style={{ fontSize: 44, color: "var(--primary-blue-dark)" }}
@@ -169,24 +140,47 @@ const ShowBlogs = () => {
           <p className="blogs-subtitle">{t.discoverInsights}</p>
         </div>
         <div className="content-wrapper">
+          {/* Inline error state inside the blog section */}
+          {error && (
+            <div className="error-message my-6">
+              <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="text-center"
+              >
+                <p style={{ color: "var(--primary-blue-dark)" }}>{error}</p>
+                <button onClick={() => window.location.reload()} className="retry-btn mt-3">
+                  {t.retry}
+                </button>
+              </motion.div>
+            </div>
+          )}
+
+          {/* Blog grid with inline loader skeleton */}
           <motion.div
             variants={staggerContainer}
             initial="hidden"
             animate="show"
             className="blogs-grid"
           >
-            {blogs.slice(0, visibleCount).map((blog, index) => (
-              <BlogCard
-                key={blog._id}
-                blog={blog}
-                t={t}
-                onReadMore={openBlogInNewPage}
-                showQuickView={true}
-                onQuickView={setSelectedBlog}
-              />
-            ))}
+            {isLoading
+              ? Array.from({ length: 6 }).map((_, i) => (
+                  <div key={i} className="glass-card rounded-xl animate-pulse" style={{ minHeight: 280 }} />
+                ))
+              : blogs.slice(0, visibleCount).map((blog) => (
+                  <BlogCard
+                    key={blog._id}
+                    blog={blog}
+                    t={t}
+                    onReadMore={openBlogInNewPage}
+                    showQuickView={true}
+                    onQuickView={setSelectedBlog}
+                  />
+                ))}
           </motion.div>
-          {visibleCount < blogs.length && (
+
+          {!isLoading && !error && visibleCount < blogs.length && (
             <motion.div
               className="see-more-container"
               initial={{ opacity: 0, y: 20 }}

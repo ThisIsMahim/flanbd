@@ -39,7 +39,7 @@ const ContactUs = () => {
       },
       contactDetails: "Contact Details",
       phone1: "01845556566",
-              email: "support@eyegearsbd.com",
+              email: "support@flanbd.store",
       serviceHours: "Service Hours",
       schedule: {
         saturday: "Available 24 hours",
@@ -177,7 +177,7 @@ const ContactUs = () => {
   }, []);
 
   return (
-    <div className="min-h-screen py-10 px-2 flex flex-col items-center justify-center bg-primary-bg bg-gradient-to-br from-primary-bg to-yellow-50">
+    <div className="min-h-screen py-10 px-2 flex flex-col items-center justify-center bg-primary-bg bg-gradient-to-br from-primary-bg to-red-50">
       <div
         ref={containerRef}
         className="max-w-4xl w-full mx-auto glass-container p-6 md:p-10 rounded-2xl shadow-lg bg-white/70 backdrop-blur-md border border-white/40"
@@ -186,16 +186,16 @@ const ContactUs = () => {
         <div className="section-header flex flex-col items-center mb-8">
           <div className="flex items-center gap-2 mb-2">
             <MenuBookIcon
-              style={{ fontSize: 40, color: "#5F6F52" }}
+              style={{ fontSize: 40, color: "var(--primary-blue-dark)" }}
             />
             <EditIcon
-              style={{ fontSize: 32, color: "#A9B388" }}
+              style={{ fontSize: 32, color: "var(--primary-blue-light)" }}
             />
           </div>
-          <h1 className="text-3xl font-bold text-accent mb-1">
+          <h1 className="text-3xl font-bold mb-1" style={{ color: "var(--primary-blue-dark)" }}>
             {translations[language].header}
           </h1>
-          <p className="text-lg text-primary-text/80">
+          <p className="text-lg opacity-80" style={{ color: "var(--text-dark)" }}>
             {translations[language].tagline}
           </p>
         </div>
@@ -204,34 +204,34 @@ const ContactUs = () => {
         <div className="flex flex-col md:flex-row gap-8">
           {/* Contact Information Cards */}
           <div className="flex-1 flex flex-col gap-6">
-            <div className="glass-card p-5 flex flex-col items-center text-center rounded-xl bg-white/70 backdrop-blur border border-white/40 shadow">
+            <div className="glass-card p-5 flex flex-col items-center text-center rounded-xl bg-[var(--glass-bg)] backdrop-blur border border-white/40 shadow">
               <LocationOnIcon
-                style={{ fontSize: 32, color: "#5F6F52" }}
+                style={{ fontSize: 32, color: "var(--primary-blue-dark)" }}
               />
-              <h3 className="font-semibold text-lg mt-2 mb-1 text-primary-text">
+              <h3 className="font-semibold text-lg mt-2 mb-1" style={{ color: "var(--primary-blue-dark)" }}>
                 {translations[language].location}
               </h3>
               {translations[language].address.line1 && (
-                <p className="text-sm text-gray-700">
+                <p className="text-sm" style={{ color: "var(--text-dark)" }}>
                   {translations[language].address.line1}
                 </p>
               )}
               {translations[language].address.line2 && (
-                <p className="text-sm text-gray-700">
+                <p className="text-sm" style={{ color: "var(--text-dark)" }}>
                   {translations[language].address.line2}
                 </p>
               )}
               {translations[language].address.line3 && (
-                <p className="text-sm text-gray-700">
+                <p className="text-sm" style={{ color: "var(--text-dark)" }}>
                   {translations[language].address.line3}
                 </p>
               )}
             </div>
             <div className="glass-card p-5 flex flex-col items-center text-center rounded-xl bg-white/70 backdrop-blur border border-white/40 shadow">
               <PhoneIcon
-                style={{ fontSize: 32, color: "#5F6F52" }}
+                style={{ fontSize: 32, color: "var(--primary-blue-dark)" }}
               />
-              <h3 className="font-semibold text-lg mt-2 mb-1 text-primary-text">
+              <h3 className="font-semibold text-lg mt-2 mb-1" style={{ color: "var(--primary-blue-dark)" }}>
                 {translations[language].contactDetails}
               </h3>
               <a
@@ -239,14 +239,16 @@ const ContactUs = () => {
                   /[^+\d]/g,
                   ""
                 )}`}
-                className="text-sm text-gray-700 hover:underline focus:outline-none focus:ring-2 focus:ring-primary-blue-light rounded"
+                className="text-sm hover:underline focus:outline-none focus:ring-2 rounded"
+                style={{ color: "var(--text-dark)", outlineColor: "var(--primary-blue-light)" }}
                 aria-label="Call us"
               >
                 {translations[language].phone1}
               </a>
               <a
                 href={`mailto:${translations[language].email}`}
-                className="text-sm text-gray-700 hover:underline focus:outline-none focus:ring-2 focus:ring-primary-blue-light rounded"
+                className="text-sm hover:underline focus:outline-none focus:ring-2 rounded"
+                style={{ color: "var(--text-dark)", outlineColor: "var(--primary-blue-light)" }}
                 aria-label="Email us"
               >
                 {translations[language].email}
@@ -254,25 +256,25 @@ const ContactUs = () => {
             </div>
             <div className="glass-card p-5 flex flex-col items-center text-center rounded-xl bg-white/70 backdrop-blur border border-white/40 shadow">
               <CollectionsBookmarkIcon
-                style={{ fontSize: 32, color: "#5F6F52" }}
+                style={{ fontSize: 32, color: "var(--primary-blue-dark)" }}
               />
-              <h3 className="font-semibold text-lg mt-2 mb-1 text-primary-text">
+              <h3 className="font-semibold text-lg mt-2 mb-1" style={{ color: "var(--primary-blue-dark)" }}>
                 {translations[language].serviceHours}
               </h3>
               {translations[language].schedule.saturday && (
-                <p className="text-sm text-gray-700">
+                <p className="text-sm" style={{ color: "var(--text-dark)" }}>
                   {translations[language].schedule.saturday}
                 </p>
               )}
               {translations[language].schedule.sunday && (
-                <p className="text-sm text-gray-700">
+                <p className="text-sm" style={{ color: "var(--text-dark)" }}>
                   {translations[language].schedule.sunday}
                 </p>
               )}
             </div>
             {/* Social Media Links */}
             <div className="glass-card p-5 flex flex-col items-center text-center rounded-xl bg-white/70 backdrop-blur border border-white/40 shadow">
-              <h3 className="font-semibold text-lg mb-2 text-primary-text">
+              <h3 className="font-semibold text-lg mb-2" style={{ color: "var(--primary-blue-dark)" }}>
                 Connect with us
               </h3>
               <div className="flex flex-row gap-6 justify-center items-center">
@@ -390,10 +392,10 @@ const ContactUs = () => {
           {/* Contact Form */}
           <div className="flex-1">
             <div className="form-header mb-4">
-              <h3 className="text-4xl font-bold text-primary-text mb-1">
+              <h3 className="text-4xl font-bold mb-1" style={{ color: "var(--primary-blue-dark)" }}>
                 {translations[language].formHeader}
               </h3>
-              <p className="text-base text-primary-text/70">
+              <p className="text-base opacity-80" style={{ color: "var(--text-dark)" }}>
                 {translations[language].formTagline}
               </p>
             </div>
@@ -401,7 +403,8 @@ const ContactUs = () => {
               <div className="flex flex-col gap-2">
                 <label
                   htmlFor="name"
-                  className="font-medium text-primary-text"
+                  className="font-medium"
+                  style={{ color: "var(--primary-blue-dark)" }}
                 >
                   {translations[language].fullName}{" "}
                   <span className="text-red-500">*</span>
@@ -420,7 +423,8 @@ const ContactUs = () => {
               <div className="flex flex-col gap-2">
                 <label
                   htmlFor="phone"
-                  className="font-medium text-primary-text"
+                  className="font-medium"
+                  style={{ color: "var(--primary-blue-dark)" }}
                 >
                   {translations[language].phoneNumber}
                 </label>
@@ -437,7 +441,8 @@ const ContactUs = () => {
               <div className="flex flex-col gap-2">
                 <label
                   htmlFor="email"
-                  className="font-medium text-primary-text"
+                  className="font-medium"
+                  style={{ color: "var(--primary-blue-dark)" }}
                 >
                   {translations[language].emailLabel}{" "}
                   <span className="text-red-500">*</span>
@@ -456,7 +461,8 @@ const ContactUs = () => {
               <div className="flex flex-col gap-2">
                 <label
                   htmlFor="subject"
-                  className="font-medium text-primary-text"
+                  className="font-medium"
+                  style={{ color: "var(--primary-blue-dark)" }}
                 >
                   {translations[language].subjectLabel}{" "}
                   <span className="text-red-500">*</span>
@@ -475,7 +481,8 @@ const ContactUs = () => {
               <div className="flex flex-col gap-2">
                 <label
                   htmlFor="message"
-                  className="font-medium text-primary-text"
+                  className="font-medium"
+                  style={{ color: "var(--primary-blue-dark)" }}
                 >
                   {translations[language].yourMessage}{" "}
                   <span className="text-red-500">*</span>
@@ -493,8 +500,9 @@ const ContactUs = () => {
               </div>
               <button
                 type="submit"
-                className="glass-button mt-2 flex items-center justify-center gap-2 bg-accent text-white px-5 py-2 rounded-lg hover:bg-accent-support transition-colors"
+                className="glass-button mt-2 flex items-center justify-center gap-2 px-5 py-2 rounded-lg transition-colors"
                 disabled={isSubmitting}
+                style={{ backgroundColor: "var(--brand-yellow)", color: "var(--primary-blue-dark)" }}
               >
                 {isSubmitting ? (
                   <>
@@ -503,7 +511,7 @@ const ContactUs = () => {
                   </>
                 ) : (
                   <>
-                    <EditIcon style={{ fontSize: 20 }} />
+                    <EditIcon style={{ fontSize: 20, color: "var(--primary-blue-dark)" }} />
                     {translations[language].sendMessage}
                   </>
                 )}
@@ -514,13 +522,13 @@ const ContactUs = () => {
 
         {/* Quality Promise Section */}
         <div className="mt-10 text-center">
-          <h3 className="text-xl font-semibold text-primary-text mb-2 flex items-center justify-center gap-2">
+          <h3 className="text-xl font-semibold mb-2 flex items-center justify-center gap-2" style={{ color: "var(--primary-blue-dark)" }}>
             <CollectionsBookmarkIcon
-              style={{ fontSize: 28, color: "#5F6F52" }}
+              style={{ fontSize: 28, color: "var(--primary-blue-dark)" }}
             />
             {translations[language].promiseHeader}
           </h3>
-          <p className="text-base text-primary-text/70 max-w-xl mx-auto">
+          <p className="text-base opacity-80 max-w-xl mx-auto" style={{ color: "var(--text-dark)" }}>
             {translations[language].promiseText}
           </p>
         </div>
@@ -535,9 +543,9 @@ const ContactUs = () => {
           exit={{ opacity: 0, y: 20 }}
         >
           <MenuBookIcon
-            style={{ fontSize: 24, color: "#5F6F52" }}
+            style={{ fontSize: 24, color: "var(--primary-blue-dark)" }}
           />
-          <span className="font-medium text-primary-text">
+          <span className="font-medium" style={{ color: "var(--primary-blue-dark)" }}>
             {toastMessage}
           </span>
           <button
