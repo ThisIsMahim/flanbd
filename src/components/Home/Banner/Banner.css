@@ -3,9 +3,9 @@
 .banner-carousel-modern {
   position: relative;
   width: 100%;
-  min-height: 490px;
-  height: clamp(370px, 72vh, 770px);
-  max-height: 790px;
+  min-height: 100vh; /* full screen */
+  height: 100vh; /* full screen */
+  max-height: none;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -59,7 +59,7 @@ div[ref="bannerRef"] {
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: contain; /* prevent cropping */
+  object-fit: cover; /* fill and remove side gaps on larger screens */
   object-position: center;
   background-color: #ffffff;
   opacity: 0;
@@ -186,7 +186,7 @@ div[ref="bannerRef"] {
 }
 
 /* Progress Bar */
-.banner-progress {
+/* .banner-progress {
   position: absolute;
   bottom: 2rem;
   left: 50%;
@@ -218,39 +218,46 @@ div[ref="bannerRef"] {
   font-weight: 500;
   min-width: 60px;
   text-align: center;
-}
+} */
 
 /* Dots Navigation */
 .banner-dots {
   display: flex;
-  gap: 0.75rem;
+  gap: 0.5rem;
   position: absolute;
   left: 50%;
-  bottom: 4rem;
+  bottom: 3rem;
   transform: translateX(-50%);
   z-index: 10;
+  padding: 0.4rem 0.6rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 4px 18px rgba(0,0,0,0.15);
 }
 
 .banner-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.5);
-  border: none;
+  width: 26px;
+  height: 8px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.6);
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   padding: 0;
 }
 
 .banner-dot:hover {
   background: rgba(255, 255, 255, 0.8);
-  transform: scale(1.2);
+  transform: translateY(-1px);
 }
 
 .banner-dot.active {
-  background: #ffffff;
-  transform: scale(1.3);
-  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.2);
+  background: var(--brand-yellow, #ef4444);
+  border-color: transparent;
+  width: 34px;
+  box-shadow: 0 6px 18px rgba(239, 68, 68, 0.35);
 }
 
 /* Centered Content */
@@ -326,8 +333,8 @@ div[ref="bannerRef"] {
 /* Responsive Design */
 @media (max-width: 1024px) {
   .banner-carousel-modern {
-    height: clamp(350px, 64vh, 690px);
-    min-height: 410px;
+    height: 100vh;
+    min-height: 100vh;
   }
   
   .banner-nav-btn {
@@ -350,8 +357,8 @@ div[ref="bannerRef"] {
 
 @media (max-width: 768px) {
   .banner-carousel-modern {
-    height: clamp(310px, 58vh, 610px);
-    min-height: 350px;
+    height: 100vh; /* maintain full height on mobile for immersive hero */
+    min-height: 100vh;
   }
   
   .banner-bg {
@@ -394,7 +401,7 @@ div[ref="bannerRef"] {
   }
   
   .banner-dots {
-    bottom: 3rem;
+    bottom: 2.25rem;
   }
   
   .progress-bar {

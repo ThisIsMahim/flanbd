@@ -337,10 +337,14 @@ const ProductDetails = () => {
   }, [location.state, product]);
 
   const addToCartHandler = React.useCallback(() => {
-    if (!productId) return;
-    dispatch(addItemsToCart(productId, 1, selectedImageUrl));
+    const effectiveId = productId || product?._id;
+    if (!effectiveId) {
+      enqueueSnackbar("Unable to add to cart. Please wait a moment and try again.", { variant: "warning" });
+      return;
+    }
+    dispatch(addItemsToCart(effectiveId, 1, selectedImageUrl));
     enqueueSnackbar("Product Added To Cart", { variant: "success" });
-  }, [dispatch, productId, selectedImageUrl, enqueueSnackbar]);
+  }, [dispatch, productId, product, selectedImageUrl, enqueueSnackbar]);
 
   const handleLoginSubmit = (e) => {
     e.preventDefault();
@@ -471,67 +475,60 @@ const ProductDetails = () => {
           <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-start">
             {/* Images container: relative for desktop */}
             <div className="w-full flex-1 flex flex-col relative">
-              {/* Main image (all screens) */}
-              <div className="block w-full aspect-[1/1] max-w-3xl mx-auto bg-[var(--primary-bg)] rounded-xl flex items-center justify-center p-8 sm:p-12">
+              {/* Desktop: absolute vertical thumbnails */}
+              <div className="hidden lg:flex flex-col gap-2 absolute left-0 top-[30%] -translate-y-1/2 z-20 pl-2">
+                {product?.images?.map((item, i) => (
+                  <OptimizedImg
+                    key={`thumb-desktop-${i}`}
+                    src={item?.url || ""}
+                    alt={product?.name || "Product thumbnail"}
+                    className={`w-14 h-14 object-cover rounded border-2 ${
+                      currentSlide === i
+                        ? "border-[var(--primary-blue-dark)]"
+                        : "border-[var(--primary-blue-light)] opacity-70"
+                    } cursor-pointer transition-all duration-200 hover:opacity-90`}
+                    onClick={() => {
+                      setCurrentSlide(i);
+                      setSelectedImageUrl(item?.url || null);
+                      const imgEl = document.getElementById(`product-img-${i}`);
+                      if (imgEl)
+                        imgEl.scrollIntoView({
+                          behavior: "smooth",
+                          block: "center",
+                        });
+                    }}
+                    style={{ background: "var(--primary-bg)" }}
+                    quality="70"
+                    format="auto"
+                    placeholder="blur"
+                  />
+                ))}
+              </div>
+
+              {/* Mobile: show only current image */}
+              <div className="block lg:hidden w-full aspect-[1/1] max-w-lg mx-auto bg-[var(--primary-bg)] rounded-xl flex items-center justify-center">
                 {product?.images?.[currentSlide] && (
-                  <div
-                    className="image-zoom-pan rounded-xl w-full h-full flex items-center justify-center"
-                    onMouseEnter={(e) =>
-                      e.currentTarget.classList.add("zoomed")
-                    }
-                    onMouseLeave={(e) =>
-                      e.currentTarget.classList.remove("zoomed")
-                    }
-                    onMouseMove={(e) => {
-                      const rect = e.currentTarget.getBoundingClientRect();
-                      const x = ((e.clientX - rect.left) / rect.width) * 100;
-                      const y = ((e.clientY - rect.top) / rect.height) * 100;
-                      e.currentTarget.style.setProperty("--x", `${x}%`);
-                      e.currentTarget.style.setProperty("--y", `${y}%`);
-                      e.currentTarget.style.setProperty("--zoom", 2);
-                    }}
-                    onTouchStart={(e) =>
-                      e.currentTarget.classList.add("zoomed")
-                    }
-                    onTouchEnd={(e) =>
-                      e.currentTarget.classList.remove("zoomed")
-                    }
-                    onTouchMove={(e) => {
-                      const touch = e.touches[0];
-                      const rect = e.currentTarget.getBoundingClientRect();
-                      const x =
-                        ((touch.clientX - rect.left) / rect.width) * 100;
-                      const y =
-                        ((touch.clientY - rect.top) / rect.height) * 100;
-                      e.currentTarget.style.setProperty("--x", `${x}%`);
-                      e.currentTarget.style.setProperty("--y", `${y}%`);
-                      e.currentTarget.style.setProperty("--zoom", 2);
-                    }}
-                  >
-                    <OptimizedImg
-                      src={product.images[currentSlide].url}
-                      alt={product?.name || "Product image"}
-                      className="max-w-full max-h-full object-contain rounded-xl"
-                      onLoad={() =>
-                        setSelectedImageUrl(product.images[currentSlide].url)
-                      }
-                      draggable={false}
-                      quality="85"
-                      format="auto"
-                      placeholder="blur"
-                      priority={true}
-                    />
-                  </div>
+                  <OptimizedImg
+                    src={product.images[currentSlide].url}
+                    alt={product?.name || "Product image"}
+                    className="w-full h-full object-cover rounded-xl"
+                    draggable={false}
+                    quality="85"
+                    format="auto"
+                    placeholder="blur"
+                    priority={true}
+                  />
                 )}
               </div>
-              {/* Thumbnails row (all screens) */}
-              <div className="flex flex-row gap-3 mt-3 w-full justify-center px-2 flex-wrap">
+
+              {/* Mobile: thumbnails under the image */}
+              <div className="flex flex-row gap-2 mt-3 w-full justify-center lg:hidden px-2">
                 {product?.images?.map((item, i) => (
                   <OptimizedImg
                     key={`thumb-mobile-${i}`}
                     src={item?.url || ""}
                     alt={product?.name || "Product thumbnail"}
-                    className={`w-16 h-16 object-cover rounded border-2 ${
+                    className={`w-14 h-14 object-cover rounded border-2 ${
                       currentSlide === i
                         ? "border-[var(--primary-blue-dark)]"
                         : "border-[var(--primary-blue-light)] opacity-70"
@@ -547,7 +544,36 @@ const ProductDetails = () => {
                   />
                 ))}
               </div>
-              {/* Removed desktop column layout; unified row thumbnails + single main image */}
+
+              {/* Desktop: all images in normal flow, scrolls with content */}
+              <div className="hidden lg:flex flex-col gap-0">
+                {product?.images?.map((item, i) => (
+                  <div
+                    key={`img-${i}`}
+                    id={`product-img-${i}`}
+                    className="relative w-full flex-1 flex items-center justify-center min-h-[320px]"
+                  >
+                    <OptimizedImg
+                      src={item?.url || ""}
+                      alt={product?.name || "Product image"}
+                      className={`w-full h-full object-cover ${
+                        currentSlide === i ? "z-10" : ""
+                      }`}
+                      style={{
+                        cursor: "pointer",
+                        transition: "box-shadow 0.2s",
+                      }}
+                      onClick={() => {
+                        setCurrentSlide(i);
+                        setSelectedImageUrl(item?.url || null);
+                      }}
+                      quality="85"
+                      format="auto"
+                      placeholder="blur"
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
           {/* Right: Product Info */}

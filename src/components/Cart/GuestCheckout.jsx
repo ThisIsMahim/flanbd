@@ -29,7 +29,6 @@ import { emptyCart, clearCoupon } from "../../actions/cartAction";
 import { LanguageContext } from "../../utils/LanguageContext";
 import MetaData from "../Layouts/MetaData";
 import PriceSidebar from "./PriceSidebar";
-import Stepper from "./Stepper";
 
 const GuestCheckout = () => {
   const { language } = useContext(LanguageContext);
@@ -201,7 +200,10 @@ const GuestCheckout = () => {
       };
 
       const orderData = {
-        shippingInfo: guestShippingInfo,
+        shippingInfo: { 
+          ...guestShippingInfo,
+          pincode: guestShippingInfo.pincode || "0000",
+        },
         orderItems: cartItems,
         totalPrice: grandTotal,
         paymentInfo,
@@ -220,7 +222,14 @@ const GuestCheckout = () => {
       dispatch(clearCoupon());
       dispatch(emptyCart());
       enqueueSnackbar(translations.orderSuccess, { variant: "success" });
-      navigate("/orders/success");
+      navigate("/guest-order-tracking", {
+        state: {
+          order: data?.order,
+          email: guestInfo.email,
+          phone: guestInfo.phone,
+        },
+        replace: true,
+      });
     } catch (error) {
       enqueueSnackbar(error.response?.data?.message || translations.paymentFailed, {
         variant: "error",
@@ -264,12 +273,12 @@ const GuestCheckout = () => {
     }
   }, [error, enqueueSnackbar]);
 
-  // Redirect to cart if no items
-  useEffect(() => {
-    if (cartItems.length === 0) {
-      navigate("/cart");
-    }
-  }, [cartItems.length, navigate]);
+  // Redirect to cart if no items, but avoid redirecting during processing/confirmation
+  // useEffect(() => {
+  //   if (cartItems.length === 0 && !isProcessing && !openDialog) {
+  //     navigate("/cart");
+  //   }
+  // }, [cartItems.length, isProcessing, openDialog, navigate]);
 
   return (
     <>
@@ -277,7 +286,6 @@ const GuestCheckout = () => {
       <main className="w-full mt-20">
         <div className="flex flex-col sm:flex-row gap-3.5 w-full sm:w-11/12 mt-0 sm:mt-4 m-auto sm:mb-7">
           <div className="flex-1">
-            <Stepper activeStep={1}>
               <Paper elevation={3} className="p-6">
                 <Typography variant="h4" component="h1" gutterBottom className="text-center">
                   {translations.title}
@@ -416,6 +424,25 @@ const GuestCheckout = () => {
                     </Grid>
                   </Box>
 
+                  {/* Items In Your Order */}
+                  <Box mb={4}>
+                    <Typography variant="h6" gutterBottom>
+                      {language === "english" ? "Items In Your Order" : "আপনার অর্ডারের আইটেম"}
+                    </Typography>
+                    <div className="bg-gray-50 rounded border divide-y">
+                      {cartItems.map((item, idx) => (
+                        <div key={idx} className="flex items-center gap-3 p-3">
+                          <img src={item.image} alt={item.name} className="w-14 h-14 object-cover rounded" />
+                          <div className="flex-1 min-w-0">
+                            <p className="font-medium truncate text-[var(--primary-blue-dark)]">{item.name}</p>
+                            <p className="text-sm text-gray-600">Qty: {item.quantity} × ৳{item.price}</p>
+                          </div>
+                          <div className="font-semibold">৳{(item.price * item.quantity).toLocaleString()}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </Box>
+
                   {/* Payment Method */}
                   <Box mb={4}>
                     <Typography variant="h6" gutterBottom>
@@ -525,7 +552,6 @@ const GuestCheckout = () => {
 
                 </form>
               </Paper>
-            </Stepper>
           </div>
 
           <PriceSidebar 
@@ -539,12 +565,86 @@ const GuestCheckout = () => {
       </main>
 
       {/* Confirmation Dialog */}
-      <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
+      <Dialog open={openDialog} onClose={() => setOpenDialog(false)} fullWidth maxWidth="sm">
         <DialogTitle>{translations.confirmOrder}</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
+        <DialogContent dividers>
+          <DialogContentText className="mb-3">
             {translations.confirmMessage}
           </DialogContentText>
+
+          {/* Guest & Shipping Summary */}
+          <Box className="space-y-3">
+            <Box className="bg-gray-50 p-3 rounded">
+              <Typography variant="subtitle2" gutterBottom>
+                {language === "english" ? "Guest Information" : "অতিথি তথ্য"}
+              </Typography>
+              <Typography variant="body2"><strong>Name:</strong> {guestInfo.name || "-"}</Typography>
+              <Typography variant="body2"><strong>Email:</strong> {guestInfo.email || "-"}</Typography>
+              <Typography variant="body2"><strong>Phone:</strong> {guestInfo.phone || "-"}</Typography>
+            </Box>
+
+            <Box className="bg-gray-50 p-3 rounded">
+              <Typography variant="subtitle2" gutterBottom>
+                {language === "english" ? "Delivery Address" : "ডেলিভারি ঠিকানা"}
+              </Typography>
+              <Typography variant="body2">{guestShippingInfo.address}</Typography>
+              <Typography variant="body2">{guestShippingInfo.city}, {guestShippingInfo.state}</Typography>
+              <Typography variant="body2">{guestShippingInfo.country} - {(guestShippingInfo.pincode || "0000")}</Typography>
+              <Typography variant="body2">{language === "english" ? "Phone:" : "ফোন:"} {guestShippingInfo.phoneNo}</Typography>
+              <Typography variant="body2">
+                {language === "english" ? "Area:" : "এলাকা:"} {guestShippingInfo.deliveryArea === "inside" ? (language === "english" ? "Inside Dhaka" : "ঢাকার ভিতরে") : (language === "english" ? "Outside Dhaka" : "ঢাকার বাইরে")} (৳{deliveryCharge})
+              </Typography>
+            </Box>
+
+            {/* Items brief */}
+            <Box className="bg-gray-50 p-3 rounded">
+              <Typography variant="subtitle2" gutterBottom>
+                {language === "english" ? "Items" : "আইটেম"}
+              </Typography>
+              <div className="divide-y">
+                {cartItems.slice(0, 3).map((item, idx) => (
+                  <div key={idx} className="flex items-center justify-between py-1">
+                    <span className="truncate mr-2">{item.name}</span>
+                    <span>×{item.quantity}</span>
+                    <span>৳{(item.price * item.quantity).toLocaleString()}</span>
+                  </div>
+                ))}
+                {cartItems.length > 3 && (
+                  <Typography variant="caption" color="textSecondary">
+                    +{cartItems.length - 3} more
+                  </Typography>
+                )}
+              </div>
+            </Box>
+
+            {/* Payment & Totals */}
+            <Box className="bg-gray-50 p-3 rounded">
+              <Typography variant="subtitle2" gutterBottom>
+                {language === "english" ? "Payment & Total" : "পেমেন্ট ও মোট"}
+              </Typography>
+              <Typography variant="body2">
+                <strong>{language === "english" ? "Method:" : "পদ্ধতি:"}</strong> {paymentMethod === "cod" ? translations.cod : paymentMethod === "bkash" ? translations.bkash : translations.nagad}
+              </Typography>
+              <div className="flex justify-between text-sm mt-1">
+                <span>{language === "english" ? "Items Subtotal" : "আইটেম উপমোট"}</span>
+                <span>৳{itemsSubtotal.toLocaleString()}</span>
+              </div>
+              <div className="flex justify-between text-sm">
+                <span>{language === "english" ? "Delivery" : "ডেলিভারি"}</span>
+                <span>৳{deliveryCharge.toLocaleString()}</span>
+              </div>
+              {couponDiscount > 0 && (
+                <div className="flex justify-between text-sm text-green-600">
+                  <span>{language === "english" ? "Coupon" : "কুপন"}</span>
+                  <span>-৳{(couponDiscount || 0).toLocaleString()}</span>
+                </div>
+              )}
+              <div className="border-t mt-2 pt-2 flex justify-between font-semibold">
+                <span>{language === "english" ? "Total" : "মোট"}</span>
+                <span>৳{grandTotal.toLocaleString()}</span>
+              </div>
+            </Box>
+          </Box>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setOpenDialog(false)}>

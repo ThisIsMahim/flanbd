@@ -120,7 +120,7 @@ const Footer = () => {
             className="relative overflow-hidden"
             style={{
               minHeight: "320px",
-              color: "var(--text-dark)",
+              color: "var(--text-white)",
               background:
                 "linear-gradient(135deg, var(--primary-blue-dark) 0%, #0f0f0f 50%, var(--primary-blue-dark) 100%)",
               borderTop: "2px solid var(--primary-blue-light)",
@@ -181,7 +181,7 @@ const Footer = () => {
                                   <Link
                                     to={link.redirect}
                                     className="footer-link text-sm transition-all duration-300"
-                                    style={{ color: "var(--text-dark)" }}
+                                    style={{ color: "var(--text-white)" }}
                                   >
                                     {link.name}
                                   </Link>
@@ -191,7 +191,7 @@ const Footer = () => {
                                     target="_blank"
                                     rel="noreferrer"
                                     className="footer-link text-sm transition-all duration-300"
-                                    style={{ color: "var(--text-dark)" }}
+                                    style={{ color: "var(--text-white)" }}
                                   >
                                     {link.name}
                                   </a>
@@ -211,7 +211,7 @@ const Footer = () => {
                         rel="noreferrer"
                         className="hover:scale-110 transition-colors duration-300"
                         aria-label={social.name}
-                        style={{ color: "var(--text-dark)" }}
+                        style={{ color: "var(--text-white)" }}
                       >
                         {social.icon}
                       </a>
@@ -245,7 +245,7 @@ const Footer = () => {
                           rel="noreferrer"
                           className="hover:scale-110 transition-colors duration-300"
                           aria-label={social.name}
-                          style={{ color: "var(--text-dark)" }}
+                          style={{ color: "var(--text-white)" }}
                         >
                           {social.icon}
                         </a>
@@ -266,7 +266,7 @@ const Footer = () => {
                                 <Link
                                   to={link.redirect}
                                   className="footer-link text-sm transition-all duration-300"
-                                  style={{ color: "var(--text-dark)" }}
+                                  style={{ color: "var(--text-white)" }}
                                 >
                                   {link.name}
                                 </Link>
@@ -276,7 +276,7 @@ const Footer = () => {
                                   target="_blank"
                                   rel="noreferrer"
                                   className="footer-link text-sm transition-all duration-300"
-                                  style={{ color: "var(--text-dark)" }}
+                                  style={{ color: "var(--text-white)" }}
                                 >
                                   {link.name}
                                 </a>
@@ -317,7 +317,7 @@ const Footer = () => {
                       >
                         <span
                           className="font-semibold text-base mr-2"
-                          style={{ color: "var(--text-light)" }}
+                          style={{ color: "var(--text-dark)" }}
                         >
                           Developed by:
                         </span>

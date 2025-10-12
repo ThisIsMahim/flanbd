@@ -92,7 +92,7 @@ const Login = () => {
         p: 3,
         position: "relative",
         zIndex: 1,
-        background: "linear-gradient(to bottom, #fefae0, #f6faff)",
+        background: "linear-gradient(to bottom,rgb(255, 255, 255),rgb(255, 221, 221))",
       }}
     >
       <Paper

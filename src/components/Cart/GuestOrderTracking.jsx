@@ -24,18 +24,36 @@ import {
   Schedule as ProcessingIcon,
   Cancel as CancelledIcon,
 } from "@mui/icons-material";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { useLocation, Link } from "react-router-dom";
 import axios from "axios";
 import { LanguageContext } from "../../utils/LanguageContext";
 import MetaData from "../Layouts/MetaData";
 
 const GuestOrderTracking = () => {
   const { language } = useContext(LanguageContext);
+  const location = useLocation();
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  // If navigated from GuestCheckout with order and contact info, prefill and show immediately
+  useEffect(() => {
+    const state = location?.state;
+    if (state?.order) {
+      setOrder(state.order);
+    }
+    if (state?.email) {
+      setEmail(state.email);
+    }
+    if (state?.phone) {
+      setPhone(state.phone);
+    }
+    // Clear navigation state effect on unmount not necessary; react-router handles state
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location?.state]);
 
   const getStatusIcon = (status) => {
     switch (status.toLowerCase()) {
@@ -307,60 +325,28 @@ const GuestOrderTracking = () => {
                     </Box>
                   </Grid>
 
-                  {/* Fraud Check Results */}
-                  {order.fraudCheck && (
-                    <Grid item xs={12} md={6}>
-                      <Typography variant="h6" gutterBottom>
-                        {translations.fraudCheck}
+                  {/* Need Help CTA */}
+                  <Grid item xs={12} md={6}>
+                    <Typography variant="h6" gutterBottom>
+                      {language === "english" ? "Need Help?" : "সাহায্য প্রয়োজন?"}
+                    </Typography>
+                    <Box className="bg-gray-50 p-3 rounded flex items-center justify-between gap-3">
+                      <Typography variant="body2" className="text-gray-700">
+                        {language === "english"
+                          ? "If you have any questions or issues with your order, our support team is here to help."
+                          : "আপনার অর্ডার সম্পর্কে কোন প্রশ্ন বা সমস্যায় আমাদের সাপোর্ট টিম সাহায্য করতে প্রস্তুত।"}
                       </Typography>
-                      <Box className="bg-gray-50 p-3 rounded">
-                        <Grid container spacing={2}>
-                          <Grid item xs={12}>
-                            <Typography variant="body2">
-                              <strong>{translations.riskLevel}:</strong>
-                            </Typography>
-                            <Chip
-                              label={order.fraudCheck.riskLevel}
-                              color={
-                                order.fraudCheck.riskLevel === "HIGH" ? "error" :
-                                order.fraudCheck.riskLevel === "MEDIUM" ? "warning" :
-                                order.fraudCheck.riskLevel === "LOW" ? "success" : "default"
-                              }
-                              size="small"
-                              className="mt-1"
-                            />
-                          </Grid>
-                          <Grid item xs={12} sm={6}>
-                            <Typography variant="body2">
-                              <strong>{translations.successRatio}:</strong> {order.fraudCheck.successRatio}%
-                            </Typography>
-                          </Grid>
-                          <Grid item xs={12} sm={6}>
-                            <Typography variant="body2">
-                              <strong>{translations.totalOrders}:</strong> {order.fraudCheck.totalOrders}
-                            </Typography>
-                          </Grid>
-                          <Grid item xs={12} sm={6}>
-                            <Typography variant="body2">
-                              <strong>{translations.totalDeliveries}:</strong> {order.fraudCheck.totalDeliveries}
-                            </Typography>
-                          </Grid>
-                          <Grid item xs={12} sm={6}>
-                            <Typography variant="body2">
-                              <strong>{translations.totalCancellations}:</strong> {order.fraudCheck.totalCancellations}
-                            </Typography>
-                          </Grid>
-                          {order.fraudCheck.recommendation && (
-                            <Grid item xs={12}>
-                              <Typography variant="body2">
-                                <strong>{translations.recommendation}:</strong> {order.fraudCheck.recommendation}
-                              </Typography>
-                            </Grid>
-                          )}
-                        </Grid>
-                      </Box>
-                    </Grid>
-                  )}
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        component={Link}
+                        to="/contact"
+                        className="bg-[var(--button-bg)] hover:bg-[var(--button-hover)]"
+                      >
+                        {language === "english" ? "Contact Support" : "সাপোর্টে যোগাযোগ"}
+                      </Button>
+                    </Box>
+                  </Grid>
                 </Grid>
               </CardContent>
             </Card>

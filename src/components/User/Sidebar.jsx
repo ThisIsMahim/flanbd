@@ -197,7 +197,7 @@ const Sidebar = ({ activeTab, isOpen, onClose }) => {
               handleLogout();
               isOpen && onClose();
             }}
-            className="w-full flex items-center gap-5 px-4 py-4 text-gray-500 hover:text-primary-blue hover:bg-blue-50"
+            className="w-full flex items-center gap-5 px-4 py-4 text-white hover:text-primary-blue hover:bg-blue-50"
           >
             <span className="text-primary-blue">
               <PowerSettingsNewIcon />

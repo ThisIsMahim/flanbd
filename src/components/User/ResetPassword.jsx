@@ -87,7 +87,7 @@ const ResetPassword = () => {
       <MetaData title="Reset Password | FlanBD" />
 
       {loading && <BackdropLoader />}
-      <main className="w-full min-h-screen bg-gradient-to-b from-blue-50 to-white flex flex-col items-center justify-center p-4 sm:p-8">
+      <main className="w-full min-h-screen bg-gradient-to-b from-blue-50 to-white flex flex-col items-center justify-center p-4 sm:p-8 mt-20">
         <div className="w-full max-w-md">
           <Link
             to="/login"
@@ -101,9 +101,6 @@ const ResetPassword = () => {
           <div className="bg-white rounded shadow-lg overflow-hidden border border-gray-100">
             {/* Header */}
             <div className="bg-gradient-to-r from-primary-blue to-blue-800 py-6 px-8 text-center">
-              <span className="flex justify-center mb-3">
-                <WaterDropIcon className="text-white" size={40} />
-              </span>
               <h2 className="text-2xl font-bold text-white">
                 Reset Your Password
               </h2>

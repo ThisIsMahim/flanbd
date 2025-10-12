@@ -64,7 +64,7 @@ const UpdatePassword = () => {
       <MetaData title="Password Update | FlanBD" />
 
       {loading && <BackdropLoader />}
-      <main className="w-full min-h-screen bg-gradient-to-br from-primary-blue-light/5 via-white to-primary-blue-light/10">
+      <main className="w-full min-h-screen bg-gradient-to-br from-primary-blue-light/5 via-white to-primary-blue-light/10 mt-20">
         <div className="container mx-auto px-4 py-12">
           <div className="max-w-2xl mx-auto">
             {/* Water-themed header */}
@@ -143,7 +143,7 @@ const UpdatePassword = () => {
                 <div className="flex flex-col sm:flex-row gap-4 pt-4">
                   <button
                     type="submit"
-                    className="flex-1 bg-primary-blue-dark hover:bg-white text-black py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-[1.02] shadow-lg hover:shadow-xl"
+                    className="flex-1 bg-primary-blue-dark hover:bg-white text-white py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-[1.02] shadow-lg hover:shadow-xl"
                   >
                     Update Password
                   </button>

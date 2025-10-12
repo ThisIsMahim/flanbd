@@ -312,7 +312,7 @@ const Header = () => {
         <div
           style={{
             background: "var(--primary-blue-dark)",
-            color: "var(--text-dark)",
+            color: "var(--primary-bg)",
             borderBottom: "1px solid var(--border-light)",
           }}
           className="w-full text-center py-1 text-xs font-medium fixed top-0 left-0 z-50"
@@ -327,10 +327,10 @@ const Header = () => {
           background:
             location.pathname === "/"
               ? isScrolled
-                ? "var(--glass-bg)"
+                ? "var(--glass-bg-blurred)"
                 : "var(--glass-bg-blurred)"
               : isScrolled
-              ? "var(--glass-bg)"
+              ? "var(--glass-bg-blurred)"
               : "var(--primary-blue-dark)",
           transition:
             "background 0.3s cubic-bezier(.4,0,.2,1), min-height 0.3s cubic-bezier(.4,0,.2,1), padding 0.3s cubic-bezier(.4,0,.2,1)",

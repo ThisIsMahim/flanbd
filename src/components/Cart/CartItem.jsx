@@ -212,7 +212,7 @@ const CartItem = ({
           <>
             <button
               onClick={() => saveForLaterHandler(product)}
-              className="sm:ml-4 font-medium text-[var(--primary-blue-dark)] hover:text-[var(--primary-blue-light)] transition-colors px-3 py-1 rounded"
+              className="sm:ml-4 font-medium text-white hover:text-[var(--primary-blue-light)] transition-colors px-3 py-1 rounded"
             >
               {language === "english"
                 ? "SAVE FOR LATER"
@@ -220,7 +220,7 @@ const CartItem = ({
             </button>
             <button
               onClick={() => confirmRemove(product)}
-              className="font-medium text-red-500 hover:text-white hover:bg-red-500 transition-colors px-3 py-1 rounded"
+              className="font-medium text-white hover:text-white hover:bg-[var(--primary-blue-dark)] transition-colors px-3 py-1 rounded"
             >
               {language === "english" ? "REMOVE" : "সরান"}
             </button>

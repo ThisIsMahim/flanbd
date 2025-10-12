@@ -120,7 +120,7 @@ const ReviewScreenshotsCarousel = () => {
             onTouchEnd={handleTouchEnd}
           >
             {display.map((shot, idx) => (
-              <div className="review-carousel-card glass-card" key={`${shot.url}-${idx}`}>
+              <div className="review-carousel-card" key={`${shot.url}-${idx}`}>
                 <img
                   src={shot.url}
                   alt={`Review Screenshot ${idx + 1}`}

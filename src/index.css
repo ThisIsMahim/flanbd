@@ -79,10 +79,11 @@
   --secondary-blue: #1a1a1a; /* Secondary dark */
   --accent-blue: #ffffff; /* Pure white for highlights like PCBBD */
 
-  --text-dark: #cccccc; /* Lighter gray text for better readability */
-  --text-light: #ff9e9e; /* Pure white text */
+  --text-dark: #171717; /* Lighter gray text for better readability */
+  --text-light: #ff9e9e; 
+  --text-white: #ffffff;
 
-  --glass-bg: rgba(193, 193, 193, 0.5); /* Darker glass effect */
+  --glass-bg: #f0bcbc52; /* Darker glass effect */
   --glass-bg-blurred: rgba(10, 10, 10, 0.1); /* Blurred glass effect */
 
   --button-bg: #DD3333; /* Button background = Flan Red */

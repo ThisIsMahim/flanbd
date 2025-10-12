@@ -229,7 +229,7 @@ const MyOrders = () => {
         onComplete={handleGoldAnimationComplete}
       />
 
-      <main className="w-full sm:mt-0">
+      <main className="w-full mt-20 md:mt-16">
         <div className="px-2 sm:px-4">
           <div className="flex justify-between items-center mb-3">
             <Breadcrumb />

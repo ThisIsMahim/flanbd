@@ -68,7 +68,8 @@ import HomeBlogSection from "./components/Home/HomeBlogSection";
 
 // Configure axios defaults
 axios.defaults.withCredentials = true;
-axios.defaults.baseURL = process.env.REACT_APP_BACKEND_URL;
+// Use backend URL from env if provided, otherwise default to local backend in dev
+axios.defaults.baseURL = process.env.REACT_APP_BACKEND_URL || "http://localhost:5000";
 
 // Enhanced inspection prevention
 // const disableInspection = (e) => {
@@ -348,7 +349,7 @@ function App() {
           />
 
           <Route
-            path="/me/update"
+            path="/account/update"
             element={
               <ProtectedRoute>
                 <UpdateProfile />

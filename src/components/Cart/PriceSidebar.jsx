@@ -101,8 +101,11 @@ const PriceSidebar = ({ cartItems, guestShippingInfo, onSubmit, isProcessing, tr
   const grandTotal = Math.max(0, amountAfterGold - (couponDiscount || 0));
 
   useEffect(() => {
-    dispatch(myOrdersSummary());
-  }, [dispatch]);
+    // Skip fetching user order summary during guest checkout
+    if (!guestShippingInfo) {
+      dispatch(myOrdersSummary());
+    }
+  }, [dispatch, guestShippingInfo]);
 
   const getPriceLabel = () => {
     if (totalItems === 1) {

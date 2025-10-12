@@ -75,7 +75,7 @@ const Cart = () => {
                         cartItems.length < 1
                           ? "bg-gray-300 cursor-not-allowed"
                           : "bg-[var(--button-bg)] hover:bg-[var(--button-hover)]"
-                      } w-full py-3 font-medium text-white shadow hover:shadow-lg rounded-sm transition-colors duration-300`}
+                      } w-full py-3 font-medium text-black shadow hover:shadow-lg hover:text-white rounded-sm transition-colors duration-300`}
                     >
                       {isAuthenticated ? translations.placeOrder : translations.guestCheckout}
                     </button>

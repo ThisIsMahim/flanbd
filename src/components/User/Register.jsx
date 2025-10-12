@@ -198,7 +198,7 @@ const Register = () => {
         p: { xs: 1, sm: 3 },
         position: "relative",
         zIndex: 1,
-        background: "linear-gradient(to bottom, #fefae0, #f6faff)",
+        background: "linear-gradient(to bottom,rgb(255, 255, 255),rgb(249, 222, 222))",
       }}
     >
       <MetaData title={t.metaTitle} />

@@ -209,7 +209,7 @@ const EnhancedBanner = () => {
       )}
 
       {/* Progress Bar */}
-      <div className="banner-progress">
+      {/* <div className="banner-progress">
         <div className="progress-bar">
           <div
             className="progress-fill"
@@ -221,7 +221,7 @@ const EnhancedBanner = () => {
         <div className="progress-text">
           {active + 1} of {sliders.length}
         </div>
-      </div>
+      </div> */}
 
       {/* Dots Navigation */}
       {sliders.length > 1 && (

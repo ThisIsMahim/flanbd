@@ -82,7 +82,7 @@ const UpdateProfile = () => {
             <MetaData title="Update Profile | FlanBD" />
 
             {loading && <BackdropLoader />}
-            <main className="w-full mt-12 sm:pt-20 sm:mt-0">
+            <main className="w-full mt-12 sm:pt-20 mt-0">
 
                 <div className="flex justify-between items-center sm:w-3/4 sm:mt-4 m-auto mb-4">
                     <Link to="/account" className="flex items-center gap-2 text-primary-blue hover:text-primary-blue/80 transition">
@@ -201,7 +201,7 @@ const UpdateProfile = () => {
                                 <div className="flex flex-col sm:flex-row items-center gap-3 w-full">
                                     <button
                                         type="submit"
-                                        className="text-black py-3 px-4 w-full sm:w-auto bg-primary-blue-dark font-medium rounded-sm shadow hover:shadow-lg transition min-w-[150px]"
+                                        className="text-white py-3 px-4 w-full sm:w-auto bg-primary-blue-dark font-medium rounded-sm shadow hover:shadow-lg transition min-w-[150px]"
                                     >
                                         Update Profile
                                     </button>

@@ -27,8 +27,9 @@ const OrderDetails = () => {
     <>
       <MetaData title="Order Details | FlanBD" />
 
-      <Breadcrumb />
       <main className="w-full mt-20">
+      
+      <Breadcrumb />  
         {loading ? (
           <Loader />
         ) : (

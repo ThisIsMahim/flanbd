@@ -3,7 +3,8 @@ import { ADD_TO_CART, EMPTY_CART, REMOVE_FROM_CART, SAVE_SHIPPING_INFO, APPLY_CO
 
 // add to cart
 export const addItemsToCart = (id, quantity = 1, selectedImageUrl) => async (dispatch, getState) => {
-    const { data } = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/v1/product/${id}`);
+    const apiBase = process.env.REACT_APP_BACKEND_URL || "";
+    const { data } = await axios.get(`${apiBase}/api/v1/product/${id}`);
 
     dispatch({
         type: ADD_TO_CART,
