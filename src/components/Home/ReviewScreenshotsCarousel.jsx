@@ -92,24 +92,26 @@ const ReviewScreenshotsCarousel = () => {
     <>
       {modalImage && (
         <div className="ss-modal-overlay" onClick={() => setModalImage(null)}>
-          <div style={{ position: "relative", maxWidth: "90vw", maxHeight: "90vh" }} onClick={(e) => e.stopPropagation()}>
+          <div className="relative max-w-4xl w-full" onClick={(e) => e.stopPropagation()}>
             <button
               onClick={() => setModalImage(null)}
-              style={{ position: "absolute", top: 8, right: 8, background: "rgba(0,0,0,0.5)", color: "white", border: "none", borderRadius: "50%", width: 32, height: 32, fontSize: 20, cursor: "pointer", zIndex: 1001 }}
+              className="absolute -top-12 right-0 text-white hover:text-accent transition-colors text-4xl"
               aria-label="Close"
             >
               &times;
             </button>
-            <img src={modalImage} alt="Full Review Screenshot" style={{ maxWidth: "90vw", maxHeight: "80vh", borderRadius: 8, boxShadow: "0 2px 16px rgba(0,0,0,0.5)", background: "white" }} />
+            <img src={modalImage} alt="Full Review Screenshot" className="w-full h-auto rounded-xl shadow-2xl" />
           </div>
         </div>
       )}
-      <section className="review-screenshots-section ">
-        <div className="review-screenshots-header">
-          <div ref={titleRef} className="review-screenshots-title">What Our Clients Say</div>
-          <div className="review-title-decoration"></div>
+      <section className="review-screenshots-section">
+        <div className="home-section-header" ref={titleRef}>
+          <span className="section-subtitle">Testimonials</span>
+          <h2 className="section-title">What Our Clients Say</h2>
         </div>
+        
         <div className="review-carousel-outer">
+
           <div className="carousel-fade carousel-fade-left"></div>
           <div className="carousel-fade carousel-fade-right"></div>
           <div

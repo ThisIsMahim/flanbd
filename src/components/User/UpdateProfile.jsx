@@ -1,17 +1,16 @@
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { Avatar, FormControlLabel, Radio, RadioGroup } from '@mui/material';
-import TextField from '@mui/material/TextField';
-import { useSnackbar } from 'notistack';
-import { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { clearErrors, loadUser, updateProfile } from '../../actions/userAction';
 import { UPDATE_PROFILE_RESET } from '../../constants/userConstants';
-import BackdropLoader from '../Layouts/BackdropLoader';
+import { useSnackbar } from 'notistack';
 import MetaData from '../Layouts/MetaData';
+import BackdropLoader from '../Layouts/BackdropLoader';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
+import "./Account.css";
 
 const UpdateProfile = () => {
-
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
@@ -27,20 +26,17 @@ const UpdateProfile = () => {
 
     const updateProfileHandler = (e) => {
         e.preventDefault();
-
         const formData = new FormData();
         formData.set("name", name);
         formData.set("email", email);
         formData.set("gender", gender);
         formData.set("avatar", avatar);
-
         dispatch(updateProfile(formData));
     }
 
-    const handleUpdateDataChange = useCallback((e) => {
+    const handleAvatarChange = (e) => {
         if (e.target.files && e.target.files[0]) {
             const reader = new FileReader();
-            setAvatar("");
             reader.onload = () => {
                 if (reader.readyState === 2) {
                     setAvatarPreview(reader.result);
@@ -49,7 +45,7 @@ const UpdateProfile = () => {
             };
             reader.readAsDataURL(e.target.files[0]);
         }
-    }, []);
+    };
 
     useEffect(() => {
         if (user) {
@@ -58,166 +54,118 @@ const UpdateProfile = () => {
             setGender(user.gender || "");
             setAvatarPreview(user.avatar?.url || "");
         }
-
         if (error) {
             enqueueSnackbar(error, { variant: "error" });
             dispatch(clearErrors());
         }
-
         if (isUpdated) {
             enqueueSnackbar("Profile Updated Successfully", { variant: "success" });
             dispatch(loadUser());
             navigate('/account');
             dispatch({ type: UPDATE_PROFILE_RESET });
         }
-
-        // Cleanup function for when component unmounts
-        return () => {
-            // Cleanup any references/listeners if needed
-        };
     }, [dispatch, error, user, isUpdated, navigate, enqueueSnackbar]);
 
     return (
-        <>
-            <MetaData title="Update Profile | FlanBD" />
+        <div className="account-page-wrapper bg-[var(--bg-primary)] min-h-screen py-12">
+            <MetaData title="Update Profile | Flan" />
 
-            {loading && <BackdropLoader />}
-            <main className="w-full mt-12 sm:pt-20 mt-0">
+            <div className="max-w-[700px] mx-auto px-6">
+                <Link to="/account" className="flex items-center gap-2 text-muted hover:text-accent transition-colors mb-8 group">
+                    <ArrowBackIcon sx={{ fontSize: 18 }} className="group-hover:-translate-x-1 transition-transform" />
+                    <span className="text-sm font-bold uppercase tracking-wider">Back to Account</span>
+                </Link>
 
-                <div className="flex justify-between items-center sm:w-3/4 sm:mt-4 m-auto mb-4">
-                    <Link to="/account" className="flex items-center gap-2 text-primary-blue hover:text-primary-blue/80 transition">
-                        <ArrowBackIcon sx={{ fontSize: 22 }} />
-                        <span>Back to My Account</span>
-                    </Link>
-                </div>
+                <main className="account-main-card">
+                    <header className="account-section-title">
+                        <h1>Update Profile</h1>
+                    </header>
 
-                <div className="sm:w-3/4 sm:mt-2 m-auto mb-7 bg-white shadow-lg rounded-sm overflow-hidden">
-                    <div className="flex flex-col overflow-hidden">
-                        <div className="bg-primary-blue py-4 px-8">
-                            <h2 className="text-2xl font-medium text-primary-blue-dark">Update Profile</h2>
-                            <p className="text-primary-blue-medium text-sm mt-1">Update your personal information</p>
+                    <form onSubmit={updateProfileHandler} className="flex flex-col gap-8">
+                        {/* Avatar Upload */}
+                        <div className="flex flex-col items-center gap-4 py-6 bg-subtle rounded-3xl border border-dashed border-subtle">
+                            <div className="relative group cursor-pointer">
+                                <img
+                                    src={avatarPreview}
+                                    className="w-32 h-32 rounded-full object-cover border-4 border-surface shadow-lg"
+                                    alt="Preview"
+                                />
+                                <label className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-full opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer text-white">
+                                    <PhotoCameraIcon />
+                                    <input type="file" className="hidden" accept="image/*" onChange={handleAvatarChange} />
+                                </label>
+                            </div>
+                            <div className="text-center">
+                                <p className="text-sm font-bold">Profile Picture</p>
+                                <p className="text-xs text-muted">Click to update your avatar</p>
+                            </div>
                         </div>
 
-                        <form
-                            onSubmit={updateProfileHandler}
-                            encType="multipart/form-data"
-                            className="p-5 sm:p-10"
-                        >
-                            <div className="flex flex-col gap-6 items-start">
-                                <div className="flex flex-col md:flex-row gap-6 w-full">
-                                    <div className="flex-1">
-                                        <TextField
-                                            fullWidth
-                                            label="Full Name"
-                                            name="name"
-                                            value={name}
-                                            onChange={(e) => setName(e.target.value)}
-                                            required
-                                            InputProps={{
-                                                style: {
-                                                    borderRadius: '0.125rem'
-                                                }
-                                            }}
-                                        />
-                                    </div>
-                                    <div className="flex-1">
-                                        <TextField
-                                            fullWidth
-                                            label="Email"
-                                            type="email"
-                                            name="email"
-                                            value={email}
-                                            onChange={(e) => setEmail(e.target.value)}
-                                            required
-                                            InputProps={{
-                                                style: {
-                                                    borderRadius: '0.125rem'
-                                                }
-                                            }}
-                                        />
-                                    </div>
-                                </div>
-
-                                <div className="flex gap-4 items-center">
-                                    <h2 className="text-md">Your Gender:</h2>
-                                    <div className="flex items-center gap-6">
-                                        <RadioGroup
-                                            row
-                                            aria-labelledby="radio-buttons-group-label"
-                                            name="radio-buttons-group"
-                                        >
-                                            <FormControlLabel
-                                                name="gender"
-                                                value="male"
-                                                checked={gender === "male"}
-                                                onChange={(e) => setGender(e.target.value)}
-                                                control={<Radio required sx={{
-                                                    '&.Mui-checked': {
-                                                        color: '#2874f0',
-                                                    },
-                                                }} />}
-                                                label="Male"
-                                            />
-                                            <FormControlLabel
-                                                name="gender"
-                                                value="female"
-                                                checked={gender === "female"}
-                                                onChange={(e) => setGender(e.target.value)}
-                                                control={<Radio required sx={{
-                                                    '&.Mui-checked': {
-                                                        color: '#2874f0',
-                                                    },
-                                                }} />}
-                                                label="Female"
-                                            />
-                                        </RadioGroup>
-                                    </div>
-                                </div>
-
-                                <div className="flex flex-col w-full sm:flex-row sm:items-center gap-4 border-t border-b py-4">
-                                    <div className="flex items-center gap-4">
-                                        <Avatar
-                                            alt="Avatar Preview"
-                                            src={avatarPreview}
-                                            sx={{ width: 56, height: 56 }}
-                                        />
-                                        <div className="flex flex-col">
-                                            <span className="text-sm font-medium">Profile Picture</span>
-                                            <span className="text-xs text-gray-500">JPG, PNG files up to 2MB</span>
-                                        </div>
-                                    </div>
-                                    <label className="rounded-sm cursor-pointer bg-blue-50 hover:bg-blue-100 text-primary-blue border border-primary-blue text-center py-2 px-4 transition w-full sm:w-auto">
-                                        <input
-                                            type="file"
-                                            name="avatar"
-                                            accept="image/*"
-                                            onChange={handleUpdateDataChange}
-                                            className="hidden"
-                                        />
-                                        Choose File
-                                    </label>
-                                </div>
-
-                                <div className="flex flex-col sm:flex-row items-center gap-3 w-full">
-                                    <button
-                                        type="submit"
-                                        className="text-white py-3 px-4 w-full sm:w-auto bg-primary-blue-dark font-medium rounded-sm shadow hover:shadow-lg transition min-w-[150px]"
-                                    >
-                                        Update Profile
-                                    </button>
-                                    <Link
-                                        className="border border-primary-blue text-primary-blue py-3 px-4 rounded-sm w-full sm:w-auto text-center font-medium hover:bg-blue-50 transition min-w-[150px]"
-                                        to="/account"
-                                    >
-                                        Cancel
-                                    </Link>
-                                </div>
+                        <div className="account-info-grid">
+                            <div className="account-field">
+                                <label>Full Name</label>
+                                <input
+                                    className="auth-input font-semibold"
+                                    type="text"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                    required
+                                />
                             </div>
-                        </form>
-                    </div>
-                </div>
-            </main>
-        </>
+
+                            <div className="account-field">
+                                <label>Email Address</label>
+                                <input
+                                    className="auth-input font-semibold"
+                                    type="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    required
+                                />
+                            </div>
+                        </div>
+
+                        <div className="account-field">
+                            <label>Gender</label>
+                            <div className="flex gap-8 mt-2">
+                                <label className="flex items-center gap-2 cursor-pointer group">
+                                    <input
+                                        type="radio"
+                                        className="accent-accent w-4 h-4"
+                                        name="gender"
+                                        value="male"
+                                        checked={gender === "male"}
+                                        onChange={(e) => setGender(e.target.value)}
+                                    />
+                                    <span className="text-sm font-semibold group-hover:text-accent transition-colors">Male</span>
+                                </label>
+                                <label className="flex items-center gap-2 cursor-pointer group">
+                                    <input
+                                        type="radio"
+                                        className="accent-accent w-4 h-4"
+                                        name="gender"
+                                        value="female"
+                                        checked={gender === "female"}
+                                        onChange={(e) => setGender(e.target.value)}
+                                    />
+                                    <span className="text-sm font-semibold group-hover:text-accent transition-colors">Female</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div className="flex gap-4 mt-8 pt-8 border-t">
+                            <button type="submit" className="btn-account-link primary flex-1" disabled={loading}>
+                                {loading ? "Updating..." : "Save Changes"}
+                            </button>
+                            <Link to="/account" className="btn-account-link outline flex-1 text-center">
+                                Cancel
+                            </Link>
+                        </div>
+                    </form>
+                </main>
+            </div>
+            {loading && <BackdropLoader />}
+        </div>
     );
 };
 

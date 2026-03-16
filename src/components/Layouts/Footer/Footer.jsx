@@ -4,11 +4,12 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import "./Footer.css";
 
 const TikTokIcon = (props) => (
   <svg
-    width="24"
-    height="24"
+    width="20"
+    height="20"
     viewBox="0 0 24 24"
     fill="currentColor"
     xmlns="http://www.w3.org/2000/svg"
@@ -25,84 +26,13 @@ const Footer = () => {
   const [adminRoute, setAdminRoute] = useState(false);
   const [showBackToTop, setShowBackToTop] = useState(false);
 
-  const footerLinks = [
-    {
-      title: "about",
-      links: [
-        { name: "Contact Us", redirect: "/contact" },
-        { name: "About Us", redirect: "/about" },
-      ],
-    },
-    {
-      title: "help",
-      links: [
-        { name: "Guest Order Tracking", redirect: "/guest-order-tracking" },
-        { name: "Shipping Policies", redirect: "/shipping-policies" },
-        { name: "Cancellation & Return", redirect: "/cancellation-return" },
-        // { name: "Terms & Conditions", redirect: "/terms-conditions" },
-      ],
-    },
-    {
-      title: "social",
-      links: [
-        {
-          name: "Facebook",
-          redirect: "https://www.facebook.com/FlanBDbd",
-        },
-        {
-          name: "Instagram",
-          redirect: "https://www.instagram.com/paper_man_official/",
-        },
-        {
-          name: "TikTok",
-          redirect: "https://www.tiktok.com/@FlanBD_?_t=ZS-8zSuo0qsf9m&_r=1",
-        },
-      ],
-    },
-  ];
-
-  const addressContent = {
-    mailUs: "More Than Sunglasses",
-    mailAddress: `FlanBD\n Dhaka, Bangladesh`,
-    registeredOffice: "Registered Office Address:",
-    officeAddress: `FlanBD\n Dhaka, Bangladesh`,
-    telephone: "+8801845-556566",
-    copyright: `© 2024-${new Date().getFullYear()} flanbd.store`,
-    sell: "Sell On FLanBD",
-    advertise: "Advertise",
-    giftCards: "Gift Cards",
-    helpCenter: "Help Center",
-  };
-
-  const socialLinks = [
-    {
-      name: "Facebook",
-      icon: <FacebookIcon />,
-      redirect: "https://www.facebook.com/FlanBDbd",
-    },
-    {
-      name: "Instagram",
-      icon: <InstagramIcon />,
-      redirect: "https://www.instagram.com/paper_man_official/",
-    },
-    {
-      name: "TikTok",
-      icon: <TikTokIcon />, // TikTok icon
-      redirect: "https://www.tiktok.com/@FlanBD_?_t=ZS-8zSuo0qsf9m&_r=1",
-    },
-  ];
-
   useEffect(() => {
     setAdminRoute(location.pathname.split("/", 2).includes("admin"));
   }, [location]);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 300) {
-        setShowBackToTop(true);
-      } else {
-        setShowBackToTop(false);
-      }
+      setShowBackToTop(window.scrollY > 400);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -112,260 +42,118 @@ const Footer = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const footerLinks = [
+    {
+      title: "Quick Links",
+      links: [
+        { name: "Shop All", redirect: "/products" },
+        { name: "About Us", redirect: "/about" },
+        { name: "Contact Us", redirect: "/contact" },
+        { name: "Stories", redirect: "/stories" },
+      ],
+    },
+    {
+      title: "Support",
+      links: [
+        { name: "Order Tracking", redirect: "/guest-order-tracking" },
+        { name: "Shipping Policies", redirect: "/shipping-policies" },
+        { name: "Cancellation & Return", redirect: "/cancellation-return" },
+        { name: "Terms & Conditions", redirect: "/terms-conditions" },
+      ],
+    },
+  ];
+
+  const socialLinks = [
+    { name: "Facebook", icon: <FacebookIcon fontSize="small" />, redirect: "https://www.facebook.com/FlanBDbd" },
+    { name: "Instagram", icon: <InstagramIcon fontSize="small" />, redirect: "https://www.instagram.com/paper_man_official/" },
+    { name: "TikTok", icon: <TikTokIcon />, redirect: "https://www.tiktok.com/@FlanBD_?_t=ZS-8zSuo0qsf9m&_r=1" },
+  ];
+
+  if (adminRoute) return null;
+
   return (
-    <>
-      {!adminRoute && (
-        <>
-          <div
-            className="relative overflow-hidden"
-            style={{
-              minHeight: "320px",
-              color: "var(--text-white)",
-              background:
-                "linear-gradient(135deg, var(--primary-blue-dark) 0%, #0f0f0f 50%, var(--primary-blue-dark) 100%)",
-              borderTop: "2px solid var(--primary-blue-light)",
-              position: "relative",
-            }}
-          >
-            {/* Subtle pattern overlay for texture */}
-            <div
-              className="absolute inset-0 opacity-10"
-              style={{
-                backgroundImage: `radial-gradient(circle at 25% 25%, var(--primary-blue-light) 0%, transparent 50%), 
-                                radial-gradient(circle at 75% 75%, var(--primary-blue-light) 0%, transparent 50%)`,
-                backgroundSize: "60px 60px",
-                backgroundPosition: "0 0, 30px 30px",
-              }}
-            />
-            {/* Gradient overlay for depth */}
-            <div
-              className="absolute inset-0"
-              style={{
-                background:
-                  "linear-gradient(180deg, rgba(26, 26, 26, 0.8) 0%, rgba(15, 15, 15, 0.9) 100%)",
-              }}
-            />
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 backdrop-blur-[2px]">
-              <div className="py-8">
-                {/* Mobile: Stack all content vertically */}
-                <div className="md:hidden flex flex-col space-y-8">
-                  <div className="flex flex-col space-y-4">
-                    <Link to="/">
-                      <img
-                        src="/logo.png"
-                        alt="Flan"
-                        className="h-14 w-auto max-w-48 md:max-w-64 p-2 rounded transition-all duration-300 hover:shadow-2xl hover:scale-105 object-contain"
-                      />
-                    </Link>
-                    <div className="text-sm">
-                      <p
-                        className="font-bold"
-                        style={{ color: "var(--primary-blue-light)" }}
-                      >
-                        {addressContent.mailUs}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-2 gap-8">
-                    {footerLinks
-                      .filter((section) => section.title !== "social")
-                      .map((section, i) => (
-                        <div key={i} className="space-y-4">
-                          <h3 className="footer-section-title">
-                            {section.title}
-                          </h3>
-                          <ul className="space-y-2">
-                            {section.links.map((link, j) => (
-                              <li key={j}>
-                                {link.redirect.startsWith("/") ? (
-                                  <Link
-                                    to={link.redirect}
-                                    className="footer-link text-sm transition-all duration-300"
-                                    style={{ color: "var(--text-white)" }}
-                                  >
-                                    {link.name}
-                                  </Link>
-                                ) : (
-                                  <a
-                                    href={link.redirect}
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    className="footer-link text-sm transition-all duration-300"
-                                    style={{ color: "var(--text-white)" }}
-                                  >
-                                    {link.name}
-                                  </a>
-                                )}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      ))}
-                  </div>
-                  <div className="flex items-center justify-center space-x-6 pt-4">
-                    {socialLinks.map((social, index) => (
-                      <a
-                        key={index}
-                        href={social.redirect}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="hover:scale-110 transition-colors duration-300"
-                        aria-label={social.name}
-                        style={{ color: "var(--text-white)" }}
-                      >
-                        {social.icon}
-                      </a>
-                    ))}
-                  </div>
-                </div>
-                {/* Desktop: Grid layout */}
-                <div className="hidden md:grid grid-cols-2 md:grid-cols-3 gap-8">
-                  <div className="space-y-4">
-                    <Link to="/">
-                      <img
-                        src="/logo.png"
-                        alt="Flan"
-                        className="h-16 w-auto max-w-48 md:max-w-64 p-2 rounded transition-all duration-300 hover:shadow-2xl hover:scale-105 object-contain"
-                      />
-                    </Link>
-                    <div className="text-sm">
-                      <p
-                        className="font-bold"
-                        style={{ color: "var(--primary-blue-light)" }}
-                      >
-                        {addressContent.mailUs}
-                      </p>
-                    </div>
-                    <div className="hidden md:flex items-center space-x-6">
-                      {socialLinks.map((social, index) => (
-                        <a
-                          key={index}
-                          href={social.redirect}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="hover:scale-110 transition-colors duration-300"
-                          aria-label={social.name}
-                          style={{ color: "var(--text-white)" }}
-                        >
-                          {social.icon}
-                        </a>
-                      ))}
-                    </div>
-                  </div>
-                  {footerLinks
-                    .filter((section) => section.title !== "social")
-                    .map((section, i) => (
-                      <div key={i} className="space-y-4">
-                        <h3 className="footer-section-title">
-                          {section.title}
-                        </h3>
-                        <ul className="space-y-2">
-                          {section.links.map((link, j) => (
-                            <li key={j}>
-                              {link.redirect.startsWith("/") ? (
-                                <Link
-                                  to={link.redirect}
-                                  className="footer-link text-sm transition-all duration-300"
-                                  style={{ color: "var(--text-white)" }}
-                                >
-                                  {link.name}
-                                </Link>
-                              ) : (
-                                <a
-                                  href={link.redirect}
-                                  target="_blank"
-                                  rel="noreferrer"
-                                  className="footer-link text-sm transition-all duration-300"
-                                  style={{ color: "var(--text-white)" }}
-                                >
-                                  {link.name}
-                                </a>
-                              )}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    ))}
-                </div>
-                <div
-                  className="mt-8 pt-8 border-t"
-                  style={{ borderColor: "var(--primary-blue-light)" }}
+    <footer className="footer-main">
+      <div className="container">
+        <div className="footer-grid">
+          <div className="footer-brand">
+            <Link to="/" className="footer-logo">
+              FLAN<span>.</span>
+            </Link>
+            <p className="footer-tagline">
+              Your premium destination for high-quality anime merchandise and collectibles.
+            </p>
+            <div className="footer-socials">
+              {socialLinks.map((social, i) => (
+                <a
+                  key={i}
+                  href={social.redirect}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="footer-social-link"
+                  aria-label={social.name}
                 >
-                  <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-                    <div className="flex flex-col md:flex-row items-center gap-4">
-                      <span
-                        className="text-sm"
-                        style={{ color: "var(--primary-blue-light)" }}
-                      >
-                        {addressContent.copyright}
-                      </span>
-                      <div className="flex items-center gap-2">
-                        <img src="/bkash.png" alt="bkash" className="w-6" />
-                        <img src="/Nagad.png" alt="Nagad" className="w-6" />
-                      </div>
-                    </div>
-                    {/* Developer Plate - Bottom Center (White Theme) */}
-                    <div className="w-full flex justify-center mb-10 md:mb-0">
-                      <div
-                        className="flex flex-col md:flex-row items-center gap-2 px-5 py-2 rounded-lg md:rounded-full shadow-sm"
-                        style={{
-                          minHeight: "44px",
-                          background: "var(--section-bg)",
-                          border: "1px solid var(--border-light)",
-                          boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
-                        }}
-                      >
-                        <span
-                          className="font-semibold text-base mr-2"
-                          style={{ color: "var(--text-dark)" }}
-                        >
-                          Developed by:
-                        </span>
-                        <a
-                          href="https://softenginelab.com/"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center"
-                          tabIndex={-1}
-                          aria-label="SoftEngineLab Website"
-                        >
-                          <img
-                            src={"/softEngineLab.png"}
-                            alt="SoftEngineLab Logo"
-                            className="h-7 w-auto mx-1"
-                          />
-                        </a>
-                        <a
-                          href="tel:01571-048971"
-                          className="font-bold text-base ml-2 hover:underline"
-                          style={{ color: "var(--text-light)" }}
-                        >
-                          01571-048971
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                  {social.icon}
+                </a>
+              ))}
             </div>
           </div>
-          <button
-            onClick={scrollToTop}
-            className={`fixed bottom-8 md:bottom-16 left-8 z-20 p-3 rounded-full shadow-lg transition-all duration-300 transform footer-backtotop hover:scale-110 ${showBackToTop
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 translate-y-4 pointer-events-none"
-              }`}
-            style={{
-              background: "var(--primary-blue-light)",
-              color: "#ffffff",
-            }}
-            aria-label="Back to top"
-          >
-            <ArrowUpwardIcon />
-          </button>
-        </>
-      )}
-    </>
+
+          {footerLinks.map((section, i) => (
+            <div key={i} className="footer-col">
+              <h4 className="footer-col-title">{section.title}</h4>
+              <ul className="footer-links">
+                {section.links.map((link, j) => (
+                  <li key={j}>
+                    <Link to={link.redirect} className="footer-link">
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+
+          <div className="footer-col">
+            <h4 className="footer-col-title">Newsletter</h4>
+            <p className="footer-tagline mb-4">
+              Subscribe to get special offers, free giveaways, and once-in-a-lifetime deals.
+            </p>
+            <div className="flex gap-2">
+              <input 
+                type="email" 
+                placeholder="Email address" 
+                className="bg-white/5 border border-white/10 rounded-full px-4 py-2 text-sm flex-1 focus:outline-none focus:border-accent"
+              />
+              <button className="btn btn-primary py-2 px-6 text-xs">Join</button>
+            </div>
+          </div>
+        </div>
+
+        <div className="footer-bottom">
+          <p className="footer-copyright">
+            &copy; {new Date().getFullYear()} FlanBD. All Rights Reserved.
+          </p>
+          <div className="footer-payments">
+            <img src="/bkash.png" alt="bkash" />
+            <img src="/Nagad.png" alt="Nagad" />
+          </div>
+          <div className="flex items-center gap-2 opacity-50 hover:opacity-100 transition-opacity">
+            <span className="text-[10px] font-bold uppercase tracking-widest">Powered by</span>
+            <a href="https://softenginelab.com/" target="_blank" rel="noopener noreferrer">
+              <img src="/softEngineLab.png" alt="SoftEngineLab" className="h-4" />
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <button
+        onClick={scrollToTop}
+        className={`back-to-top ${showBackToTop ? "visible" : ""}`}
+        aria-label="Back to top"
+      >
+        <ArrowUpwardIcon />
+      </button>
+    </footer>
   );
 };
 

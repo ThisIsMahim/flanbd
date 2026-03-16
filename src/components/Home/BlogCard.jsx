@@ -1,11 +1,11 @@
 import React from "react";
 import { motion } from "framer-motion";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
-import "./HomeBlogSection.css"
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import "./BlogCard.css";
 
 const BlogCard = ({
   blog,
-  t,
   onReadMore,
   showQuickView = false,
   onQuickView,
@@ -17,59 +17,32 @@ const BlogCard = ({
     return div.textContent || div.innerText || "";
   };
 
-  // Animation variants
-  const fadeInUp = {
-    hidden: { y: 20, opacity: 0 },
-    show: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.3,
-        ease: "easeOut",
-      },
-    },
-  };
-
   return (
     <motion.div
-      variants={fadeInUp}
-      initial="hidden"
-      animate="show"
-      className="home-blog-card-cover"
-      style={{
-        backgroundImage: blog.imageUrl ? `url(${blog.imageUrl})` : undefined,
-        backgroundColor: !blog.imageUrl ? "var(--section-bg)" : undefined,
-      }}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      className="modern-blog-card"
     >
-      <div className="home-blog-card-overlay" style={{ pointerEvents: "auto", color: "var(--primary-blue-dark)", background: "var(--glass-bg)" }}>
-        <h3 className="font-bold text-2xl text-primary-blue-dark mb-2">
-          {blog.title}
-        </h3>
-        {blog.subtitle && (
-          <div className="text-base font-normal mb-3" style={{ color: "var(--primary-blue-dark)" }}>
-            {getPlainText(blog.subtitle)}
-          </div>
-        )}
-        {!blog.subtitle && blog.description && (
-          <div className="text-base font-normal mb-3" style={{ color: "var(--primary-blue-dark)", opacity: 0.8 }}>
-            {getPlainText(blog.description).substring(0, 70)}...
-          </div>
-        )}
-        <div className="flex flex-col w-full gap-2 mt-2">
-          <button
-            className="home-blog-learnmore-btn home-animated-underline"
-            onClick={() => onReadMore(blog._id)}
-          >
-            <span className="home-underline-text">{t.readMore}</span>
+      <div className="mb-card-image" onClick={() => onReadMore(blog._id)}>
+        <img src={blog.imageUrl} alt={blog.title} />
+      </div>
+
+      <div className="mb-card-content">
+        <h3 className="mb-card-title">{blog.title}</h3>
+        <p className="mb-card-desc">
+          {getPlainText(blog.subtitle || blog.description).substring(0, 100)}...
+        </p>
+
+        <div className="mb-card-footer">
+          <button className="mb-btn-more group" onClick={() => onReadMore(blog._id)}>
+            Read Story
+            <ArrowForwardIcon sx={{ fontSize: 16 }} className="group-hover:translate-x-1 transition-transform" />
           </button>
+
           {showQuickView && (
-            <button
-              className="home-blog-learnmore-btn home-animated-underline border border-[var(--primary-blue-light)] px-3 py-1 rounded"
-              onClick={() => onQuickView(blog)}
-              type="button"
-            >
-              <MenuBookIcon style={{ fontSize: 18, marginRight: 4 }} />
-              <span>Quick View</span>
+            <button className="mb-btn-quick" onClick={() => onQuickView(blog)}>
+              <MenuBookIcon sx={{ fontSize: 20 }} />
             </button>
           )}
         </div>

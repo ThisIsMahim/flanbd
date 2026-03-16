@@ -353,115 +353,58 @@ const DealSlider = () => {
   }
 
   return (
-    <>
-      {/* Title Section */}
-      <div
-        ref={titleSectionRef}
-        className="products-title-section mx-auto max-w-[1400px] mb-4 px-2 text-center flex flex-col items-center justify-center"
-      >
-        <div className="title-container flex flex-col items-center justify-center gap-2">
-          <div className="flex items-center justify-center gap-2 mb-2">
-            {/* <MenuBookIcon
-              style={{ fontSize: 36, color: "var(--primary-blue-dark)" }}
-            />
-            <EditIcon
-              style={{ fontSize: 30, color: "var(--primary-blue-light)" }}
-            /> */}
-          </div>
-          {/* <div className="title-decoration"></div> */}
-          <div className="title-content">
-            <h2
-              ref={titleRef}
-              className="text-2xl font-bold text-red-500"
-            >
-              {t.title}
-            </h2>
-            <p ref={subtitleRef} className="text-sm text-primary-blue-dark">
-              {t.subtitle}
-            </p>
-          </div>
-        </div>
+    <section className="deal-slider-section" ref={contentSectionRef}>
+      <div className="home-section-header" ref={titleSectionRef}>
+        <span className="section-subtitle">Flash Sale</span>
+        <h2 className="section-title">{t.title}</h2>
       </div>
 
-      <section
-        ref={contentSectionRef}
-        className="mx-auto max-w-[1400px] w-full overflow-hidden mb-4 px-2 sm:px-3 md:px-4"
-      >
-        {/* Products grid container */}
-        <div className="py-4 px-0 sm:px-1 relative section-content">
-          <div className="grid grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-2 sm:gap-3 lg:gap-4">
-            {currentProducts.map((product, i) => {
-              const discountPercentage = Math.round(
-                ((product.cuttedPrice - product.price) / product.cuttedPrice) *
-                  100
-              );
-              return (
-                <DealProductCard
-                  key={product._id || i}
-                  image={product.images[0]?.url}
-                  images={product.images?.map(img=>img.url) || []}
-                  isDifferentColors={product.isDifferentColors}
-                  name={product.name}
-                  category={getParentCategoryName(product)}
-                  price={product.price}
-                  cuttedPrice={product.cuttedPrice}
-                  discountPercentage={discountPercentage}
-                  onClick={(selectedUrl) => handleProductClick(product._id, selectedUrl)}
-                />
-              );
-            })}
-          </div>
-
-          {/* Enhanced Pagination Controls */}
-          {totalPages > 1 && (
-            <div ref={paginationRef} className="pagination-container">
-              {/* Previous button */}
-              <button
-                onClick={goToPrevPage}
-                disabled={currentPage === 0}
-                className="pagination-control"
-                aria-label="Previous page"
-              >
-                <ChevronLeftIcon />
-              </button>
-
-              {/* Page numbers */}
-              <div className="pagination-info">
-                {getPaginationNumbers().map((pageNum, idx) =>
-                  pageNum >= 0 ? (
-                    <button
-                      key={idx}
-                      onClick={() => goToPage(pageNum)}
-                      className={`page-number ${
-                        pageNum === currentPage ? "font-bold" : ""
-                      }`}
-                      aria-label={`Go to page ${pageNum + 1}`}
-                      disabled={pageNum === currentPage}
-                    >
-                      {pageNum + 1}
-                    </button>
-                  ) : (
-                    <span key={idx} className="page-dots">
-                      …
-                    </span>
-                  )
-                )}
-              </div>
-
-              {/* Next button */}
-              <button
-                onClick={goToNextPage}
-                disabled={currentPage === totalPages - 1}
-                className="pagination-control"
-                aria-label="Next page"
-              >
-                <ChevronRightIcon />
-              </button>
-            </div>
-          )}
+      <div className="container">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+          {currentProducts.map((product) => (
+            <DealProductCard
+              key={product._id}
+              product={product}
+              categoryName={getParentCategoryName(product)}
+              onClick={() => handleProductClick(product._id, product.images?.[0]?.url)}
+            />
+          ))}
         </div>
-      </section>
-    </>
+
+        {totalPages > 1 && (
+          <div className="pagination-container" ref={paginationRef}>
+            <button
+              className="pagination-control"
+              onClick={goToPrevPage}
+              disabled={currentPage === 0}
+              aria-label="Previous page"
+            >
+              <ChevronLeftIcon />
+            </button>
+
+            <div className="pagination-dots">
+              {Array.from({ length: totalPages }).map((_, idx) => (
+                <button
+                  key={idx}
+                  className={`pagination-dot ${currentPage === idx ? "active" : ""}`}
+                  onClick={() => goToPage(idx)}
+                  aria-label={`Go to page ${idx + 1}`}
+                />
+              ))}
+            </div>
+
+            <button
+              className="pagination-control"
+              onClick={goToNextPage}
+              disabled={currentPage === totalPages - 1}
+              aria-label="Next page"
+            >
+              <ChevronRightIcon />
+            </button>
+          </div>
+        )}
+      </div>
+    </section>
   );
 };
 

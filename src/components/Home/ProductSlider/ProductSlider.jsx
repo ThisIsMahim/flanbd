@@ -17,11 +17,8 @@ const ProductSlider = () => {
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
 
-  // Add refs for title and subtitle (must be before any early return)
   const titleRef = React.useRef(null);
-  const subtitleRef = React.useRef(null);
   useScrollReveal(titleRef);
-  useScrollReveal(subtitleRef, { delay: 0.12 });
 
   const { loading, products } = useSelector((state) => state.products);
   const { cartItems } = useSelector((state) => state.cart);
@@ -32,30 +29,24 @@ const ProductSlider = () => {
   const { categories, categoriesLoading, getProductsByCategory } =
     useDataFetching();
 
-  // Personalized dummy category for sunglasses store
   const dummyCategory = {
     _id: "dummy-category-1",
-    name: "Premium Sunglasses",
-    description:
-      "Discover our exclusive range of premium sunglasses—perfect for students, professionals, and creatives. Experience clear vision and elegant designs.",
-    bannerImage: "/water-bg.jpg", // fallback image
+    name: "All Products",
     isTopSelling: true,
   };
 
-  // Only show dummy category if there are no real top-selling categories
   const realTopSellingCategories =
     categories && categories.length > 0
       ? categories.filter(
-          (cat) =>
-            cat.isTopSelling && cat.name !== "Commercial Filter Water Purifiers"
-        )
+        (cat) =>
+          cat.isTopSelling && cat.name !== "Commercial Filter Water Purifiers"
+      )
       : [];
 
-  // If nothing is marked top-selling yet, fall back to top-level categories
   const fallbackRootCategories =
     (!realTopSellingCategories || realTopSellingCategories.length === 0) &&
-    categories &&
-    categories.length > 0
+      categories &&
+      categories.length > 0
       ? categories.filter((cat) => !cat.parent)
       : [];
 
@@ -63,8 +54,8 @@ const ProductSlider = () => {
     realTopSellingCategories.length > 0
       ? realTopSellingCategories
       : fallbackRootCategories.length > 0
-      ? fallbackRootCategories
-      : [dummyCategory];
+        ? fallbackRootCategories
+        : [dummyCategory];
 
   const addToCartHandler = (productId) => {
     if (isMounted.current) {
@@ -99,7 +90,6 @@ const ProductSlider = () => {
   };
 
   const handleSeeAll = (categoryName) => {
-    // For the dummy category, send users to the general products page
     if (
       categoryName === dummyCategory.name ||
       categoryName?.toLowerCase() === "all products" ||
@@ -111,34 +101,28 @@ const ProductSlider = () => {
     navigate(`/products?category=${encodeURIComponent(categoryName)}`);
   };
 
-  // Helper function to get subcategories for a parent category
   const getSubcategories = (parentCategory, allCategories) => {
     if (!allCategories || !parentCategory) return [];
     return allCategories.filter(
       (cat) =>
         cat.parent &&
         (typeof cat.parent === "object" ? cat.parent._id : cat.parent) ===
-          parentCategory._id
+        parentCategory._id
     );
   };
 
-  // Only show categories that have at least one product
   const categoriesWithProducts = topSellingCategories.filter((category) => {
     const categoryProducts = getProductsByCategory(
       products,
       categories,
       category.name
     );
-
-    // For dummy category, show it if there are any products at all
     if (category._id === "dummy-category-1") {
       return products && products.length > 0;
     }
-
     return categoryProducts && categoryProducts.length > 0;
   });
 
-  // If no categories have products but we have products, show dummy category with all products
   if (categoriesWithProducts.length === 0 && products && products.length > 0) {
     categoriesWithProducts.push({
       ...dummyCategory,
@@ -146,47 +130,35 @@ const ProductSlider = () => {
     });
   }
 
-  // Show message if no products are available
+  // Empty state
   if (!products || products.length === 0) {
     return (
-      <section className="mx-auto max-w-[1400px] w-full overflow-hidden mb-8 py-10">
-        <div className="text-center">
-          <h3 className="text-xl font-semibold text-gray-700 mb-2">
+      <section className="category-section">
+        <div className="category-section-inner" style={{ textAlign: 'center', padding: '3rem 1.5rem' }}>
+          <h3 style={{ fontSize: 'var(--text-xl)', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>
             No Products Available
           </h3>
-          <p className="text-gray-500">
+          <p style={{ color: 'var(--text-muted)', marginBottom: '1rem' }}>
             Please check back later or contact support if this issue persists.
           </p>
-          <div className="mt-4">
-            <button
-              onClick={() => window.location.reload()}
-              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-            >
-              Refresh Page
-            </button>
-          </div>
+          <button onClick={() => window.location.reload()} className="btn btn-outline">
+            Refresh Page
+          </button>
         </div>
       </section>
     );
   }
 
-  // Show message if no categories have products
   if (categoriesWithProducts.length === 0) {
     return (
-      <section className="mx-auto max-w-[1400px] glass-container glow-border w-full overflow-hidden mb-8 py-10">
-        <div className="text-center">
-          <h3 className="text-xl font-semibold text-gray-700 mb-2">
-            No Categories with Products Found
+      <section className="category-section">
+        <div className="category-section-inner" style={{ textAlign: 'center', padding: '3rem 1.5rem' }}>
+          <h3 style={{ fontSize: 'var(--text-xl)', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>
+            No Categories Found
           </h3>
-          <p className="text-gray-500">
+          <p style={{ color: 'var(--text-muted)' }}>
             Products are available but no categories match the current filter.
           </p>
-          <div className="mt-4">
-            <p className="text-sm text-gray-400">
-              Available products: {products.length} | Available categories:{" "}
-              {categories?.length || 0}
-            </p>
-          </div>
         </div>
       </section>
     );
@@ -194,45 +166,32 @@ const ProductSlider = () => {
 
   if (loading || categoriesLoading) {
     return (
-      <section className="mx-auto max-w-[1400px] glass-container glow-border w-full overflow-hidden mb-8 py-10 flex justify-center">
-        <Loader title="Loading Products..." />
+      <section className="category-section">
+        <div className="category-section-inner" style={{ display: 'flex', justifyContent: 'center', padding: '3rem 1.5rem' }}>
+          <Loader title="Loading Products..." />
+        </div>
       </section>
     );
   }
 
   return (
     <>
-      {/* Shop by Categories Title */}
-      <section className="mx-auto max-w-[1400px] w-full mb-8">
-        <div className="text-center">
-          <h2
-            ref={titleRef}
-            className="text-4xl md:text-5xl font-bold mb-4"
-            style={{
-              color: "var(--brand-yellow)",
-              textShadow: "2px 2px 4px rgba(0,0,0,0.1)",
-            }}
-          >
-            Shop by Categories
-          </h2>
-          <div
-            className="w-24 h-1 mx-auto rounded-full"
-            style={{ backgroundColor: "var(--brand-yellow)" }}
-          ></div>
-        </div>
-      </section>
+      {/* Section Title */}
+      <div className="home-section-header" ref={titleRef}>
+        <span className="section-subtitle">Anime Merchandise</span>
+        <h2 className="section-title">Shop by Categories</h2>
+      </div>
 
-      <div className="mb-4">
+      {/* Category Sections */}
+      <div className="container">
+
         {categoriesWithProducts.map((category) => {
-          // If this is the dummy category, show all products (filtered for stock)
           const categoryProducts =
             category._id === "dummy-category-1"
               ? products.filter((product) => product.stock > 0)
               : getProductsByCategory(products, categories, category.name);
           const showSeeAll = categoryProducts.length > 6;
           const displayedProducts = categoryProducts.slice(0, 6);
-
-          // Get subcategories for this category
           const subcategories = getSubcategories(category, categories);
 
           return (

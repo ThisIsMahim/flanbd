@@ -15,12 +15,11 @@ const Categories = () => {
   const headerRef = useRef(null);
   const cardsRef = useRef([]);
 
-      // Personalized translation content for sunglasses website
+      // Personalized translation content
   const translations = {
     english: {
-              title: "Shop Sunglasses by Category",
-      subtitle:
-                  "Find the perfect sunglasses for school, work, or style. Explore our curated categories!",
+      title: "Explore the Collection",
+      subtitle: "Find your favorite anime merchandise by category",
     },
   };
 
@@ -200,78 +199,39 @@ const Categories = () => {
   }
 
   return (
-    <section
-      ref={sectionRef}
-      className="block glass-container glow-border mt-6 mb-8 w-full relative overflow-hidden min-h-[400px]"
-      style={{
-        background: "var(--primary-bg)",
-        borderColor: "var(--border-light)",
-      }}
-    >
-      <div className="container mx-auto relative z-10">
-        <div
-          ref={headerRef}
-          className="text-center mb-8 section-header relative z-20"
-        >
-          <h2
-            className="text-2xl font-bold"
-            style={{ color: "var(--primary-blue-dark)" }}
-          >
-            {translations.english.title}
-          </h2>
-          <p
-            className="max-w-2xl mx-auto"
-            style={{ color: "var(--text-dark)" }}
-          >
-            {translations.english.subtitle}
-          </p>
-          <div
-            className="h-1 w-24 mx-auto mt-3 rounded-full"
-            style={{ background: "var(--primary-blue-light)" }}
-          ></div>
-        </div>
-        {/* Categories Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 section-content relative z-20">
+    <section className="section" ref={sectionRef}>
+      <div className="home-section-header" ref={headerRef}>
+        <span className="section-subtitle">{translations.english.subtitle}</span>
+        <h2 className="section-title">{translations.english.title}</h2>
+      </div>
+
+      <div className="container">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {categories.map((item, index) => {
-            const productCount = getProductsByCategory(
+            const catProducts = getProductsByCategory(
               products,
               item._id,
               allCategories
-            ).length;
+            );
             return (
               <Link
-                ref={(el) => (cardsRef.current[index] = el)}
-                to={`/products?category=${item.name}`}
+                to={`/products?category=${item._id}`}
                 key={item._id}
-                className="group relative rounded-xl overflow-hidden shadow-lg min-h-[320px] flex items-center justify-center transition-transform duration-300 hover:scale-[1.03]"
-                style={{ minHeight: 320 }}
+                className="category-card group"
+                ref={(el) => (cardsRef.current[index] = el)}
               >
-                {/* Background Image */}
-                <div
-                  className="absolute inset-0 w-full h-full bg-cover bg-center transition-transform duration-300 group-hover:scale-105"
-                  style={{
-                    backgroundImage: `url(${
-                      item.bannerImage || item.icon || "/no-pictures.png"
-                    })`,
-                    filter: "brightness(0.92)",
-                  }}
-                ></div>
-                {/* Overlay on hover */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"></div>
-                {/* Category Name, Product Count, and Button */}
-                <div className="relative z-20 flex flex-col items-center justify-center w-full h-full text-center">
-                  <span className="text-white text-2xl font-bold drop-shadow-lg mb-2 transition-all duration-300 group-hover:scale-110 group-hover:drop-shadow-2xl">
-                    {item.name}
-                  </span>
-                  {/* Product count, only visible on hover */}
-                  <span className="text-white text-lg font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 mb-2">
-                    {productCount} product{productCount !== 1 ? "s" : ""}
-                  </span>
-                  {/* Optional: Add a button on hover */}
-                  <span className="inline-block mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <span className="px-5 py-2 rounded-full bg-white/90 text-primary-blue-dark font-semibold shadow hover:bg-white">
-                      View Products
-                    </span>
+                <div className="category-image-wrapper">
+                  <img
+                    src={item.image?.url || "/no-pictures.png"}
+                    alt={item.name}
+                    className="category-image group-hover:scale-110 transition-transform duration-700"
+                  />
+                  <div className="category-overlay group-hover:opacity-100 transition-opacity duration-500" />
+                </div>
+                <div className="category-info">
+                  <h3 className="category-name">{item.name}</h3>
+                  <span className="category-count">
+                    {catProducts.length} Products
                   </span>
                 </div>
               </Link>
@@ -279,6 +239,69 @@ const Categories = () => {
           })}
         </div>
       </div>
+
+      <style jsx>{`
+        .category-card {
+          position: relative;
+          background: var(--bg-surface);
+          border-radius: var(--radius-xl);
+          overflow: hidden;
+          transition: all var(--transition-base);
+          border: 1px solid var(--border);
+        }
+
+        .category-card:hover {
+          transform: translateY(-8px);
+          box-shadow: var(--shadow-xl);
+          border-color: transparent;
+        }
+
+        .category-image-wrapper {
+          position: relative;
+          aspect-ratio: 4/5;
+          overflow: hidden;
+          background: var(--bg-subtle);
+        }
+
+        .category-image {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+
+        .category-overlay {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 100%);
+          opacity: 0.3;
+        }
+
+        .category-info {
+          padding: 1.5rem;
+          text-align: center;
+        }
+
+        .category-name {
+          font-family: var(--font-display);
+          font-size: var(--text-lg);
+          font-weight: 700;
+          color: var(--text-primary);
+          margin-bottom: 0.25rem;
+          transition: color var(--transition-fast);
+        }
+
+        .category-card:hover .category-name {
+          color: var(--accent);
+        }
+
+        .category-count {
+          font-size: var(--text-xs);
+          color: var(--text-muted);
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+          font-weight: 600;
+        }
+      `}</style>
     </section>
   );
 };

@@ -3,87 +3,76 @@ import "./dealslider.css";
 import OptimizedImg from "../../common/OptimizedImg";
 
 const DealProductCard = ({
-  image,
-  images = [],
-  isDifferentColors = false,
-  name,
-  category,
-  price,
-  cuttedPrice,
-  discountPercentage,
+  product,
+  categoryName,
   onClick,
 }) => {
   const [selectedImageUrl, setSelectedImageUrl] = useState(null);
-  const displayImage = selectedImageUrl || image;
+  const displayImage = selectedImageUrl || product.images?.[0]?.url || "/no-pictures.png";
+  
+  const hasDiscount = product.cuttedPrice && product.price < product.cuttedPrice;
+  const discountPercentage = hasDiscount 
+    ? Math.round(((product.cuttedPrice - product.price) / product.cuttedPrice) * 100) 
+    : 0;
+
   return (
-    <div className="deal-minimal-card white-theme" onClick={() => onClick?.(selectedImageUrl)}>
+    <div className="deal-minimal-card group" onClick={() => onClick?.(selectedImageUrl)}>
       <div className="deal-minimal-image-container">
         <OptimizedImg
           src={displayImage}
-          alt={name}
+          alt={product.name}
           className="deal-minimal-image"
-          quality="80"
-          format="auto"
-          placeholder="blur"
         />
         {discountPercentage > 0 && (
           <span className="deal-discount-badge">-{discountPercentage}%</span>
         )}
-        {category === 'Polarized' && (
-          <div className="deal-polarized-badge">
-            <img 
-              src="/polarized.JPG" 
-              alt="Polarized" 
-              className="w-8 h-8 object-contain"
-            />
-          </div>
-        )}
       </div>
+      
       <div className="deal-minimal-info">
-        <div className="w-full">
-          {/* Only show category if not different colors */}
-          {category && !isDifferentColors && <span className="deal-minimal-category">{category}</span>}
-          <div className="deal-minimal-title">{name}</div>
-          <div className="deal-minimal-price-row">
-            <div className="flex items-center gap-1">
-              <span className="deal-minimal-price">
-                ৳{price?.toLocaleString() || 0}
-              </span>
-              {cuttedPrice && price < cuttedPrice && (
-                <span className="deal-minimal-cutted">
-                  ৳{cuttedPrice.toLocaleString()}
-                </span>
-              )}
-            </div>
-          </div>
-          
-          {/* Color Variations - Separate row when multiple colors available */}
-          {isDifferentColors && images?.length > 1 && (
-            <div className="deal-color-variants-row">
-              <div className="flex items-center justify-center gap-2 overflow-x-auto deal-color-variations-scroll pb-1" style={{scrollbarWidth: 'thin', msOverflowStyle: 'scrollbar', maxWidth: '100%'}}>
-                {images.map((url, idx) => (
-                  <div key={idx} className="relative group flex-shrink-0">
-                    <button
-                      onClick={(e)=>{ e.stopPropagation(); setSelectedImageUrl(url); }}
-                      className={`relative w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden transition-all duration-200 ${
-                        selectedImageUrl===url 
-                          ? 'ring-2 ring-[var(--brand-yellow)] shadow-md' 
-                          : 'ring-1 ring-gray-200 hover:ring-[var(--primary-blue-light)]'
-                      }`}
-                      aria-label={`Color ${idx+1}`}
-                    >
-                      <img src={url} alt={`Color ${idx+1}`} className="w-full h-full object-cover rounded-full" />
-                    </button>
-                    {/* Tiny indicator for selected state */}
-                    {selectedImageUrl===url && (
-                      <div className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-[var(--brand-yellow)] rounded-full border border-white shadow-sm"></div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
+        <div className="flex flex-col gap-1">
+          {categoryName && (
+            <span className="deal-minimal-category">{categoryName}</span>
+          )}
+          <h3 className="deal-minimal-title group-hover:text-accent transition-colors duration-300">
+            {product.name}
+          </h3>
+        </div>
+
+        <div className="deal-minimal-price-row">
+          <span className="deal-minimal-price">
+            ৳{product.price?.toLocaleString() || 0}
+          </span>
+          {hasDiscount && (
+            <span className="deal-minimal-cutted">
+              ৳{product.cuttedPrice.toLocaleString()}
+            </span>
           )}
         </div>
+        
+        {/* Color Variations */}
+        {product.isDifferentColors && product.images?.length > 1 && (
+          <div className="mt-4 pt-4 border-t border-border">
+            <div className="flex gap-2 overflow-x-auto pb-1 no-scrollbar">
+              {product.images.map((img, idx) => (
+                <button
+                  key={idx}
+                  onClick={(e) => { 
+                    e.stopPropagation(); 
+                    setSelectedImageUrl(img.url); 
+                  }}
+                  className={`relative w-10 h-10 rounded-full overflow-hidden border-2 transition-all duration-300 flex-shrink-0 ${
+                    (selectedImageUrl === img.url || (!selectedImageUrl && idx === 0))
+                      ? 'border-accent scale-110 shadow-md' 
+                      : 'border-transparent hover:border-border'
+                  }`}
+                  aria-label={`Color ${idx + 1}`}
+                >
+                  <img src={img.url} alt={`Color ${idx + 1}`} className="w-full h-full object-cover" />
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ProductCard from "./ProductSlider/components/ProductCard";
-import SkeletonProduct from "../Products/SkeletonProduct";
+import SkeletonProduct from "../products/SkeletonProduct";
 import QuickViewDialog from "./ProductSlider/components/QuickViewDialog";
 import { useDispatch, useSelector } from "react-redux";
 import { useSnackbar } from "notistack";

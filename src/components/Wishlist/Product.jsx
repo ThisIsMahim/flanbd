@@ -1,53 +1,56 @@
-import DeleteIcon from '@mui/icons-material/Delete';
-import StarIcon from '@mui/icons-material/Star';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { removeFromWishlist } from '../../actions/wishlistAction';
 import { getDiscount } from '../../utils/functions';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import StarIcon from '@mui/icons-material/Star';
 
-const Product = (props) => {
-
-    const { product, name, price, cuttedPrice, image, ratings, reviews } = props;
-
+const Product = ({ product, name, price, cuttedPrice, image, ratings, reviews }) => {
     const dispatch = useDispatch();
 
     const deleteHandler = () => {
         dispatch(removeFromWishlist(product));
-    }
+    };
 
     return (
-        <div className="flex gap-4 border-b p-4 sm:pb-8 w-full group overflow-hidden">
-            <div className="w-1/6 h-28 flex-shrink-0">
-                <img draggable="false" className="h-full w-full object-contain" src={image} alt={name} />
+        <div className="wishlist-item">
+            <div className="wishlist-item-image">
+                <Link to={`/product/${product}`}>
+                    <img src={image} alt={name} />
+                </Link>
             </div>
 
-            {/* <!-- description --> */}
-            <div className="flex flex-col gap-5 w-full p-1">
-                {/* <!-- product title --> */}
-                <div className="flex justify-between items-start sm:pr-5">
-                    <Link to={`/product/${product}`} className="flex flex-col gap-0.5">
-                        <p className="group-hover:text-primary-blue w-56 sm:w-full truncate">{name.length > 85 ? `${name.substring(0, 85)}...` : name}</p>
-                        {/* <!-- rating badge --> */}
-                        <span className="text-sm text-gray-500 font-medium flex gap-2 items-center">
-                            <span className="text-xs px-1.5 py-0.5 bg-primary-green rounded-sm text-white flex items-center gap-0.5">{ratings} <StarIcon sx={{ fontSize: "14px" }} /></span>
-                            <span>({reviews.toLocaleString()})</span>
-                        </span>
-                        {/* <!-- rating badge --> */}
+            <div className="wishlist-item-info">
+                <h3>
+                    <Link to={`/product/${product}`} className="hover:text-accent transition-colors">
+                        {name}
                     </Link>
-                    <button onClick={deleteHandler} className="text-gray-400 hover:text-red-500"><span><DeleteIcon /></span></button>
-                </div>
-                {/* <!-- product title --> */}
+                </h3>
 
-                {/* <!-- price desc --> */}
-                <div className="flex items-center gap-2 text-2xl font-medium">
-                    <span>৳{price.toLocaleString()}</span>
-                    <span className="text-sm text-gray-500 line-through font-normal mt-1">৳{cuttedPrice.toLocaleString()}</span>
-                    <span className="text-sm text-primary-green mt-1">{getDiscount(price, cuttedPrice)}%&nbsp;off</span>
+                <div className="wishlist-item-rating">
+                    <span className="rating-badge">
+                        {ratings} <StarIcon sx={{ fontSize: 12 }} />
+                    </span>
+                    <span>({reviews?.toLocaleString() || 0} reviews)</span>
                 </div>
-                {/* <!-- price desc --> */}
 
+                <div className="wishlist-item-price">
+                    <span className="wish-price-current">৳{price?.toLocaleString()}</span>
+                    {cuttedPrice > price && (
+                        <>
+                            <span className="wish-price-original">৳{cuttedPrice.toLocaleString()}</span>
+                            <span className="qv-discount-badge">{getDiscount(price, cuttedPrice)}% OFF</span>
+                        </>
+                    )}
+                </div>
             </div>
-            {/* <!-- description --> */}
+
+            <div className="flex items-center">
+                <button onClick={deleteHandler} className="btn-remove-wish" title="Remove from Wishlist">
+                    <DeleteOutlineIcon />
+                </button>
+            </div>
         </div>
     );
 };

@@ -1,55 +1,72 @@
 import React, { useState } from "react";
-import { Rating } from "@mui/material";
+import { Rating, Avatar } from "@mui/material";
 
 const ProductReviewsBlock = ({ product }) => {
   const [viewAll, setViewAll] = useState(false);
+
   if (!product) return null;
+
+  const reviews = product.reviews || [];
+  const displayedReviews = viewAll ? reviews : reviews.slice(0, 3);
+
   return (
-    <div className="mt-8">
-      <div className="flex items-center border-b pb-2 mb-4">
-        <h2 className="text-2xl font-bold text-[var(--primary-blue-light)] flex items-center">
-          {product?.ratings?.toFixed(1) || 0}
+    <div className="product-reviews-container">
+      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '2rem' }}>
+        <h2 style={{ fontSize: 'var(--text-4xl)', fontWeight: 700, color: 'var(--text-primary)' }}>
+          {product.ratings?.toFixed(1) || 0}
         </h2>
-        <p className="text-lg text-[var(--primary-blue-dark)] ml-2">
-          ({product?.numOfReviews || 0}) Reviews
-        </p>
+        <div>
+          <Rating value={product.ratings || 0} precision={0.5} readOnly size="medium" />
+          <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-muted)' }}>
+            Based on {product.numOfReviews || 0} verified reviews
+          </p>
+        </div>
       </div>
-      {product?.reviews?.length > 0 ? (
-        <>
-          {(viewAll ? product.reviews : product.reviews.slice(0, 3)).map((rev, i) => (
+
+      {reviews.length > 0 ? (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+          {displayedReviews.map((rev, i) => (
             <div
               key={i}
-              className="flex flex-col gap-2 py-4 px-0 border-b last:border-b-0"
+              style={{
+                padding: '1.5rem',
+                background: 'var(--bg-surface)',
+                border: '1px solid var(--border-subtle)',
+                borderRadius: 'var(--radius-lg)'
+              }}
             >
-              <Rating
-                name={`read-only-rating-${i}`}
-                value={rev.rating}
-                readOnly
-                size="small"
-                precision={0.5}
-              />
-              <p className="text-[var(--primary-blue-dark)]">{rev.comment}</p>
-              <span className="text-sm text-[var(--primary-blue-light)]">by {rev.name}</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.75rem' }}>
+                <Avatar sx={{ bgcolor: 'var(--accent-subtle)', color: 'var(--accent)', width: 32, height: 32, fontSize: '0.875rem' }}>
+                  {rev.name?.charAt(0) || 'U'}
+                </Avatar>
+                <div>
+                  <div style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--text-primary)' }}>{rev.name}</div>
+                  <Rating value={rev.rating} readOnly size="small" precision={0.5} />
+                </div>
+              </div>
+              <p style={{ color: 'var(--text-secondary)', fontSize: 'var(--text-sm)', lineHeight: 1.6 }}>
+                {rev.comment}
+              </p>
             </div>
           ))}
-          {product.reviews.length > 3 && (
-            <div className="mt-4 flex justify-center">
-              <button
-                onClick={() => setViewAll(!viewAll)}
-                className="w-auto m-2 rounded-full py-2 px-4 bg-[var(--primary-blue-light)] text-white font-bold hover:bg-[var(--primary-blue-dark)] hover:text-white"
-              >
-                {viewAll ? "View Less Reviews" : "View All Reviews"}
-              </button>
-            </div>
+
+          {reviews.length > 3 && (
+            <button
+              onClick={() => setViewAll(!viewAll)}
+              className="btn btn-outline"
+              style={{ alignSelf: 'center', marginTop: '1rem' }}
+            >
+              {viewAll ? "Show Less" : "View All Reviews"}
+            </button>
           )}
-        </>
+        </div>
       ) : (
-        <p className="py-4 px-0 text-[var(--primary-blue-light)]">
-          No reviews yet. Be the first to rate this product!
-        </p>
+        <div style={{ padding: '3rem', textAlign: 'center', background: 'var(--bg-subtle)', borderRadius: 'var(--radius-xl)' }}>
+          <p style={{ color: 'var(--text-muted)', marginBottom: '1rem' }}>No reviews yet. Be the first to share your experience!</p>
+        </div>
       )}
     </div>
   );
 };
 
-export default ProductReviewsBlock; 
+export default ProductReviewsBlock;

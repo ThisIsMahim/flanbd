@@ -1,57 +1,44 @@
-/* Modern Banner Carousel Styles */
+/* ===================================
+   BANNER CAROUSEL — Awe-Strucking Modern
+   =================================== */
 
 .banner-carousel-modern {
   position: relative;
   width: 100%;
-  min-height: 100vh; /* full screen */
-  height: 100vh; /* full screen */
-  max-height: none;
+  height: clamp(500px, 85vh, 900px);
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  background: #ffffff !important;
-  background-color: #ffffff !important;
+  background: var(--text-primary);
 }
 
-/* Force white background on banner elements - but preserve images */
-.banner-carousel-modern .banner-images-container {
-  background-color: #ffffff !important;
-}
-
-/* Only set background color for banner images, not the images themselves */
-.banner-carousel-modern .banner-bg {
-  background-color: #ffffff !important;
-}
-
-/* Override any potential gray backgrounds on containers only */
-.banner-carousel-modern {
-  background-color: #ffffff !important;
-  background: #ffffff !important;
-}
-
-/* Force white background on the main banner section */
-section.banner-carousel-modern {
-  background-color: #ffffff !important;
-  background: #ffffff !important;
-}
-
-/* Target the banner div wrapper */
-div[ref="bannerRef"] {
-  background-color: #ffffff !important;
-  background: #ffffff !important;
-}
-
-/* Images Container */
-.banner-images-container {
+/* Slides Container */
+.banner-slides {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   z-index: 1;
-  background: #ffffff;
-  display: block !important;
-  visibility: visible !important;
+}
+
+.banner-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.8s var(--ease-out);
+}
+
+.banner-slide.active {
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 2;
 }
 
 .banner-bg {
@@ -59,408 +46,158 @@ div[ref="bannerRef"] {
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover; /* fill and remove side gaps on larger screens */
+  object-fit: cover;
   object-position: center;
-  background-color: #ffffff;
-  opacity: 0;
-  transform: scale(1.05);
-  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 1;
-  display: block !important;
-  visibility: visible !important;
+  scale: 1.1;
+  filter: brightness(0.7) contrast(1.1);
+  transition: scale 10s linear, filter 1.2s var(--ease-out);
 }
 
-.banner-bg.active {
+.banner-slide.active .banner-bg {
+  scale: 1;
+  filter: brightness(0.8) contrast(1.05);
+}
+
+/* Content Animations within Slide */
+.banner-slide.active .banner-title {
   opacity: 1;
-  transform: scale(1);
+  transform: translateY(0);
 }
 
-.banner-bg.banner-mobile-contain {
-  object-fit: contain;
-}
-
-/* Overlay */
-.banner-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.1);
-  z-index: 2;
-}
-
-/* Content */
-.banner-content {
-  position: relative;
-  z-index: 3;
-  width: 100%;
-  max-width: 760px;
-  margin: 0 auto;
-  text-align: left;
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 1.5rem;
-  padding: calc(1.2rem + env(safe-area-inset-top, 0)) 1rem 1.5rem 1rem;
-}
-
-.banner-title {
-  font-size: clamp(1.6rem, 4vw + 0.2rem, 3rem);
-  font-weight: 800;
-  line-height: 1.1;
-  margin-bottom: 0.5rem;
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s forwards;
-}
-
-.banner-subtitle {
-  font-size: clamp(0.95rem, 1.6vw, 1.2rem);
-  font-weight: 500;
+.banner-slide.active .banner-subtitle {
   opacity: 0.9;
-  letter-spacing: 0.04em;
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.4s forwards;
+  transform: translateY(0);
 }
 
-.banner-btn {
-  background: var(--brand-yellow);
-  color: #0f172a;
-  font-weight: 700;
-  font-size: clamp(0.95rem, 1.7vw, 1.1rem);
-  padding: 0.8rem 1.8rem;
-  border: 2px solid var(--brand-yellow);
-  border-radius: 9999px;
-  cursor: pointer;
-  letter-spacing: 0.14em;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.6s forwards;
+.banner-slide.active .btn {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.banner-btn:hover {
-  background: var(--brand-yellow-dark);
-  color: #0f172a;
-  border: 2px solid var(--brand-yellow-dark);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+.banner-content .btn {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s var(--ease-out) 0.6s;
 }
+
 
 /* Navigation Arrows */
 .banner-nav-btn {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: transparent;
-  border: none;
-  color: var(--brand-yellow-dark);
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-inverse);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all var(--transition-base);
   z-index: 10;
 }
 
 .banner-nav-btn:hover {
-  background: rgba(255, 255, 255, 1);
-  transform: translateY(-50%) scale(1.05);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  background: var(--accent);
+  border-color: var(--accent);
+  scale: 1.1;
 }
 
-.banner-nav-btn:active {
-  transform: translateY(-50%) scale(0.95);
-}
-
-.banner-nav-prev {
-  left: 2rem;
-}
-
-.banner-nav-next {
-  right: 2rem;
-}
-
-/* Progress Bar */
-/* .banner-progress {
-  position: absolute;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  z-index: 10;
-}
-
-.progress-bar {
-  width: 200px;
-  height: 4px;
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 2px;
-  overflow: hidden;
-}
-
-.progress-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #ffffff 0%, #f8fafc 100%);
-  border-radius: 2px;
-  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.progress-text {
-  font-size: 0.875rem;
-  color: rgba(255, 255, 255, 0.9);
-  font-weight: 500;
-  min-width: 60px;
-  text-align: center;
-} */
+.banner-nav-prev { left: 2rem; }
+.banner-nav-next { right: 2rem; }
 
 /* Dots Navigation */
 .banner-dots {
   display: flex;
-  gap: 0.5rem;
+  gap: 1rem;
   position: absolute;
   left: 50%;
   bottom: 3rem;
   transform: translateX(-50%);
   z-index: 10;
-  padding: 0.4rem 0.6rem;
-  border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  box-shadow: 0 4px 18px rgba(0,0,0,0.15);
 }
 
 .banner-dot {
-  width: 26px;
-  height: 8px;
-  border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.55);
-  border: 1px solid rgba(255, 255, 255, 0.6);
+  width: 40px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
   cursor: pointer;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  padding: 0;
-}
-
-.banner-dot:hover {
-  background: rgba(255, 255, 255, 0.8);
-  transform: translateY(-1px);
+  transition: all var(--transition-base);
+  border-radius: var(--radius-full);
 }
 
 .banner-dot.active {
-  background: var(--brand-yellow, #ef4444);
-  border-color: transparent;
-  width: 34px;
-  box-shadow: 0 6px 18px rgba(239, 68, 68, 0.35);
+  background: var(--accent);
+  width: 60px;
 }
 
-/* Centered Content */
-.centered {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100%;
-  max-width: 760px;
-  text-align: center;
-  align-items: center !important;
-}
 
-/* Animations */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Skeleton Loader Styles */
-.skeleton {
-  background: var(--primary-blue-dark, #e0e0e0);
-  position: relative;
-  overflow: hidden;
-}
-
-.skeleton::after {
-  content: "";
-  display: block;
-  position: absolute;
-  top: 0;
-  left: -150px;
-  height: 100%;
-  width: 150px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    var(--primary-bg, #fff) 60%,
-    transparent
-  );
-  animation: skeleton-shimmer 1.2s infinite;
-  z-index: 10;
-}
-
-@keyframes skeleton-shimmer {
-  0% {
-    left: -150px;
-  }
-  100% {
-    left: 100%;
-  }
-}
-
+/* Skeleton */
 .banner-skeleton-bg {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   z-index: 1;
+  background: var(--bg-subtle);
 }
 
 .skeleton-text {
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
 }
 
-/* Responsive Design */
-@media (max-width: 1024px) {
-  .banner-carousel-modern {
-    height: 100vh;
-    min-height: 100vh;
-  }
-  
-  .banner-nav-btn {
-    width: 48px;
-    height: 48px;
-  }
-  
-  .banner-nav-prev {
-    left: 1.5rem;
-  }
-  
-  .banner-nav-next {
-    right: 1.5rem;
-  }
-  
-  .progress-bar {
-    width: 150px;
-  }
-}
-
+/* ===================================
+   RESPONSIVE
+   =================================== */
 @media (max-width: 768px) {
   .banner-carousel-modern {
-    height: 100vh; /* maintain full height on mobile for immersive hero */
-    min-height: 100vh;
+    height: 60vh;
+    min-height: 320px;
   }
-  
+
   .banner-bg {
     object-fit: contain;
     object-position: center;
   }
-  
-  .banner-bg.banner-mobile-contain {
-    object-fit: contain;
-  }
-  
-  .banner-overlay {
-    background: rgba(0, 0, 0, 0.08);
-  }
-  
-  .centered {
-    max-width: 92vw;
-  }
-  
+
   .banner-nav-btn {
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
   }
-  
+
   .banner-nav-btn svg {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
   }
-  
-  .banner-nav-prev {
-    left: 1rem;
-  }
-  
-  .banner-nav-next {
-    right: 1rem;
-  }
-  
-  .banner-progress {
-    bottom: 1.5rem;
-  }
-  
-  .banner-dots {
-    bottom: 2.25rem;
-  }
-  
-  .progress-bar {
-    width: 120px;
-  }
+
+  .banner-nav-prev { left: 0.75rem; }
+  .banner-nav-next { right: 0.75rem; }
 }
 
-@media (max-width: 600px) {
-  .banner-content {
-    max-width: 92vw;
-    padding: calc(0.8rem + env(safe-area-inset-top, 0)) 0.5rem 1rem 0.5rem;
-    align-items: flex-start;
-  }
-  
+@media (max-width: 480px) {
   .banner-nav-btn {
     display: none;
   }
-  
-  .banner-progress {
-    bottom: 1rem;
-  }
-  
+
   .banner-dots {
-    bottom: 2.5rem;
-  }
-  
-  .progress-bar {
-    width: 100px;
+    bottom: 1rem;
   }
 }
 
-/* Focus States for Accessibility */
-.banner-nav-btn:focus,
-.banner-dot:focus {
-  outline: 2px solid #3b82f6;
+/* Accessibility */
+.banner-nav-btn:focus-visible,
+.banner-dot:focus-visible {
+  outline: 2px solid #fff;
   outline-offset: 2px;
 }
 
-/* High Contrast Mode Support */
-@media (prefers-contrast: high) {
-  .banner-nav-btn {
-    border: 2px solid #000000;
-  }
-  
-  .banner-dot {
-    border: 1px solid #000000;
-  }
-}
-
-/* Reduced Motion Support */
 @media (prefers-reduced-motion: reduce) {
-  .banner-bg,
-  .banner-nav-btn,
-  .banner-dot,
-  .progress-fill,
-  .banner-title,
-  .banner-subtitle,
-  .banner-btn {
+  .banner-bg {
     transition: none;
-    animation: none;
   }
 }

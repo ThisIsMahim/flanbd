@@ -9,7 +9,7 @@ import { motion } from "framer-motion";
 import React, { useRef, useEffect, useState } from "react";
 import "./ExplorePage.css";
 import gsap from "gsap";
-import DealSlider from "../../Home/DealSlider/DealSlider";
+import DealSlider from "../../home/DealSlider/DealSlider";
 import ServiceBookingModal from "../servicesPage/ServiceBookingModal";
 
 const ExplorePage = () => {
@@ -26,11 +26,11 @@ const ExplorePage = () => {
     }
   }, []);
 
-      // EyeGears Company Services
+  // EyeGears Company Services
   const services = [
     {
       id: 1,
-              title: "Custom Sunglasses Manufacturing",
+      title: "Custom Sunglasses Manufacturing",
       description:
         "Tailored sunglasses for brands, events, and organizations with full customization options.",
       icon: (

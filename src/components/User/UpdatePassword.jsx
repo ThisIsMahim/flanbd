@@ -1,16 +1,14 @@
-import TextField from "@mui/material/TextField";
-import { useSnackbar } from "notistack";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  clearErrors,
-  loadUser,
-  updatePassword,
-} from "../../actions/userAction";
+import { clearErrors, loadUser, updatePassword } from "../../actions/userAction";
 import { UPDATE_PASSWORD_RESET } from "../../constants/userConstants";
-import BackdropLoader from "../Layouts/BackdropLoader";
+import { useSnackbar } from "notistack";
 import MetaData from "../Layouts/MetaData";
+import BackdropLoader from "../Layouts/BackdropLoader";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import SecurityIcon from '@mui/icons-material/Security';
+import "./Account.css";
 
 const UpdatePassword = () => {
   const dispatch = useDispatch();
@@ -23,17 +21,14 @@ const UpdatePassword = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const updatePasswordSubmitHandler = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-
     if (newPassword.length < 8) {
-      enqueueSnackbar("Password length must be atleast 8 characters", {
-        variant: "warning",
-      });
+      enqueueSnackbar("Password length must be at least 8 characters", { variant: "warning" });
       return;
     }
     if (newPassword !== confirmPassword) {
-      enqueueSnackbar("Password Doesn't Match", { variant: "error" });
+      enqueueSnackbar("Passwords do not match", { variant: "error" });
       return;
     }
 
@@ -41,7 +36,6 @@ const UpdatePassword = () => {
     formData.set("oldPassword", oldPassword);
     formData.set("newPassword", newPassword);
     formData.set("confirmPassword", confirmPassword);
-
     dispatch(updatePassword(formData));
   };
 
@@ -54,121 +48,76 @@ const UpdatePassword = () => {
       enqueueSnackbar("Password Updated Successfully", { variant: "success" });
       dispatch(loadUser());
       navigate("/account");
-
       dispatch({ type: UPDATE_PASSWORD_RESET });
     }
   }, [dispatch, error, isUpdated, navigate, enqueueSnackbar]);
 
   return (
-    <>
-      <MetaData title="Password Update | FlanBD" />
+    <div className="account-page-wrapper bg-[var(--bg-primary)] min-h-screen py-12">
+      <MetaData title="Update Password | Flan" />
 
+      <div className="max-w-[600px] mx-auto px-6">
+        <Link to="/account" className="flex items-center gap-2 text-muted hover:text-accent transition-colors mb-8 group">
+          <ArrowBackIcon sx={{ fontSize: 18 }} className="group-hover:-translate-x-1 transition-transform" />
+          <span className="text-sm font-bold uppercase tracking-wider">Back to Account</span>
+        </Link>
+
+        <main className="account-main-card">
+          <header className="account-section-title">
+            <div className="flex items-center gap-3">
+              <SecurityIcon sx={{ color: 'var(--accent)' }} />
+              <h1>Update Password</h1>
+            </div>
+          </header>
+
+          <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+            <div className="account-field">
+              <label>Current Password</label>
+              <input
+                className="auth-input"
+                type="password"
+                value={oldPassword}
+                onChange={(e) => setOldPassword(e.target.value)}
+                required
+              />
+            </div>
+
+            <div className="account-field">
+              <label>New Password</label>
+              <input
+                className="auth-input"
+                type="password"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                required
+              />
+              <p className="text-[10px] text-muted mt-1 uppercase font-bold tracking-widest">Min. 8 characters</p>
+            </div>
+
+            <div className="account-field">
+              <label>Confirm New Password</label>
+              <input
+                className="auth-input"
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+              />
+            </div>
+
+            <div className="flex gap-4 mt-8 pt-8 border-t">
+              <button type="submit" className="btn-account-link primary flex-1" disabled={loading}>
+                {loading ? "Updating..." : "Update Password"}
+              </button>
+              <Link to="/account" className="btn-account-link outline flex-1 text-center">
+                Cancel
+              </Link>
+            </div>
+          </form>
+        </main>
+      </div>
       {loading && <BackdropLoader />}
-      <main className="w-full min-h-screen bg-gradient-to-br from-primary-blue-light/5 via-white to-primary-blue-light/10 mt-20">
-        <div className="container mx-auto px-4 py-12">
-          <div className="max-w-2xl mx-auto">
-            {/* Water-themed header */}
-            <div className="text-center mb-8">
-              <h1 className="text-3xl font-semibold text-primary-blue-dark mb-2">
-                Update Your Password
-              </h1>
-              <p className="text-gray-600">
-                Keep your account secure with a strong password
-              </p>
-            </div>
-
-            {/* Main form container */}
-            <div className="glass-card p-8">
-              <form
-                onSubmit={updatePasswordSubmitHandler}
-                className="space-y-6"
-              >
-                <div className="space-y-4">
-                  <TextField
-                    fullWidth
-                    label="Current Password"
-                    type="password"
-                    name="oldPassword"
-                    value={oldPassword}
-                    onChange={(e) => setOldPassword(e.target.value)}
-                    required
-                    variant="outlined"
-                    className="bg-white/50 backdrop-blur-sm"
-                    sx={{
-                      "& .MuiOutlinedInput-root": {
-                        "&:hover fieldset": {
-                          borderColor: "#25A4E3",
-                        },
-                      },
-                    }}
-                  />
-                  <TextField
-                    fullWidth
-                    label="New Password"
-                    type="password"
-                    name="newPassword"
-                    value={newPassword}
-                    onChange={(e) => setNewPassword(e.target.value)}
-                    required
-                    variant="outlined"
-                    className="bg-white/50 backdrop-blur-sm"
-                    sx={{
-                      "& .MuiOutlinedInput-root": {
-                        "&:hover fieldset": {
-                          borderColor: "#25A4E3",
-                        },
-                      },
-                    }}
-                  />
-                  <TextField
-                    fullWidth
-                    label="Confirm New Password"
-                    type="password"
-                    name="confirmPassword"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    required
-                    variant="outlined"
-                    className="bg-white/50 backdrop-blur-sm"
-                    sx={{
-                      "& .MuiOutlinedInput-root": {
-                        "&:hover fieldset": {
-                          borderColor: "#25A4E3",
-                        },
-                      },
-                    }}
-                  />
-                </div>
-
-                <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                  <button
-                    type="submit"
-                    className="flex-1 bg-primary-blue-dark hover:bg-white text-white py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-[1.02] shadow-lg hover:shadow-xl"
-                  >
-                    Update Password
-                  </button>
-                  <Link
-                    to="/account"
-                    className="flex-1 text-center border-2 border-primary-blue-light text-primary-blue-dark hover:bg-primary-blue-light/10 py-3 px-6 rounded-lg transition-all duration-300"
-                  >
-                    Cancel
-                  </Link>
-                </div>
-              </form>
-            </div>
-
-            {/* Password requirements */}
-            <div className="mt-6 text-center text-sm text-gray-600">
-              <p>Password must be at least 8 characters long</p>
-              <p>
-                For security, use a combination of letters, numbers, and special
-                characters
-              </p>
-            </div>
-          </div>
-        </div>
-      </main>
-    </>
+    </div>
   );
 };
 

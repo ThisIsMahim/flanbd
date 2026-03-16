@@ -1,132 +1,70 @@
-import { useSnackbar } from "notistack";
-import { useContext } from "react";
+import React, { useContext } from "react";
 import { useDispatch } from "react-redux";
-import { addItemsToCart } from "../../actions/cartAction";
+import { Link } from "react-router-dom";
+import { addItemsToCart, removeItemsFromCart } from "../../actions/cartAction";
 import { removeFromSaveForLater } from "../../actions/saveForLaterAction";
 import { LanguageContext } from "../../utils/LanguageContext";
-import { getDiscount } from "../../utils/functions";
-// import { LanguageContext } from '../../../utils/LanguageContext';
+import { useSnackbar } from "notistack";
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
-const SaveForLaterItem = ({
-  product,
-  name,
-  seller,
-  price,
-  cuttedPrice,
-  image,
-  stock,
-  quantity,
-}) => {
+const SaveForLaterItem = ({ product, name, price, cuttedPrice, image }) => {
   const { language } = useContext(LanguageContext);
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
 
-  // Translations
-  const translations = {
-    seller: language === "english" ? "Seller:" : "বিক্রেতা:",
-    off: language === "english" ? "off" : "ছাড়",
-    moveToCart: language === "english" ? "MOVE TO CART" : "কার্টে নিন",
-    remove: language === "english" ? "REMOVE" : "সরান",
-    removedFromSave:
-      language === "english"
-        ? "Removed From Save For Later"
-        : "পরে কেনার তালিকা থেকে সরানো হয়েছে",
-    addedToCart:
-      language === "english"
-        ? "Product Added To Cart"
-        : "পণ্য কার্টে যোগ করা হয়েছে",
+  const t = (eng, ben) => (language === "english" ? eng : ben);
+
+  const moveToCartHandler = () => {
+    dispatch(addItemsToCart(product, 1));
+    dispatch(removeFromSaveForLater(product));
+    enqueueSnackbar(t("Moved to cart", "কার্টে সরানো হয়েছে"), { variant: "success" });
   };
 
-  const removeFromSaveForLaterHandler = (id) => {
-    dispatch(removeFromSaveForLater(id));
-    enqueueSnackbar(translations.removedFromSave, { variant: "success" });
-  };
-
-  const moveToCartHandler = (id, quantity) => {
-    dispatch(addItemsToCart(id, quantity));
-    removeFromSaveForLaterHandler(id);
-    enqueueSnackbar(translations.addedToCart, { variant: "success" });
+  const removeHandler = () => {
+    dispatch(removeFromSaveForLater(product));
+    enqueueSnackbar(t("Removed from saved", "সংরক্ষণ তালিকা থেকে সরানো হয়েছে"), { variant: "info" });
   };
 
   return (
-    <div
-      className="flex flex-col gap-3 py-5 pl-2 sm:pl-6 border-b"
-      key={product}
-    >
-      <div
-        className="flex flex-col sm:flex-row gap-5 items-stretch w-full"
-        href="#"
-      >
-        {/* <!-- product image --> */}
-        <div className="w-full sm:w-1/6 h-28 flex-shrink-0">
-          <img
-            draggable="false"
-            className="h-full w-full object-contain"
-            src={image}
-            alt={name}
-          />
-        </div>
-        {/* <!-- product image --> */}
-
-        {/* <!-- description --> */}
-        <div className="flex flex-col gap-1 sm:gap-5 w-full p-1 pr-6">
-          {/* <!-- product title --> */}
-          <div className="flex justify-between items-start pr-5">
-            <div className="flex flex-col gap-0.5 w-11/12 sm:w-full">
-              <p>{name.length > 50 ? `${name.substring(0, 50)}...` : name}</p>
-              <span className="text-sm text-gray-500">
-                {translations.seller} {seller}
-              </span>
-            </div>
-          </div>
-          {/* <!-- product title --> */}
-
-          {/* <!-- price desc --> */}
-          <div className="flex items-baseline gap-2 text-xl font-medium">
-            <span>৳{(price * quantity).toLocaleString()}</span>
-            <span className="text-sm text-gray-500 line-through font-normal">
-              ৳{(cuttedPrice * quantity).toLocaleString()}
-            </span>
-            <span className="text-sm text-[#118c4f] font-medium">
-              {getDiscount(price, cuttedPrice)}%&nbsp;{translations.off}
-            </span>
-          </div>
-          {/* <!-- price desc --> */}
-        </div>
-        {/* <!-- description --> */}
+    <div className="cart-item-row" style={{ opacity: 0.85 }}>
+      <div className="cart-item-image">
+        <Link to={`/product/${product}`}>
+          <img src={image} alt={name} />
+        </Link>
       </div>
 
-      {/* <!-- move to cart --> */}
-      <div className="flex justify-evenly sm:justify-start sm:gap-6">
-        {/* <!-- quantity --> */}
-        <div className="flex gap-1 items-center">
-          <span className="w-7 h-7 text-3xl font-light bg-gray-50 rounded-full border flex items-center justify-center cursor-not-allowed">
-            <p>-</p>
-          </span>
-          <input
-            className="w-11 border outline-none text-center rounded-sm py-0.5 text-gray-700 font-medium text-sm"
-            value={quantity}
-            disabled
-          />
-          <span className="w-7 h-7 text-xl font-light bg-gray-50 rounded-full border flex items-center justify-center cursor-not-allowed">
-            +
-          </span>
+      <div className="cart-item-info">
+        <h3>
+          <Link to={`/product/${product}`} className="hover:text-accent transition-colors">
+            {name}
+          </Link>
+        </h3>
+
+        <div className="cart-item-meta">
+          <span>{t("Saved for later", "পরে কেনার জন্য সংরক্ষিত")}</span>
         </div>
-        {/* <!-- quantity --> */}
-        <button
-          onClick={() => moveToCartHandler(product, quantity)}
-          className="sm:ml-4 font-medium hover:text-[var(--primary-blue-dark)] transition-colors"
-        >
-          {translations.moveToCart}
-        </button>
-        <button
-          onClick={() => removeFromSaveForLaterHandler(product)}
-          className="font-medium hover:text-red-600 transition-colors"
-        >
-          {translations.remove}
-        </button>
+
+        <div className="cart-item-actions">
+          <div className="flex gap-4">
+            <button className="cart-item-save flex items-center gap-1" onClick={moveToCartHandler}>
+              <ShoppingCartOutlinedIcon sx={{ fontSize: 16 }} />
+              {t("Move to cart", "কার্টে নিন")}
+            </button>
+            <button className="cart-item-remove flex items-center gap-1" onClick={removeHandler}>
+              <DeleteOutlineIcon sx={{ fontSize: 16 }} />
+              {t("Remove", "সরান")}
+            </button>
+          </div>
+        </div>
       </div>
-      {/* <!-- move to cart --> */}
+
+      <div className="cart-item-price">
+        <span className="price-current">৳{price.toLocaleString()}</span>
+        {cuttedPrice > price && (
+          <span className="price-original">৳{cuttedPrice.toLocaleString()}</span>
+        )}
+      </div>
     </div>
   );
 };

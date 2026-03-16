@@ -21,17 +21,17 @@ const TrustedCompaniesCarousel = () => {
 
   return (
     <section className="trusted-companies-section">
-      <div className="trusted-companies-header">
-        <div ref={titleRef} className="trusted-companies-title !text-3xl" style={{ color: 'var(--primary-blue-dark)' }}>
-          Brands We Provide
-        </div>
-        <div className="trusted-title-decoration"></div>
+      <div className="home-section-header" ref={titleRef}>
+        <span className="section-subtitle">Official Partners</span>
+        <h2 className="section-title">Brands We Provide</h2>
       </div>
 
-      <div className="trusted-grid">
-        {companies.map((company, idx) => {
+      <div className="container">
+        <div className="trusted-grid">
+          {companies.map((company, idx) => {
+
           const content = (
-            <div className="trusted-grid-logo glass-card" key={idx} title={company.name}>
+            <div className="trusted-grid-logo" key={idx} title={company.name}>
               <img src={company.logo} alt={company.name} />
             </div>
           );
@@ -49,6 +49,7 @@ const TrustedCompaniesCarousel = () => {
             content
           );
         })}
+      </div>
       </div>
     </section>
   );
