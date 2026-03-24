@@ -110,9 +110,8 @@ const ProductDetails = () => {
   return (
     <>
       <MetaData title={product.name} />
-      <Breadcrumb product={product} />
-
-      <main className="product-details-container">
+      <main className="product-details-container mt-24">
+        <Breadcrumb product={product} />
         <div className="product-main-row">
           {/* Left: Gallery */}
           <div className="product-gallery">

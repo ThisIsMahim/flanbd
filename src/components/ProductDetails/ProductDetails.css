@@ -4,7 +4,6 @@
 
 .product-details-container {
   max-width: var(--container-max);
-  margin: 0 auto;
   padding: 2rem var(--section-px);
   display: flex;
   flex-direction: column;

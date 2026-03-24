@@ -358,11 +358,7 @@ const Products = () => {
   return (
     <>
       <MetaData title="All Products | FlanBD" />
-      <main className="bg-[var(--bg-primary)]">
-        <div className="mx-auto max-w-[1400px] border-b border-[var(--border-subtle)] px-4 py-2">
-          <Breadcrumb items={breadcrumbItems} />
-        </div>
-
+      <main className="bg-[var(--bg-primary)] mt-24">
         <div className="products-page-container">
           {/* Desktop Sidebar */}
           {!isMobile && (
@@ -407,6 +403,7 @@ const Products = () => {
               </div>
             ) : (
               <div className="products-grid-section">
+                 <Breadcrumb items={breadcrumbItems} />
                 <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {filteredProducts
                     .slice((currentPage - 1) * FIXED_RESULT_PER_PAGE, currentPage * FIXED_RESULT_PER_PAGE)
