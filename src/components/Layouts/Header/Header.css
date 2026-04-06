@@ -8,15 +8,32 @@
   left: 0;
   width: 100%;
   z-index: 1000;
-  transition: all var(--transition-base);
-  background: transparent;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
+/* ---- DEFAULT (non-home pages): dark background at top ---- */
+.header-wrapper {
+  background: rgba(30, 40, 38, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* ---- HOME PAGE at top: transparent with subtle gradient for readability ---- */
+.header-wrapper.home-page:not(.scrolled) {
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0.15) 60%, transparent 100%);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-bottom: none;
+  box-shadow: none;
+}
+
+/* ---- ALL PAGES when scrolled: darker solid color ---- */
 .header-wrapper.scrolled {
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(20, 30, 28, 0.97);
   backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border);
-  box-shadow: var(--shadow-md);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.25);
 }
 
 .header-container {
@@ -27,11 +44,11 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  transition: all var(--transition-base);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .header-wrapper.scrolled .header-container {
-  height: 80px;
+  height: 72px;
 }
 
 /* Logo */
@@ -41,17 +58,21 @@
   font-weight: 900;
   letter-spacing: -0.05em;
   text-transform: uppercase;
-  color: var(--text-primary);
   display: flex;
   align-items: center;
   gap: 0.1em;
+}
+
+.header-logo,
+.header-logo img {
+  transition: all 0.3s ease;
 }
 
 .header-logo span {
   color: var(--accent);
 }
 
-/* Nav Links */
+/* Nav Links — always white text on dark bg */
 .nav-links {
   display: flex;
   gap: 3rem;
@@ -64,16 +85,16 @@
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.15em;
-  color: var(--text-primary);
+  color: rgba(255, 255, 255, 0.75);
   text-decoration: none;
-  transition: all var(--transition-base);
+  transition: all 0.3s ease;
   position: relative;
-  opacity: 0.7;
 }
 
-.nav-link:hover, .nav-link.active {
+.nav-link:hover,
+.nav-link.active {
   opacity: 1;
-  color: var(--accent);
+  color: #ffffff;
 }
 
 .nav-link::after {
@@ -84,28 +105,26 @@
   width: 0;
   height: 2px;
   background: var(--accent);
-  transition: all var(--transition-base);
+  transition: all 0.3s ease;
   transform: translateX(-50%);
 }
 
-.nav-link:hover::after, .nav-link.active::after {
+.nav-link:hover::after,
+.nav-link.active::after {
   width: 20px;
 }
 
-/* Home Page Transparent Header */
-.header-wrapper.home-page:not(.scrolled) .nav-link,
-.header-wrapper.home-page:not(.scrolled) .header-icon-btn {
-  color: #ffffff;
-  opacity: 0.9;
+/* Home Page at top — same white links (transparent bg) */
+.header-wrapper.home-page:not(.scrolled) .nav-link {
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .header-wrapper.home-page:not(.scrolled) .nav-link:hover,
 .header-wrapper.home-page:not(.scrolled) .nav-link.active {
-  color: var(--accent);
-  opacity: 1;
+  color: #ffffff;
 }
 
-/* Icons Group */
+/* Icons — always white on dark bg */
 .header-actions {
   display: flex;
   align-items: center;
@@ -115,31 +134,43 @@
 .header-icon-btn {
   background: transparent;
   border: none;
-  color: var(--text-primary);
+  color: rgba(255, 255, 255, 0.8);
   cursor: pointer;
   padding: 0.75rem;
   border-radius: var(--radius-full);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all var(--transition-base);
+  transition: all 0.3s ease;
   position: relative;
   border: 1px solid transparent;
 }
 
 .header-icon-btn:hover {
-  background: var(--bg-surface);
-  border-color: var(--border);
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.15);
   transform: translateY(-2px);
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
+/* Home page top icons */
+.header-wrapper.home-page:not(.scrolled) .header-icon-btn {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.header-wrapper.home-page:not(.scrolled) .header-icon-btn:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Cart Badge */
 .cart-badge {
   position: absolute;
   top: 4px;
   right: 4px;
   background: var(--accent);
-  color: var(--text-inverse);
+  color: #ffffff;
   font-size: 10px;
   font-weight: 900;
   width: 18px;
@@ -148,14 +179,19 @@
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  border: 2px solid var(--bg-surface);
+  border: 2px solid rgba(20, 30, 28, 0.97);
+  transition: border-color 0.3s ease;
+}
+
+.header-wrapper.home-page:not(.scrolled) .cart-badge {
+  border-color: transparent;
 }
 
 /* Search Modal */
 .search-modal {
   position: fixed;
   inset: 0;
-  background: rgba(255, 255, 255, 0.98);
+  background: rgba(15, 20, 18, 0.97);
   backdrop-filter: blur(20px);
   z-index: 2000;
   display: flex;
@@ -174,18 +210,23 @@
   width: 100%;
   background: transparent;
   border: none;
-  border-bottom: 4px solid var(--text-primary);
+  border-bottom: 4px solid rgba(255, 255, 255, 0.3);
   padding: 1.5rem 0;
   font-family: var(--font-display);
   font-size: var(--text-5xl);
   font-weight: 800;
-  color: var(--text-primary);
+  color: #ffffff;
   outline: none;
   letter-spacing: -0.04em;
+  transition: border-color 0.3s ease;
+}
+
+.search-input:focus {
+  border-bottom-color: var(--accent);
 }
 
 .search-input::placeholder {
-  color: var(--border);
+  color: rgba(255, 255, 255, 0.25);
 }
 
 .search-close-btn {
@@ -195,9 +236,9 @@
   font-size: 2rem;
   background: none;
   border: none;
-  color: var(--text-primary);
+  color: rgba(255, 255, 255, 0.7);
   cursor: pointer;
-  transition: transform var(--transition-base);
+  transition: all 0.3s ease;
 }
 
 .search-close-btn:hover {
@@ -205,12 +246,12 @@
   color: var(--accent);
 }
 
-/* Mobile Menu Toggle button hide defaults desk layout */
+/* Mobile Menu Toggle button — hidden on desktop */
 .mobile-menu-btn {
   display: none;
 }
 
-/* Mobile Menu Dark Overlay Styling */
+/* Mobile Menu Dark Overlay */
 .mobile-menu-overlay {
   position: fixed;
   inset: 0;
@@ -233,7 +274,7 @@
   border: none;
   color: #ffffff;
   cursor: pointer;
-  transition: transform var(--transition-base);
+  transition: transform 0.3s ease;
 }
 
 .mobile-menu-close-btn:hover {
@@ -249,7 +290,7 @@
   color: #ffffff;
   text-decoration: none;
   letter-spacing: -0.01em;
-  transition: all var(--transition-base);
+  transition: all 0.3s ease;
 }
 
 .mobile-nav-link:hover {
@@ -265,5 +306,24 @@
   
   .mobile-menu-btn {
     display: flex;
+  }
+}
+
+@media (max-width: 768px) {
+  .header-container {
+    height: 80px;
+    padding: 0 1rem;
+  }
+
+  .header-wrapper.scrolled .header-container {
+    height: 64px;
+  }
+
+  .header-actions {
+    gap: 0.75rem;
+  }
+
+  .header-icon-btn {
+    padding: 0.5rem;
   }
 }

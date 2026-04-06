@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { addItemsToCart, removeItemsFromCart } from "../../actions/cartAction";
+import { addItemsToCart } from "../../actions/cartAction";
 import { removeFromSaveForLater } from "../../actions/saveForLaterAction";
 import { LanguageContext } from "../../utils/LanguageContext";
 import { useSnackbar } from "notistack";
@@ -27,7 +27,7 @@ const SaveForLaterItem = ({ product, name, price, cuttedPrice, image }) => {
   };
 
   return (
-    <div className="cart-item-row" style={{ opacity: 0.85 }}>
+    <div className="cart-item-row" style={{ opacity: 0.75 }}>
       <div className="cart-item-image">
         <Link to={`/product/${product}`}>
           <img src={image} alt={name} />
@@ -36,7 +36,7 @@ const SaveForLaterItem = ({ product, name, price, cuttedPrice, image }) => {
 
       <div className="cart-item-info">
         <h3>
-          <Link to={`/product/${product}`} className="hover:text-accent transition-colors">
+          <Link to={`/product/${product}`}>
             {name}
           </Link>
         </h3>
@@ -46,13 +46,13 @@ const SaveForLaterItem = ({ product, name, price, cuttedPrice, image }) => {
         </div>
 
         <div className="cart-item-actions">
-          <div className="flex gap-4">
-            <button className="cart-item-save flex items-center gap-1" onClick={moveToCartHandler}>
-              <ShoppingCartOutlinedIcon sx={{ fontSize: 16 }} />
+          <div style={{ display: 'flex', gap: '1rem' }}>
+            <button className="cart-item-save" onClick={moveToCartHandler}>
+              <ShoppingCartOutlinedIcon sx={{ fontSize: 14 }} />
               {t("Move to cart", "কার্টে নিন")}
             </button>
-            <button className="cart-item-remove flex items-center gap-1" onClick={removeHandler}>
-              <DeleteOutlineIcon sx={{ fontSize: 16 }} />
+            <button className="cart-item-remove" onClick={removeHandler}>
+              <DeleteOutlineIcon sx={{ fontSize: 14 }} />
               {t("Remove", "সরান")}
             </button>
           </div>

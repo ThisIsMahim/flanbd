@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { clearErrors, registerUser } from "../../actions/userAction";
@@ -7,7 +8,7 @@ import { useSnackbar } from "notistack";
 import MetaData from "../Layouts/MetaData";
 import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';
 import BackdropLoader from "../Layouts/BackdropLoader";
-import "./Auth.css";
+import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 
 const notebookAvatars = [
   "https://img.icons8.com/ios-filled/100/000000/user-male-circle.png",
@@ -73,74 +74,176 @@ const Register = () => {
   const t = (eng, ben) => (language === "english" ? eng : ben);
 
   return (
-    <div className="auth-page-wrapper">
+    <div className="min-h-screen bg-gray-50 flex overflow-hidden">
       <MetaData title={t("Register | Flan", "নিবন্ধন | Flan")} />
 
-      <div className="auth-card">
-        {/* Sidebar */}
-        <aside className="auth-sidebar">
-          <div className="auth-sidebar-icon">
-            <LocalLibraryIcon sx={{ fontSize: 40 }} />
+      {/* Left Form Side */}
+      <motion.div 
+        initial={{ x: "100%", opacity: 0.5 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        className="w-full lg:w-7/12 flex items-center justify-center p-6 sm:p-10 lg:p-16 bg-white relative"
+      >
+        <div className="w-full max-w-lg relative z-10">
+          
+          {/* Mobile Logo Fallback */}
+          <div className="lg:hidden mb-10 text-center">
+             <Link to="/">
+               <img src="/logo.png" alt="Flan" className="h-10 mx-auto object-contain" onError={(e) => { e.target.style.display='none'; e.target.nextSibling.style.display='flex'; }} />
+               <div className="hidden mx-auto w-12 h-12 bg-black rounded-xl items-center justify-center">
+                 <LocalLibraryIcon sx={{ fontSize: 24 }} className="text-white" />
+               </div>
+             </Link>
           </div>
-          <h2>Join the Community</h2>
-          <p>Create an account to track orders, save favorites, and get the latest fandom updates.</p>
-        </aside>
 
-        {/* Form Content */}
-        <main className="auth-content">
-          <div className="auth-header">
-            <h1>Create Account</h1>
-            <p>Fill in your details to get started.</p>
+          <div className="mb-10">
+            <h1 className="text-4xl sm:text-5xl font-black text-gray-900 mb-3 font-display tracking-tight">Create Account</h1>
+            <p className="text-gray-500 font-medium text-sm sm:text-base">Join Flan and level up your shopping experience.</p>
           </div>
 
-          <form className="auth-form" onSubmit={handleRegister}>
-            <div className="auth-input-group">
-              <label>{t("Full Name", "পুরো নাম")}</label>
-              <input type="text" name="name" value={user.name} onChange={handleChange} required className="auth-input" />
+          <form onSubmit={handleRegister} className="space-y-5">
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              {/* Name Field */}
+              <div className="space-y-2">
+                <label className="text-xs font-bold text-gray-400 uppercase tracking-widest pl-1">{t("Full Name", "পুরো নাম")}</label>
+                <input
+                  type="text"
+                  name="name"
+                  value={user.name}
+                  onChange={handleChange}
+                  required
+                  placeholder="John Doe"
+                  className="w-full px-5 py-3.5 bg-gray-50 text-gray-900 placeholder-gray-400 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent transition-all duration-300"
+                />
+              </div>
+
+              {/* Email Field */}
+              <div className="space-y-2">
+                <label className="text-xs font-bold text-gray-400 uppercase tracking-widest pl-1">{t("Email Address", "ইমেইল")}</label>
+                <input
+                  type="email"
+                  name="email"
+                  value={user.email}
+                  onChange={handleChange}
+                  required
+                  placeholder="name@example.com"
+                  className="w-full px-5 py-3.5 bg-gray-50 text-gray-900 placeholder-gray-400 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent transition-all duration-300"
+                />
+              </div>
             </div>
 
-            <div className="auth-input-group">
-              <label>{t("Email Address", "ইমেইল")}</label>
-              <input type="email" name="email" value={user.email} onChange={handleChange} required className="auth-input" />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              {/* Password Field */}
+              <div className="space-y-2">
+                <label className="text-xs font-bold text-gray-400 uppercase tracking-widest pl-1">{t("Password", "পাসওয়ার্ড")}</label>
+                <input
+                  type="password"
+                  name="password"
+                  value={user.password}
+                  onChange={handleChange}
+                  required
+                  placeholder="••••••••"
+                  className="w-full px-5 py-3.5 bg-gray-50 text-gray-900 placeholder-gray-400 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent transition-all duration-300"
+                />
+              </div>
+
+              {/* Confirm Password Field */}
+              <div className="space-y-2">
+                 <label className="text-xs font-bold text-gray-400 uppercase tracking-widest pl-1">{t("Confirm Password", "পাসওয়ার্ড নিশ্চিত করুন")}</label>
+                 <input
+                  type="password"
+                  name="cpassword"
+                  value={user.cpassword}
+                  onChange={handleChange}
+                  required
+                  placeholder="••••••••"
+                  className="w-full px-5 py-3.5 bg-gray-50 text-gray-900 placeholder-gray-400 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent transition-all duration-300"
+                />
+              </div>
             </div>
 
-            <div className="auth-input-group">
-              <label>{t("Password", "পাসওয়ার্ড")}</label>
-              <input type="password" name="password" value={user.password} onChange={handleChange} required className="auth-input" />
-            </div>
-
-            <div className="auth-input-group">
-              <label>{t("Confirm Password", "পাসওয়ার্ড নিশ্চিত করুন")}</label>
-              <input type="password" name="cpassword" value={user.cpassword} onChange={handleChange} required className="auth-input" />
-            </div>
-
-            <div className="auth-input-group">
-              <label>{t("Select Avatar", "প্রোফাইল ছবি")}</label>
-              <div className="avatar-grid">
+            {/* Avatar Selection */}
+            <div className="pt-2 space-y-3">
+              <label className="text-xs font-bold text-gray-400 uppercase tracking-widest pl-1">{t("Select Avatar", "প্রোফাইল ছবি")}</label>
+              <div className="flex flex-wrap gap-4">
                 {notebookAvatars.map((url) => (
-                  <div
+                  <button
+                    type="button"
                     key={url}
-                    className={`avatar-option ${selectedAvatar === url ? 'selected' : ''}`}
                     onClick={() => setSelectedAvatar(url)}
+                    className={`relative w-14 h-14 rounded-full p-1 border-2 transition-all duration-300 focus:outline-none ${selectedAvatar === url ? 'border-accent shadow-[0_0_15px_rgba(255,0,0,0.3)] scale-110' : 'border-gray-200 hover:border-gray-300'}`}
                   >
-                    <img src={url} alt="Avatar" />
-                  </div>
+                    <img src={url} alt="Avatar" className="w-full h-full object-cover rounded-full bg-gray-100" />
+                  </button>
                 ))}
               </div>
             </div>
 
-            <button type="submit" className="auth-btn-primary" disabled={loading}>
-              {loading ? "Creating..." : t("Create Account", "অ্যাকাউন্ট তৈরি করুন")}
+            {/* Submit Button */}
+            <button 
+              type="submit" 
+              disabled={loading}
+              className="group w-full py-4 px-6 mt-6 flex items-center justify-between text-white bg-black hover:bg-accent focus:ring-4 focus:ring-accent/20 rounded-xl font-bold uppercase tracking-wider text-sm transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed shadow-[0_10px_30px_-10px_rgba(0,0,0,0.3)] hover:shadow-[0_10px_30px_-10px_rgba(255,0,0,0.4)]"
+            >
+              <span>{loading ? "Creating..." : t("Create Account", "অ্যাকাউন্ট তৈরি করুন")}</span>
+              <ArrowRightAltIcon className="group-hover:translate-x-2 transition-transform duration-300" />
             </button>
+            
           </form>
 
-          <div className="auth-footer">
-            <p>
-              Already a customer? <Link to="/login" className="auth-link">Login Here</Link>
-            </p>
+          {/* Login Link */}
+          <div className="mt-10 text-center">
+             <p className="text-sm font-medium text-gray-500">
+               Already a customer?{' '}
+               <Link to="/login" className="text-accent font-bold hover:underline underline-offset-4 decoration-2 transition-all">
+                 Login Here
+               </Link>
+             </p>
           </div>
-        </main>
-      </div>
+
+        </div>
+      </motion.div>
+
+      {/* Right Decoration Side */}
+      <motion.div 
+        initial={{ x: "-100%", opacity: 0.5 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        className="hidden lg:flex lg:w-5/12 relative bg-black items-center justify-center overflow-hidden"
+      >
+        {/* Subtle patterned/gradient background */}
+        <div className="absolute inset-0 bg-gradient-to-tr from-black via-gray-900 to-red-950 opacity-90 z-0" />
+        
+        {/* Decorative Circles */}
+        <div className="absolute top-1/3 left-1/4 w-80 h-80 bg-accent rounded-full opacity-10 blur-[100px] mix-blend-screen" />
+        <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-white rounded-full opacity-5 blur-[80px] mix-blend-overlay" />
+
+        <div className="relative z-10 w-full max-w-sm px-8 text-white">
+          <div className="mb-10 inline-flex items-center justify-center p-4 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 shadow-2xl">
+             <img src="/logo.png" alt="Flan" className="h-8 object-contain" onError={(e) => { e.target.style.display='none'; e.target.nextSibling.style.display='block'; }} />
+             <LocalLibraryIcon sx={{ fontSize: 32 }} className="hidden text-accent" />
+          </div>
+          
+          <h2 className="text-4xl font-extrabold mb-6 font-display tracking-tight leading-tight">
+            Join the <br /> <span className="text-accent underline decoration-4 underline-offset-4">Community</span>
+          </h2>
+          <p className="text-gray-400 text-lg mb-10 leading-relaxed font-light">
+            Create an account to track orders, save favorites, and get the latest fandom updates instantly.
+          </p>
+          
+          <ul className="space-y-4">
+            {['Track Orders Instantly', 'Early Access to Deals', 'Save Your Favorites'].map((item, i) => (
+              <li key={i} className="flex items-center gap-3 text-sm font-medium text-gray-300">
+                 <div className="w-2 h-2 rounded-full bg-accent" />
+                 {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </motion.div>
+
+
 
       {loading && <BackdropLoader />}
     </div>

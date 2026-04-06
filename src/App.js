@@ -37,7 +37,7 @@ import Payment from "./components/Cart/Payment";
 import GuestCheckout from "./components/Cart/GuestCheckout";
 import GuestOrderTracking from "./components/Cart/GuestOrderTracking";
 
-import Home from "./components/home/Home";
+import Home from "./components/Home/Home";
 import Footer from "./components/Layouts/Footer/Footer";
 import Header from "./components/Layouts/Header/Header";
 import AboutUs from "./components/Layouts/aboutUsPage/AboutUs";
@@ -49,7 +49,7 @@ import MyOrders from "./components/Order/MyOrders";
 import OrderDetails from "./components/Order/OrderDetails";
 import OrderHistory from "./components/User/OrderHistory";
 import ProductDetails from "./components/ProductDetails/ProductDetails";
-import Products from "./components/products/Products";
+import Products from "./components/Products/Products";
 import Account from "./components/User/Account";
 import ForgotPassword from "./components/User/ForgotPassword";
 import Login from "./components/User/Login";
@@ -64,7 +64,7 @@ import Shipping from "./components/Cart/Shipping";
 import CancellationReturn from "./components/Layouts/Footer/CancellationReturn";
 import TermsConditions from "./components/Layouts/Footer/TermsConditions";
 import ShippingPolicies from "./components/Layouts/Footer/Shipping";
-import HomeBlogSection from "./components/home/HomeBlogSection";
+import HomeBlogSection from "./components/Home/HomeBlogSection";
 
 // Configure axios defaults
 axios.defaults.withCredentials = true;
@@ -237,7 +237,7 @@ function App() {
   return (
     <HelmetProvider>
       <LanguageProvider>
-        <Header />
+        {!pathname.startsWith("/admin") && <Header />}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
@@ -431,7 +431,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
         {/* <ChatButton /> */}
-        <Footer />
+        {!pathname.startsWith("/admin") && <Footer />}
       </LanguageProvider>
     </HelmetProvider>
   );

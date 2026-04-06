@@ -45,32 +45,32 @@ const CartItem = ({ product, name, price, cuttedPrice, image, stock, quantity, i
 
       <div className="cart-item-info">
         <h3>
-          <Link to={`/product/${product}`} className="hover:text-accent transition-colors">
+          <Link to={`/product/${product}`}>
             {name}
           </Link>
         </h3>
 
         <div className="cart-item-meta">
           <span>{t("Sold by:", "বিক্রেতা:")} Flanbd</span>
-          {stock < 5 && <span className="text-accent ml-2">({t(`Only ${stock} left`, `মাত্র ${stock}টি বাকি`)})</span>}
+          {stock < 5 && <span className="text-accent" style={{ marginLeft: '0.5rem' }}>({t(`Only ${stock} left`, `মাত্র ${stock}টি বাকি`)})</span>}
         </div>
 
         <div className="cart-item-actions">
           <div className="qty-control">
             <button className="qty-btn" onClick={() => handleQtyChange(quantity - 1)}>−</button>
             <span className="qty-value">{quantity}</span>
-            <button className="qty-btn" onClick={() => handleQtyChange(quantity + 1)}>+</button>
+            <button className="qty-btn" onClick={() => handleQtyChange(quantity + 1)} disabled={quantity >= stock}>+</button>
           </div>
 
-          <div className="flex gap-4">
+          <div style={{ display: 'flex', gap: '1rem' }}>
             {inCart && (
-              <button className="cart-item-save flex items-center gap-1" onClick={saveLaterHandler}>
-                <FavoriteBorderIcon sx={{ fontSize: 16 }} />
+              <button className="cart-item-save" onClick={saveLaterHandler}>
+                <FavoriteBorderIcon sx={{ fontSize: 14 }} />
                 {t("Save for later", "পরে কেনুন")}
               </button>
             )}
-            <button className="cart-item-remove flex items-center gap-1" onClick={removeHandler}>
-              <DeleteOutlineIcon sx={{ fontSize: 16 }} />
+            <button className="cart-item-remove" onClick={removeHandler}>
+              <DeleteOutlineIcon sx={{ fontSize: 14 }} />
               {t("Remove", "সরান")}
             </button>
           </div>

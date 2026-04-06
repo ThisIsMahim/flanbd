@@ -73,11 +73,11 @@ const Footer = () => {
 
   return (
     <footer className="footer-main">
-      <div className="container">
+      <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
         <div className="footer-grid">
           <div className="footer-brand">
             <Link to="/" className="footer-logo">
-              FLAN<span>.</span>
+              <span className="footer-logo-accent">F</span>LAN<span>.</span>
             </Link>
             <p className="footer-tagline">
               Your premium destination for high-quality anime merchandise and collectibles.
@@ -113,7 +113,7 @@ const Footer = () => {
             </div>
           ))}
 
-          <div className="footer-col">
+          <div className="footer-col newsletter-col">
             <h4 className="footer-col-title">Newsletter</h4>
             <p className="footer-tagline mb-4">
               Subscribe to get special offers, free giveaways, and once-in-a-lifetime deals.
@@ -122,9 +122,11 @@ const Footer = () => {
               <input 
                 type="email" 
                 placeholder="Email address" 
-                className="bg-white/5 border border-white/10 rounded-full px-4 py-2 text-sm flex-1 focus:outline-none focus:border-accent"
+                className="footer-input"
               />
-              <button className="btn btn-primary py-2 px-6 text-xs">Join</button>
+              <button className="btn py-2 px-4 sm:px-6 text-xs font-bold uppercase tracking-wider border-2 border-current rounded-full transition-all duration-300 hover:scale-105 hover:opacity-80" style={{ color: 'inherit' }}>
+                Join
+              </button>
             </div>
           </div>
         </div>
@@ -133,11 +135,11 @@ const Footer = () => {
           <p className="footer-copyright">
             &copy; {new Date().getFullYear()} FlanBD. All Rights Reserved.
           </p>
-          <div className="footer-payments">
+          <div className="footer-payments justify-center">
             <img src="/bkash.png" alt="bkash" />
             <img src="/Nagad.png" alt="Nagad" />
           </div>
-          <div className="flex items-center gap-2 opacity-50 hover:opacity-100 transition-opacity">
+          <div className="flex items-center justify-center gap-2 opacity-50 hover:opacity-100 transition-opacity">
             <span className="text-[10px] font-bold uppercase tracking-widest">Powered by</span>
             <a href="https://softenginelab.com/" target="_blank" rel="noopener noreferrer">
               <img src="/softEngineLab.png" alt="SoftEngineLab" className="h-4" />

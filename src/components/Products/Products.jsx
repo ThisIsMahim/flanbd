@@ -15,15 +15,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { addItemsToCart } from "../../actions/cartAction";
 import { clearErrors, getProducts } from "../../actions/productAction";
-import DealSlider from "../home/DealSlider/DealSlider";
-import HomeContactSection from "../home/HomeContactSection";
-import ProductCard from "../home/ProductSlider/components/ProductCard";
-import QuickViewDialog from "../home/ProductSlider/components/QuickViewDialog";
+import DealSlider from "../Home/DealSlider/DealSlider";
+import HomeContactSection from "../Home/HomeContactSection";
+import ProductCard from "../Home/ProductSlider/components/ProductCard";
+import QuickViewDialog from "../Home/ProductSlider/components/QuickViewDialog";
 import Breadcrumb from "../Layouts/Breadcrumb";
 import MetaData from "../Layouts/MetaData";
 import SkeletonProduct from "./SkeletonProduct";
 import "./Products.css";
-import "../home/SliderStyles.css"; // Card styles
+import "../Home/SliderStyles.css"; // Card styles
 
 const PRICE_STEP = 100;
 const FIXED_RESULT_PER_PAGE = 9;
@@ -398,13 +398,13 @@ const Products = () => {
             )}
 
             {loading ? (
-              <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {[...Array(9)].map((_, i) => <SkeletonProduct key={i} />)}
+              <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
+                {[...Array(12)].map((_, i) => <SkeletonProduct key={i} />)}
               </div>
             ) : (
               <div className="products-grid-section">
                  <Breadcrumb items={breadcrumbItems} />
-                <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
                   {filteredProducts
                     .slice((currentPage - 1) * FIXED_RESULT_PER_PAGE, currentPage * FIXED_RESULT_PER_PAGE)
                     .map((product) => (

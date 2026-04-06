@@ -1,19 +1,21 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { clearErrors, loadUser, updateProfile } from '../../actions/userAction';
 import { UPDATE_PROFILE_RESET } from '../../constants/userConstants';
+import { LanguageContext } from '../../utils/LanguageContext';
 import { useSnackbar } from 'notistack';
 import MetaData from '../Layouts/MetaData';
 import BackdropLoader from '../Layouts/BackdropLoader';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
+import PhotoCameraOutlinedIcon from '@mui/icons-material/PhotoCameraOutlined';
 import "./Account.css";
 
 const UpdateProfile = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
+    const { language } = useContext(LanguageContext);
 
     const { user } = useSelector((state) => state.user);
     const { error, isUpdated, loading } = useSelector((state) => state.profile);
@@ -23,6 +25,8 @@ const UpdateProfile = () => {
     const [gender, setGender] = useState("");
     const [avatar, setAvatar] = useState("");
     const [avatarPreview, setAvatarPreview] = useState("");
+
+    const t = (eng, ben) => (language === "english" ? eng : ben);
 
     const updateProfileHandler = (e) => {
         e.preventDefault();
@@ -59,7 +63,7 @@ const UpdateProfile = () => {
             dispatch(clearErrors());
         }
         if (isUpdated) {
-            enqueueSnackbar("Profile Updated Successfully", { variant: "success" });
+            enqueueSnackbar(t("Profile Updated Successfully", "প্রোফাইল সফলভাবে আপডেট হয়েছে"), { variant: "success" });
             dispatch(loadUser());
             navigate('/account');
             dispatch({ type: UPDATE_PROFILE_RESET });
@@ -67,102 +71,105 @@ const UpdateProfile = () => {
     }, [dispatch, error, user, isUpdated, navigate, enqueueSnackbar]);
 
     return (
-        <div className="account-page-wrapper bg-[var(--bg-primary)] min-h-screen py-12">
-            <MetaData title="Update Profile | Flan" />
+        <div className="account-page-wrapper">
+            <MetaData title={t("Update Profile | Flan", "প্রোফাইল আপডেট | Flan")} />
 
-            <div className="max-w-[700px] mx-auto px-6">
-                <Link to="/account" className="flex items-center gap-2 text-muted hover:text-accent transition-colors mb-8 group">
-                    <ArrowBackIcon sx={{ fontSize: 18 }} className="group-hover:-translate-x-1 transition-transform" />
-                    <span className="text-sm font-bold uppercase tracking-wider">Back to Account</span>
+            <div className="update-profile-container">
+                {/* Back Link */}
+                <Link to="/account" className="update-back-link">
+                    <ArrowBackIcon sx={{ fontSize: 16 }} />
+                    <span>{t("Back to Profile", "প্রোফাইলে ফিরুন")}</span>
                 </Link>
 
-                <main className="account-main-card">
-                    <header className="account-section-title">
-                        <h1>Update Profile</h1>
+                <div className="update-profile-card">
+                    <header className="update-profile-header">
+                        <h1>{t("Update Profile", "প্রোফাইল আপডেট")}</h1>
+                        <p>{t("Manage your personal information", "আপনার ব্যক্তিগত তথ্য পরিচালনা করুন")}</p>
                     </header>
 
-                    <form onSubmit={updateProfileHandler} className="flex flex-col gap-8">
+                    <form onSubmit={updateProfileHandler} className="update-profile-form">
                         {/* Avatar Upload */}
-                        <div className="flex flex-col items-center gap-4 py-6 bg-subtle rounded-3xl border border-dashed border-subtle">
-                            <div className="relative group cursor-pointer">
+                        <div className="update-avatar-section">
+                            <div className="update-avatar-wrapper">
                                 <img
-                                    src={avatarPreview}
-                                    className="w-32 h-32 rounded-full object-cover border-4 border-surface shadow-lg"
+                                    src={avatarPreview || "https://img.icons8.com/ios-filled/100/000000/user-male-circle.png"}
                                     alt="Preview"
+                                    className="update-avatar-img"
                                 />
-                                <label className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-full opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer text-white">
-                                    <PhotoCameraIcon />
-                                    <input type="file" className="hidden" accept="image/*" onChange={handleAvatarChange} />
+                                <label className="update-avatar-overlay">
+                                    <PhotoCameraOutlinedIcon sx={{ fontSize: 20 }} />
+                                    <input type="file" accept="image/*" onChange={handleAvatarChange} style={{ display: 'none' }} />
                                 </label>
                             </div>
-                            <div className="text-center">
-                                <p className="text-sm font-bold">Profile Picture</p>
-                                <p className="text-xs text-muted">Click to update your avatar</p>
+                            <div className="update-avatar-text">
+                                <span className="update-avatar-label">{t("Profile Photo", "প্রোফাইল ছবি")}</span>
+                                <span className="update-avatar-hint">{t("Click photo to change", "পরিবর্তন করতে ছবিতে ক্লিক করুন")}</span>
                             </div>
                         </div>
 
-                        <div className="account-info-grid">
-                            <div className="account-field">
-                                <label>Full Name</label>
+                        {/* Form Fields */}
+                        <div className="update-fields-grid">
+                            <div className="update-field">
+                                <label>{t("Full Name", "পুরো নাম")}</label>
                                 <input
-                                    className="auth-input font-semibold"
                                     type="text"
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
+                                    placeholder={t("Enter your name", "আপনার নাম")}
                                     required
                                 />
                             </div>
 
-                            <div className="account-field">
-                                <label>Email Address</label>
+                            <div className="update-field">
+                                <label>{t("Email Address", "ইমেইল")}</label>
                                 <input
-                                    className="auth-input font-semibold"
                                     type="email"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
+                                    placeholder={t("your@email.com", "আপনার ইমেইল")}
                                     required
                                 />
                             </div>
                         </div>
 
-                        <div className="account-field">
-                            <label>Gender</label>
-                            <div className="flex gap-8 mt-2">
-                                <label className="flex items-center gap-2 cursor-pointer group">
+                        {/* Gender */}
+                        <div className="update-field">
+                            <label>{t("Gender", "লিঙ্গ")}</label>
+                            <div className="update-gender-options">
+                                <label className={`update-gender-option ${gender === 'male' ? 'selected' : ''}`}>
                                     <input
                                         type="radio"
-                                        className="accent-accent w-4 h-4"
                                         name="gender"
                                         value="male"
                                         checked={gender === "male"}
                                         onChange={(e) => setGender(e.target.value)}
                                     />
-                                    <span className="text-sm font-semibold group-hover:text-accent transition-colors">Male</span>
+                                    <span>{t("Male", "পুরুষ")}</span>
                                 </label>
-                                <label className="flex items-center gap-2 cursor-pointer group">
+                                <label className={`update-gender-option ${gender === 'female' ? 'selected' : ''}`}>
                                     <input
                                         type="radio"
-                                        className="accent-accent w-4 h-4"
                                         name="gender"
                                         value="female"
                                         checked={gender === "female"}
                                         onChange={(e) => setGender(e.target.value)}
                                     />
-                                    <span className="text-sm font-semibold group-hover:text-accent transition-colors">Female</span>
+                                    <span>{t("Female", "মহিলা")}</span>
                                 </label>
                             </div>
                         </div>
 
-                        <div className="flex gap-4 mt-8 pt-8 border-t">
-                            <button type="submit" className="btn-account-link primary flex-1" disabled={loading}>
-                                {loading ? "Updating..." : "Save Changes"}
+                        {/* Actions */}
+                        <div className="update-actions">
+                            <button type="submit" className="btn-account-link primary" disabled={loading}>
+                                {loading ? t("Updating...", "আপডেট হচ্ছে...") : t("Save Changes", "পরিবর্তন সংরক্ষণ")}
                             </button>
-                            <Link to="/account" className="btn-account-link outline flex-1 text-center">
-                                Cancel
+                            <Link to="/account" className="btn-account-link outline">
+                                {t("Cancel", "বাতিল")}
                             </Link>
                         </div>
                     </form>
-                </main>
+                </div>
             </div>
             {loading && <BackdropLoader />}
         </div>

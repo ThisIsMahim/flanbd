@@ -13,7 +13,7 @@ const TrustedCompaniesCarousel = () => {
   useEffect(() => {
     fetch(`${process.env.REACT_APP_BACKEND_URL}/api/trusted-companies`)
       .then((res) => res.json())
-      .then(setCompanies)
+      .then((data) => setCompanies(Array.isArray(data) ? data : []))
       .finally(() => setLoading(false));
   }, []);
 

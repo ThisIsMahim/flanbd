@@ -26,6 +26,13 @@ const Sidebar = ({ activeTab }) => {
     navigate("/login");
   };
 
+  const navItems = [
+    { path: "/orders", tab: "orders", icon: <ShoppingBagOutlinedIcon />, label: t("My Orders", "আমার অর্ডার") },
+    { path: "/account", tab: "profile", icon: <PersonOutlineOutlinedIcon />, label: t("Profile", "প্রোফাইল") },
+    { path: "/wishlist", tab: "wishlist", icon: <FavoriteBorderIcon />, label: t("Wishlist", "ইচ্ছেতালিকা") },
+    { path: "/password/update", tab: "password", icon: <LockOpenOutlinedIcon />, label: t("Password", "পাসওয়ার্ড") },
+  ];
+
   return (
     <aside className="account-sidebar">
       {/* Profile Summary */}
@@ -40,24 +47,18 @@ const Sidebar = ({ activeTab }) => {
         </div>
       </div>
 
-      {/* Nav Card */}
+      {/* Nav */}
       <nav className="account-nav-card">
-        <Link to="/orders" className={`account-nav-item ${activeTab === 'orders' ? 'active' : ''}`}>
-          <ShoppingBagOutlinedIcon />
-          {t("My Orders", "আমার অর্ডার")}
-        </Link>
-        <Link to="/account" className={`account-nav-item ${activeTab === 'profile' ? 'active' : ''}`}>
-          <PersonOutlineOutlinedIcon />
-          {t("Profile Information", "প্রোফাইল তথ্য")}
-        </Link>
-        <Link to="/wishlist" className={`account-nav-item ${activeTab === 'wishlist' ? 'active' : ''}`}>
-          <FavoriteBorderIcon />
-          {t("Wishlist", "ইচ্ছেতালিকা")}
-        </Link>
-        <Link to="/password/update" className={`account-nav-item ${activeTab === 'password' ? 'active' : ''}`}>
-          <LockOpenOutlinedIcon />
-          {t("Change Password", "পাসওয়ার্ড পরিবর্তন")}
-        </Link>
+        {navItems.map((item) => (
+          <Link
+            key={item.tab}
+            to={item.path}
+            className={`account-nav-item ${activeTab === item.tab ? 'active' : ''}`}
+          >
+            {item.icon}
+            {item.label}
+          </Link>
+        ))}
 
         <button className="btn-logout" onClick={handleLogout}>
           <PowerSettingsNewIcon />

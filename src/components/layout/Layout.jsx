@@ -1,17 +1,3 @@
-import React from 'react';
-import Header from './Header';
-import Footer from './Footer';
-
-const Layout = ({ children }) => {
-    return (
-        <div className="app-wrapper">
-            <Header />
-            <main className="main-content">
-                {children}
-            </main>
-            <Footer />
-        </div>
-    );
-};
-
-export default Layout;
+// DEPRECATED - This file is no longer used.
+// The app uses App.js directly with the Header from Layouts/Header/Header.jsx
+// This file and folder can be safely deleted.

@@ -82,13 +82,13 @@ module.exports = {
       // --- Custom Flan Palette ---
       primary: {
         bg: "#FEFAE0", // Main background
-        accent: "#5F6F52", // Main accent (was blue)
-        support: "#A9B388", // Supporting accent
+        accent: "#FF0000", // Main accent (was blue)
+        support: "#CC0000", // Supporting accent
         text: "#1E3A5C", // Main text (consider updating if needed)
       },
       accent: {
-        DEFAULT: "#5F6F52", // Accent color
-        support: "#A9B388", // Supporting color
+        DEFAULT: "#FF0000", // Accent color
+        support: "#CC0000", // Supporting color
       },
       // Optionally, keep legacy for backward compatibility
       // legacy: {
@@ -327,7 +327,7 @@ module.exports = {
     },
     fontFamily: {
       sans: [
-        "Lato",
+        "Inter",
         "ui-sans-serif",
         "system-ui",
         "-apple-system",

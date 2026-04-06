@@ -354,13 +354,13 @@ const DealSlider = () => {
 
   return (
     <section className="deal-slider-section" ref={contentSectionRef}>
-      <div className="home-section-header" ref={titleSectionRef}>
+      <div className="home-section-header px-4 sm:px-6 lg:px-8" ref={titleSectionRef}>
         <span className="section-subtitle">Flash Sale</span>
         <h2 className="section-title">{t.title}</h2>
       </div>
 
-      <div className="container">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-[1400px]">
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4 md:gap-6">
           {currentProducts.map((product) => (
             <DealProductCard
               key={product._id}

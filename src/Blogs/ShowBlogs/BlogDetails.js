@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
-import axios from "axios";
 import { motion } from "framer-motion";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import MetaData from "../../components/Layouts/MetaData";
 import Loader from "../../components/Layouts/Loader";
 import OptimizedImg from "../../components/common/OptimizedImg";
+import BlogApi from "../api/blogApi";
 import "./BlogDetail.css";
 
 const BlogDetail = () => {
@@ -20,9 +20,11 @@ const BlogDetail = () => {
     const fetchBlog = async () => {
       try {
         setIsLoading(true);
-        const { data } = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/v1/blog/${id}`);
-        if (data.success) {
+        const data = await BlogApi.getBlogById(id);
+        if (data && data.blog) {
           setBlog(data.blog);
+        } else if (data) {
+          setBlog(data);
         } else {
           setError("Story not found");
         }

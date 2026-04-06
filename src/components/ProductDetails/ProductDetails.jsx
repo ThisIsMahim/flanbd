@@ -16,7 +16,7 @@ import Breadcrumb from "../Layouts/Breadcrumb";
 import Loader from "../Layouts/Loader";
 import MetaData from "../Layouts/MetaData";
 import OptimizedImg from "../common/OptimizedImg";
-import DealSlider from "../home/DealSlider/DealSlider";
+import DealSlider from "../Home/DealSlider/DealSlider";
 import ProductHighlightsBlock from "./ProductHighlightsBlock";
 import ProductInfoBlock from "./ProductInfoBlock";
 import ProductReviewsBlock from "./ProductReviewsBlock";

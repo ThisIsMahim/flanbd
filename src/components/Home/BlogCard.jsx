@@ -19,9 +19,9 @@ const BlogCard = ({
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
+      initial={{ opacity: 1, y: 0 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
       className="modern-blog-card"
     >
       <div className="mb-card-image" onClick={() => onReadMore(blog._id)}>

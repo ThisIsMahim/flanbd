@@ -4,16 +4,15 @@
 
 .products-page-container {
   display: flex;
-  gap: 2rem;
-  max-width: var(--container-max);
-  margin: 0 auto;
-  padding: 2rem var(--section-px);
+  gap: 2.5rem;
+  max-width: 100%;
+  padding: 2rem clamp(1rem, 5vw, 4rem);
   min-height: 80vh;
 }
 
 /* Sidebar */
 .filter-sidebar {
-  width: 260px;
+  width: 280px;
   flex-shrink: 0;
   position: sticky;
   top: 100px;
@@ -241,7 +240,7 @@
   left: 50%;
   transform: translateX(-50%);
   z-index: 100;
-  background: var(--text-primary);
+  background: var(--accent);
   color: var(--text-inverse);
   padding: 0.875rem 2rem;
   border-radius: var(--radius-full);

@@ -28,7 +28,7 @@ class BlogApi {
 
   static async getAllBlogs(){
     try {
-      const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/blogs`);
+      const response = await axios.get(`/api/blogs`);
       // Extract the blogs array from the response
       return response.data.blogs || response.data.data || response.data;
     } catch (error) {
@@ -40,7 +40,7 @@ class BlogApi {
 
   static async getBlogById(id) {
     try {
-      const response = await axios.get(`${API_BASE_URL}/api/blogs/${id}`);
+      const response = await axios.get(`/api/blogs/${id}`);
       return response.data;
     } catch (error) {
       console.error('Failed to fetch blog:', error);
@@ -54,13 +54,13 @@ class BlogApi {
   static async createBlog(blogData) {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.post(`${API_BASE_URL}/api/blogs/new`, blogData, {
+      const response = await axios.post(`/api/blogs/new`, blogData, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `${token}`
         }
       });
-      return response.data;
+      return response.data.blog || response.data;
     } catch (error) {
       console.error('Blog creation failed:', error);
       throw new Error(error.response?.data?.message || 'Failed to create blog');
@@ -70,13 +70,13 @@ class BlogApi {
   static async updateBlog(id, blogData) {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.put(`${API_BASE_URL}/api/blog/${id}`, blogData, {
+      const response = await axios.put(`/api/blog/${id}`, blogData, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         }
       });
-      return response.data;
+      return response.data.blog || response.data;
     } catch (error) {
       console.error('Blog update failed:', error);
       throw new Error(error.response?.data?.message || 'Failed to update blog');
@@ -85,7 +85,7 @@ class BlogApi {
 
   static async deleteBlog (id) {
     try {
-      await axios.delete(`${process.env.REACT_APP_BACKEND_URL}/api/blog/${id}`);
+      await axios.delete(`/api/blog/${id}`);
     } catch (error) {
       console.error('Error deleting blog:', error);
       throw error;
@@ -94,7 +94,7 @@ class BlogApi {
 
   static async searchBlogs(query) {
     try {
-      const response = await axios.get(`${API_BASE_URL}/api/blogs/search`, {
+      const response = await axios.get(`/api/blogs/search`, {
         params: { q: query }
       });
       return response.data;

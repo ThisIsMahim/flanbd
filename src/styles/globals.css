@@ -3,16 +3,16 @@
    Clean Minimal Aesthetic
    =================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap');
 
 /* ===================================
    DESIGN TOKENS
    =================================== */
 :root {
   /* Brand - Refined Modern Palette */
-  --accent: #FF3D00; /* Vibrant Red-Orange */
-  --accent-hover: #E63600;
-  --accent-subtle: rgba(255, 61, 0, 0.05);
+  --accent: #FF0000; /* Logo Red */
+  --accent-hover: #CC0000;
+  --accent-subtle: rgba(255, 0, 0, 0.05);
 
   /* Neutrals - Warm & Modern */
   --bg-primary: #FCFCFB;
@@ -35,20 +35,20 @@
   --shadow-lg: 0 16px 32px rgba(0, 0, 0, 0.06);
   --shadow-xl: 0 32px 64px rgba(0, 0, 0, 0.08);
 
-  /* Typography - Modular Fluid Scale */
-  --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-display: 'Syne', 'Plus Jakarta Sans', sans-serif;
+  /* Typography — Font Families */
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Bebas Neue', 'Oswald', 'Impact', sans-serif;
 
-  /* Fluid Type Scale (Modular) */
-  --text-xs: clamp(0.7rem, 0.65rem + 0.25vw, 0.75rem);
-  --text-sm: clamp(0.8rem, 0.75rem + 0.25vw, 0.875rem);
-  --text-base: clamp(0.95rem, 0.9rem + 0.25vw, 1.05rem);
-  --text-lg: clamp(1.1rem, 1rem + 0.5vw, 1.25rem);
-  --text-xl: clamp(1.35rem, 1.25rem + 0.75vw, 1.75rem);
-  --text-2xl: clamp(1.75rem, 1.5rem + 1.25vw, 2.5rem);
-  --text-3xl: clamp(2.25rem, 2rem + 2vw, 3.5rem);
-  --text-4xl: clamp(2.75rem, 2.5rem + 3vw, 4.5rem);
-  --text-5xl: clamp(3.5rem, 3rem + 5vw, 6rem);
+  /* Fluid Type Scale — Major Third (1.25) via Utopia.fyi */
+  --text-xs:   clamp(0.6944rem, 0.6727rem + 0.1087vw, 0.72rem);
+  --text-sm:   clamp(0.8333rem, 0.7976rem + 0.1786vw, 0.9rem);
+  --text-base: clamp(1rem, 0.9464rem + 0.2679vw, 1.125rem);
+  --text-lg:   clamp(1.2rem, 1.1214rem + 0.3929vw, 1.4063rem);
+  --text-xl:   clamp(1.44rem, 1.3286rem + 0.5571vw, 1.7578rem);
+  --text-2xl:  clamp(1.728rem, 1.5738rem + 0.7712vw, 2.1973rem);
+  --text-3xl:  clamp(2.0736rem, 1.8641rem + 1.0476vw, 2.7466rem);
+  --text-4xl:  clamp(2.4883rem, 2.2072rem + 1.4054vw, 3.4332rem);
+  --text-5xl:  clamp(2.986rem, 2.6116rem + 1.872vw, 4.2915rem);
 
   /* Spacing - Fluid & Rhythmic */
   --container-max: 1440px;
@@ -123,21 +123,30 @@ body {
 /* ===================================
    TYPOGRAPHY
    =================================== */
-h1, h2, h3, h4, h5, h6 {
+/* Bebas Neue headings (h1–h4) — Editorial display */
+h1, h2, h3, h4 {
   font-family: var(--font-display);
-  font-weight: 700;
-  line-height: 1.1;
+  font-weight: 400; /* Bebas Neue only has 400 — its design IS bold */
   color: var(--text-primary);
-  letter-spacing: -0.04em;
+  text-transform: uppercase;
   text-wrap: balance;
 }
 
-h1 { font-size: var(--text-5xl); }
-h2 { font-size: var(--text-4xl); }
-h3 { font-size: var(--text-3xl); }
-h4 { font-size: var(--text-2xl); }
-h5 { font-size: var(--text-xl); }
-h6 { font-size: var(--text-lg); }
+/* Inter headings (h5–h6) — Component-level readability */
+h5, h6 {
+  font-family: var(--font-body);
+  font-weight: 600;
+  color: var(--text-primary);
+  text-wrap: balance;
+}
+
+/* Per-level sizing, line-height, and letter-spacing */
+h1 { font-size: var(--text-5xl); line-height: 0.95; letter-spacing: 0.02em; }
+h2 { font-size: var(--text-4xl); line-height: 1.0;  letter-spacing: 0.01em; }
+h3 { font-size: var(--text-3xl); line-height: 1.05; letter-spacing: 0.01em; }
+h4 { font-size: var(--text-2xl); line-height: 1.1;  letter-spacing: 0.01em; }
+h5 { font-size: var(--text-xl);  line-height: 1.2;  letter-spacing: -0.02em; }
+h6 { font-size: var(--text-lg);  line-height: 1.3;  letter-spacing: -0.01em; }
 
 p {
   color: var(--text-secondary);
@@ -264,20 +273,7 @@ a {
   display: block;
   text-align: center;
 }
-
-  gap: 0.5rem;
-  padding: 0.75rem 1.75rem;
-  font-family: var(--font-display);
-  font-size: var(--text-sm);
-  font-weight: 600;
-  border: none;
-  border-radius: var(--radius-full);
-  cursor: pointer;
-  transition: all var(--transition-base);
-  text-decoration: none;
-  white-space: nowrap;
-  letter-spacing: 0.01em;
-}
+/* Removed broken CSS block */
 
 .btn-primary {
   background: var(--accent);
@@ -422,17 +418,65 @@ a:focus-visible {
 /* ===================================
    RESPONSIVE
    =================================== */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   :root {
-    --text-5xl: 2rem;
-    --text-4xl: 1.75rem;
-    --text-3xl: 1.5rem;
+    --section-gap: clamp(3rem, 6vw, 5rem);
+    --section-px: clamp(1.25rem, 4vw, 3rem);
+  }
+}
+
+@media (max-width: 768px) {
+  /* Font sizes handled by clamp() — no overrides needed */
+  :root {
+    --section-gap: 3rem;
+    --section-px: 1rem;
+  }
+  
+  /* Slightly more open letter-spacing on small screens */
+  h1, h2, h3, h4 {
+    letter-spacing: 0.02em;
+  }
+
+  p {
+    line-height: 1.65;
+  }
+
+  .section-subtitle {
+    letter-spacing: 0.15em;
+  }
+
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .grid-layout {
+    gap: 1.5rem;
+  }
+
+  .section {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
   }
 }
 
 @media (max-width: 480px) {
+  /* Font sizes handled by clamp() — no overrides needed */
+
+  h1 {
+    letter-spacing: 0.01em;
+    word-spacing: 0.05em;
+  }
+
   .btn {
-    padding: 0.625rem 1.25rem;
+    padding: 0.75rem 1.25rem;
     font-size: var(--text-sm);
+    width: 100%;
+    justify-content: center;
+  }
+
+  .grid-layout {
+    grid-template-columns: 1fr;
+    gap: 1rem;
   }
 }

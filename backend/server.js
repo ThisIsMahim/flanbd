@@ -1,3 +1,11 @@
+// Node 25+ compatibility fix for older dependencies (buffer-equal-constant-time)
+const buffer = require('buffer');
+if (!buffer.SlowBuffer) {
+  buffer.SlowBuffer = function() {};
+  buffer.SlowBuffer.prototype = buffer.Buffer.prototype;
+}
+
+require('dotenv').config({ path: require('path').resolve(__dirname, '.env') });
 const path = require('path');
 const express = require('express');
 const cloudinary = require('cloudinary');

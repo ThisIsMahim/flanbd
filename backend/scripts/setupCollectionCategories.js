@@ -1,3 +1,10 @@
+// Node 25+ compatibility fix for older dependencies (buffer-equal-constant-time)
+const buffer = require('buffer');
+if (!buffer.SlowBuffer) {
+  buffer.SlowBuffer = function() {};
+  buffer.SlowBuffer.prototype = buffer.Buffer.prototype;
+}
+
 const mongoose = require('mongoose');
 const Category = require('../models/categoryModel');
 
