@@ -6,7 +6,6 @@ import { clearErrors, registerUser } from "../../actions/userAction";
 import { LanguageContext } from "../../utils/LanguageContext";
 import { useSnackbar } from "notistack";
 import MetaData from "../Layouts/MetaData";
-import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';
 import BackdropLoader from "../Layouts/BackdropLoader";
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 
@@ -89,10 +88,7 @@ const Register = () => {
           {/* Mobile Logo Fallback */}
           <div className="lg:hidden mb-10 text-center">
              <Link to="/">
-               <img src="/logo.png" alt="Flan" className="h-10 mx-auto object-contain" onError={(e) => { e.target.style.display='none'; e.target.nextSibling.style.display='flex'; }} />
-               <div className="hidden mx-auto w-12 h-12 bg-black rounded-xl items-center justify-center">
-                 <LocalLibraryIcon sx={{ fontSize: 24 }} className="text-white" />
-               </div>
+               <img src="/logo.png" alt="Flan" className="h-10 mx-auto object-contain" />
              </Link>
           </div>
 
@@ -106,7 +102,7 @@ const Register = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               {/* Name Field */}
               <div className="space-y-2">
-                <label className="text-xs font-bold text-gray-400 uppercase tracking-widest pl-1">{t("Full Name", "পুরো নাম")}</label>
+                <label className="text-xs font-black text-gray-400 uppercase tracking-[0.2em] pl-1">{t("Full Name", "পুরো নাম")}</label>
                 <input
                   type="text"
                   name="name"
@@ -114,13 +110,13 @@ const Register = () => {
                   onChange={handleChange}
                   required
                   placeholder="John Doe"
-                  className="w-full px-5 py-3.5 bg-gray-50 text-gray-900 placeholder-gray-400 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent transition-all duration-300"
+                  className="w-full px-5 py-4 bg-gray-50 text-gray-900 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition-all duration-300"
                 />
               </div>
 
               {/* Email Field */}
               <div className="space-y-2">
-                <label className="text-xs font-bold text-gray-400 uppercase tracking-widest pl-1">{t("Email Address", "ইমেইল")}</label>
+                <label className="text-xs font-black text-gray-400 uppercase tracking-[0.2em] pl-1">{t("Email Address", "ইমেইল")}</label>
                 <input
                   type="email"
                   name="email"
@@ -128,7 +124,7 @@ const Register = () => {
                   onChange={handleChange}
                   required
                   placeholder="name@example.com"
-                  className="w-full px-5 py-3.5 bg-gray-50 text-gray-900 placeholder-gray-400 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent transition-all duration-300"
+                  className="w-full px-5 py-4 bg-gray-50 text-gray-900 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition-all duration-300"
                 />
               </div>
             </div>
@@ -136,7 +132,7 @@ const Register = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               {/* Password Field */}
               <div className="space-y-2">
-                <label className="text-xs font-bold text-gray-400 uppercase tracking-widest pl-1">{t("Password", "পাসওয়ার্ড")}</label>
+                <label className="text-xs font-black text-gray-400 uppercase tracking-[0.2em] pl-1">{t("Password", "পাসওয়ার্ড")}</label>
                 <input
                   type="password"
                   name="password"
@@ -144,13 +140,13 @@ const Register = () => {
                   onChange={handleChange}
                   required
                   placeholder="••••••••"
-                  className="w-full px-5 py-3.5 bg-gray-50 text-gray-900 placeholder-gray-400 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent transition-all duration-300"
+                  className="w-full px-5 py-4 bg-gray-50 text-gray-900 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition-all duration-300"
                 />
               </div>
 
               {/* Confirm Password Field */}
               <div className="space-y-2">
-                 <label className="text-xs font-bold text-gray-400 uppercase tracking-widest pl-1">{t("Confirm Password", "পাসওয়ার্ড নিশ্চিত করুন")}</label>
+                 <label className="text-xs font-black text-gray-400 uppercase tracking-[0.2em] pl-1">{t("Confirm Password", "পাসওয়ার্ড নিশ্চিত করুন")}</label>
                  <input
                   type="password"
                   name="cpassword"
@@ -158,23 +154,32 @@ const Register = () => {
                   onChange={handleChange}
                   required
                   placeholder="••••••••"
-                  className="w-full px-5 py-3.5 bg-gray-50 text-gray-900 placeholder-gray-400 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent transition-all duration-300"
+                  className="w-full px-5 py-4 bg-gray-50 text-gray-900 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition-all duration-300"
                 />
               </div>
             </div>
 
             {/* Avatar Selection */}
-            <div className="pt-2 space-y-3">
-              <label className="text-xs font-bold text-gray-400 uppercase tracking-widest pl-1">{t("Select Avatar", "প্রোফাইল ছবি")}</label>
-              <div className="flex flex-wrap gap-4">
+            <div className="pt-2 space-y-4">
+              <label className="text-xs font-black text-gray-400 uppercase tracking-[0.2em] pl-1">{t("Choose Your Identity", "প্রোফাইল ছবি বেছে নিন")}</label>
+              <div className="flex flex-wrap gap-3 sm:gap-4 p-2">
                 {notebookAvatars.map((url) => (
                   <button
                     type="button"
                     key={url}
                     onClick={() => setSelectedAvatar(url)}
-                    className={`relative w-14 h-14 rounded-full p-1 border-2 transition-all duration-300 focus:outline-none ${selectedAvatar === url ? 'border-accent shadow-[0_0_15px_rgba(255,0,0,0.3)] scale-110' : 'border-gray-200 hover:border-gray-300'}`}
+                    className={`relative w-14 h-14 rounded-2xl overflow-hidden transition-all duration-500 group/avatar ${
+                      selectedAvatar === url 
+                        ? 'ring-4 ring-accent ring-offset-2 scale-110 shadow-xl z-10' 
+                        : 'hover:scale-105 hover:shadow-md grayscale hover:grayscale-0 opacity-60 hover:opacity-100'
+                    }`}
                   >
-                    <img src={url} alt="Avatar" className="w-full h-full object-cover rounded-full bg-gray-100" />
+                    <div className={`absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200 group-hover/avatar:from-accent/5 group-hover/avatar:to-accent/10 transition-colors ${selectedAvatar === url ? 'from-accent/10 to-accent/20' : ''}`} />
+                    <img 
+                      src={url} 
+                      alt="Avatar" 
+                      className={`relative w-full h-full object-contain p-2.5 transition-transform duration-500 ${selectedAvatar === url ? 'scale-110' : 'group-hover/avatar:scale-110'}`} 
+                    />
                   </button>
                 ))}
               </div>
@@ -184,7 +189,7 @@ const Register = () => {
             <button 
               type="submit" 
               disabled={loading}
-              className="group w-full py-4 px-6 mt-6 flex items-center justify-between text-white bg-black hover:bg-accent focus:ring-4 focus:ring-accent/20 rounded-xl font-bold uppercase tracking-wider text-sm transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed shadow-[0_10px_30px_-10px_rgba(0,0,0,0.3)] hover:shadow-[0_10px_30px_-10px_rgba(255,0,0,0.4)]"
+              className="group w-full py-4 px-6 mt-6 flex items-center justify-between text-white bg-black hover:bg-[#FF1837] focus:ring-4 focus:ring-red-500/20 rounded-xl font-bold uppercase tracking-wider text-sm transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed shadow-lg hover:shadow-[0_10px_30px_-10px_rgba(255,24,55,0.4)]"
             >
               <span>{loading ? "Creating..." : t("Create Account", "অ্যাকাউন্ট তৈরি করুন")}</span>
               <ArrowRightAltIcon className="group-hover:translate-x-2 transition-transform duration-300" />
@@ -221,8 +226,7 @@ const Register = () => {
 
         <div className="relative z-10 w-full max-w-sm px-8 text-white">
           <div className="mb-10 inline-flex items-center justify-center p-4 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 shadow-2xl">
-             <img src="/logo.png" alt="Flan" className="h-8 object-contain" onError={(e) => { e.target.style.display='none'; e.target.nextSibling.style.display='block'; }} />
-             <LocalLibraryIcon sx={{ fontSize: 32 }} className="hidden text-accent" />
+             <img src="/logo.png" alt="Flan" className="h-8 object-contain" />
           </div>
           
           <h2 className="text-4xl font-extrabold mb-6 font-display tracking-tight leading-tight">

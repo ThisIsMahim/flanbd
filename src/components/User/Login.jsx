@@ -5,7 +5,6 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { clearErrors, loginUser } from "../../actions/userAction";
 import { useSnackbar } from "notistack";
 import MetaData from "../Layouts/MetaData";
-import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';
 import BackdropLoader from "../Layouts/BackdropLoader";
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 
@@ -58,8 +57,7 @@ const Login = () => {
 
         <div className="relative z-10 w-full max-w-md px-12 text-white">
           <div className="mb-10 inline-flex items-center justify-center p-4 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 shadow-2xl">
-             <img src="/logo.png" alt="Flan" className="h-8 object-contain" onError={(e) => { e.target.style.display='none'; e.target.nextSibling.style.display='block'; }} />
-             <LocalLibraryIcon sx={{ fontSize: 32 }} className="hidden text-accent" />
+             <img src="/logo.png" alt="Flan" className="h-8 object-contain" />
           </div>
           
           <h2 className="text-5xl font-extrabold mb-6 font-display tracking-tight leading-tight">
@@ -92,10 +90,7 @@ const Login = () => {
           {/* Mobile Logo Fallback */}
           <div className="lg:hidden mb-10 text-center">
              <Link to="/">
-               <img src="/logo.png" alt="Flan" className="h-10 mx-auto object-contain" onError={(e) => { e.target.style.display='none'; e.target.nextSibling.style.display='flex'; }} />
-               <div className="hidden mx-auto w-12 h-12 bg-black rounded-xl items-center justify-center">
-                 <LocalLibraryIcon sx={{ fontSize: 24 }} className="text-white" />
-               </div>
+               <img src="/logo.png" alt="Flan" className="h-10 mx-auto object-contain" />
              </Link>
           </div>
 
@@ -143,7 +138,7 @@ const Login = () => {
             <button 
               type="submit" 
               disabled={loading}
-              className="group w-full py-4 px-6 mt-4 flex items-center justify-between text-white bg-black hover:bg-accent focus:ring-4 focus:ring-accent/20 rounded-xl font-bold uppercase tracking-wider text-sm transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed shadow-[0_10px_30px_-10px_rgba(0,0,0,0.3)] hover:shadow-[0_10px_30px_-10px_rgba(255,0,0,0.4)]"
+              className="group w-full py-4 px-6 mt-4 flex items-center justify-between text-white bg-black hover:bg-[#FF1837] focus:ring-4 focus:ring-red-500/20 rounded-xl font-bold uppercase tracking-wider text-sm transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed shadow-lg hover:shadow-[0_10px_30px_-10px_rgba(255,24,55,0.4)]"
             >
               <span>{loading ? "Verifying..." : "Sign in securely"}</span>
               <ArrowRightAltIcon className="group-hover:translate-x-2 transition-transform duration-300" />

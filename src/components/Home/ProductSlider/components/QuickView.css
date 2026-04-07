@@ -147,7 +147,9 @@
 }
 
 .btn-qv-secondary:hover {
-  background: var(--bg-subtle);
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-subtle);
 }
 
 .qv-close-btn {

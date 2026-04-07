@@ -52,9 +52,19 @@ const ForgotPassword = () => {
                     type="submit"
                     fullWidth
                     variant="contained"
-                    color="primary"
                     disabled={loading}
-                    sx={{ mt: 2 }}
+                    sx={{ 
+                        mt: 2, 
+                        bgcolor: 'black', 
+                        color: 'white',
+                        '&:hover': {
+                            bgcolor: '#FF1837',
+                        },
+                        fontFamily: 'var(--font-display)',
+                        fontWeight: 800,
+                        py: 1.5,
+                        borderRadius: '8px'
+                    }}
                 >
                     {loading ? 'Sending...' : 'Send Reset Link'}
                 </Button>

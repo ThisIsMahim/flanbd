@@ -135,9 +135,9 @@ if (typeof document !== "undefined") {
       margin-top: 10px;
       font-size: 1rem;
       font-weight: 400;
-      border: 2px solid var(--primary-blue-light);
+      border: 2px solid var(--accent);
       background: var(--primary-bg);
-      color: var(--primary-blue-dark);
+      color: var(--text-primary);
       padding: 8px 0;
       border-radius: 12px;
       transition: background 0.2s, color 0.2s;
@@ -145,8 +145,9 @@ if (typeof document !== "undefined") {
       outline: none;
     }
     .unified-quick-view-btn:hover {
-      background: var(--primary-blue-light) !important;
-      color: var(--primary-bg) !important;
+      background: var(--accent) !important;
+      color: var(--text-inverse) !important;
+      border-color: var(--accent) !important;
     }
     .unified-buy-now-btn {
       width: 100%;
@@ -167,11 +168,11 @@ if (typeof document !== "undefined") {
       justify-content: center;
     }
     .unified-buy-now-btn:hover {
-      background: rgb(220, 200, 60) !important;
-      border-color: rgb(220, 200, 60) !important;
-      color: #0f172a !important;
+      background: var(--accent) !important;
+      border-color: var(--accent) !important;
+      color: var(--text-inverse) !important;
       transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      box-shadow: 0 4px 12px rgba(255, 24, 55, 0.25);
     }
     
     /* Color variations scrollbar styling */
@@ -314,7 +315,7 @@ if (typeof document !== "undefined") {
       position: absolute;
       top: 8px;
       left: 8px;
-      background: var(--primary-blue-light);
+      background: var(--accent);
       color: white;
       padding: 4px 8px;
       border-radius: 12px;
@@ -415,11 +416,11 @@ if (typeof document !== "undefined") {
         box-shadow: 0 2px 8px rgba(0,0,0,0.1);
       }
       .unified-buy-now-btn:hover {
-        background: rgb(220, 200, 60) !important;
-        border-color: rgb(220, 200, 60) !important;
-        color: #0f172a !important;
+        background: var(--accent) !important;
+        border-color: var(--accent) !important;
+        color: var(--text-inverse) !important;
         transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        box-shadow: 0 6px 20px rgba(255, 24, 55, 0.25);
       }
     }
     
@@ -473,11 +474,11 @@ if (typeof document !== "undefined") {
         border: 2px solid rgb(243,233,85);
       }
       .unified-buy-now-btn:hover {
-        background: rgb(220, 200, 60) !important;
-        border-color: rgb(220, 200, 60) !important;
-        color: #0f172a !important;
+        background: var(--accent) !important;
+        border-color: var(--accent) !important;
+        color: var(--text-inverse) !important;
         transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        box-shadow: 0 6px 20px rgba(255, 24, 55, 0.25);
       }
     }
   `;

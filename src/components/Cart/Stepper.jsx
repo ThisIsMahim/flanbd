@@ -92,11 +92,11 @@ const Stepper = ({ activeStep, children }) => {
           <>
             {activeStep === index ? (
               <div className="flex flex-col shadow rounded-sm">
-                <div className="flex items-center rounded-t-sm bg-[var(--primary-blue-dark)] px-6 py-2 gap-4">
-                  <span className="h-5 w-5 flex items-center justify-center text-xs font-medium bg-white rounded-sm text-[var(--primary-blue-dark)]">
+                <div className="flex items-center rounded-t-sm bg-[#FF1837] px-6 py-3 gap-4">
+                  <span className="h-6 w-6 flex items-center justify-center text-xs font-black bg-white rounded-md text-[#FF1837] shadow-sm">
                     {index + 1}
                   </span>
-                  <h2 className="font-medium text-white">{getLabel(step)}</h2>
+                  <h2 className="font-black text-white tracking-[0.1em] uppercase text-sm">{getLabel(step)}</h2>
                 </div>
                 {children}
               </div>
@@ -124,15 +124,15 @@ const Stepper = ({ activeStep, children }) => {
 const Step = ({ isDesc, label, desc, index }) => {
   return (
     <div className="flex bg-white shadow px-4 py-3 pb-4 rounded-sm">
-      <span className="mt-2 ml-2 mr-4 h-5 w-5 flex items-center justify-center text-xs font-medium bg-gray-100 rounded-sm text-[var(--primary-blue-dark)]">
+      <span className="mt-2 ml-2 mr-4 h-6 w-6 flex items-center justify-center text-xs font-black bg-gray-50 rounded-md text-[#FF1837] border border-gray-200">
         {index + 1}
       </span>
       <div className="flex flex-col mt-1 gap-0.5">
-        <h2 className="font-medium text-gray-500 flex items-center gap-2">
+        <h2 className="font-black text-gray-500 flex items-center gap-2 tracking-[0.05em] uppercase text-xs">
           {label}
           {isDesc && (
-            <span className="text-[var(--primary-blue-dark)] mb-1">
-              <CheckIcon sx={{ fontSize: "20px" }} />
+            <span className="text-[#FF1837] mb-1">
+              <CheckIcon sx={{ fontSize: "18px" }} />
             </span>
           )}
         </h2>

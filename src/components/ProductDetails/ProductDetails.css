@@ -198,12 +198,16 @@
 }
 
 .btn-add-cart:hover {
-  background: var(--bg-subtle);
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--text-inverse);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
 }
 
 .btn-buy-now {
   flex: 1;
-  background: var(--accent);
+  background: var(--text-primary);
   color: var(--text-inverse);
   border: none;
   padding: 1rem;

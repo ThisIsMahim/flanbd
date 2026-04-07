@@ -16,9 +16,9 @@ module.exports = {
         display: ["var(--font-display)", "sans-serif"],
       },
       colors: {
-        accent: "var(--accent)",
-        "accent-hover": "var(--accent-hover)",
-        "accent-subtle": "var(--accent-subtle)",
+        accent: "#FF1837",
+        "accent-hover": "#FF1837",
+        "accent-subtle": "rgba(255, 24, 55, 0.05)",
         "bg-primary": "var(--bg-primary)",
         "bg-surface": "var(--bg-surface)",
         "bg-subtle": "var(--bg-subtle)",
@@ -79,27 +79,6 @@ module.exports = {
       indigo: colors.indigo,
       purple: colors.violet,
       pink: colors.pink,
-      // --- Custom Flan Palette ---
-      primary: {
-        bg: "#FEFAE0", // Main background
-        accent: "#FF0000", // Main accent (was blue)
-        support: "#CC0000", // Supporting accent
-        text: "#1E3A5C", // Main text (consider updating if needed)
-      },
-      accent: {
-        DEFAULT: "#FF0000", // Accent color
-        support: "#CC0000", // Supporting color
-      },
-      // Optionally, keep legacy for backward compatibility
-      // legacy: {
-      //   blue: "#2874f0",
-      //   lightGreen: "#14be47",
-      //   green: "#388e3c",
-      //   yellow: "#ff9f00",
-      //   orange: "#fb641b",
-      //   darkBlue: "#172337",
-      //   grey: "#878787",
-      // },
       // --- End Custom Palette ---
     },
     spacing: {

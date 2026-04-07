@@ -10,9 +10,9 @@
    =================================== */
 :root {
   /* Brand - Refined Modern Palette */
-  --accent: #FF0000; /* Logo Red */
-  --accent-hover: #CC0000;
-  --accent-subtle: rgba(255, 0, 0, 0.05);
+  --accent: #FF1837; /* Logo Red */
+  --accent-hover: #FF1837;
+  --accent-subtle: rgba(255, 24, 55, 0.05);
 
   /* Neutrals - Warm & Modern */
   --bg-primary: #FCFCFB;
@@ -202,11 +202,23 @@ a {
 }
 
 .btn-primary {
-  background-color: var(--text-primary);
+  background-color: var(--accent);
   color: var(--text-inverse);
 }
 
 .btn-primary:hover {
+  background-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  opacity: 0.9;
+}
+
+.btn-secondary {
+  background-color: var(--text-primary);
+  color: var(--text-inverse);
+}
+
+.btn-secondary:hover {
   background-color: var(--accent);
   transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
@@ -219,8 +231,8 @@ a {
 }
 
 .btn-outline:hover {
-  border-color: var(--text-primary);
-  background-color: var(--text-primary);
+  border-color: var(--accent);
+  background-color: var(--accent);
   color: var(--text-inverse);
 }
 
@@ -248,6 +260,7 @@ a {
 .text-gradient {
   background: linear-gradient(to right, var(--text-primary), var(--accent));
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
@@ -274,42 +287,6 @@ a {
   text-align: center;
 }
 /* Removed broken CSS block */
-
-.btn-primary {
-  background: var(--accent);
-  color: var(--text-inverse);
-}
-
-.btn-primary:hover {
-  background: var(--accent-hover);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-md);
-}
-
-.btn-primary:active {
-  transform: translateY(0);
-}
-
-.btn-secondary {
-  background: var(--text-primary);
-  color: var(--text-inverse);
-}
-
-.btn-secondary:hover {
-  opacity: 0.85;
-  transform: translateY(-1px);
-}
-
-.btn-outline {
-  background: transparent;
-  color: var(--text-primary);
-  border: 1.5px solid var(--border);
-}
-
-.btn-outline:hover {
-  border-color: var(--text-primary);
-  transform: translateY(-1px);
-}
 
 .btn-lg {
   padding: 1rem 2.25rem;

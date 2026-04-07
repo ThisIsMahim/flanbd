@@ -157,7 +157,7 @@ const Shipping = () => {
         <div className="w-full sm:w-11/12 mx-auto mb-4">
           <Link
             to="/cart"
-            className="flex items-center text-[var(--button-bg)] hover:text-[var(--button-hover)] transition-colors font-medium"
+            className="flex items-center text-gray-500 hover:text-[#FF1837] transition-colors font-bold uppercase text-xs tracking-widest"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -276,32 +276,34 @@ const Shipping = () => {
                   </div>
 
                   {/* Delivery Area Selection */}
-                  <div className="flex gap-6 items-center">
-                    <label className="flex items-center gap-2">
+                  <div className="flex flex-col sm:flex-row gap-6 p-4 bg-gray-50 rounded-xl border border-gray-100">
+                    <label className="flex items-center gap-3 cursor-pointer group">
                       <input
                         type="radio"
                         name="deliveryArea"
                         value="inside"
                         checked={deliveryArea === "inside"}
                         onChange={(e) => setDeliveryArea(e.target.value)}
+                        className="w-5 h-5 accent-[#FF1837] cursor-pointer"
                       />
-                      <span>Inside Dhaka (৳70)</span>
+                      <span className="text-sm font-bold text-gray-700 group-hover:text-black transition-colors uppercase tracking-wider">Inside Dhaka (৳70)</span>
                     </label>
-                    <label className="flex items-center gap-2">
+                    <label className="flex items-center gap-3 cursor-pointer group">
                       <input
                         type="radio"
                         name="deliveryArea"
                         value="outside"
                         checked={deliveryArea === "outside"}
                         onChange={(e) => setDeliveryArea(e.target.value)}
+                        className="w-5 h-5 accent-[#FF1837] cursor-pointer"
                       />
-                      <span>Outside Dhaka (৳130)</span>
+                      <span className="text-sm font-bold text-gray-700 group-hover:text-black transition-colors uppercase tracking-wider">Outside Dhaka (৳130)</span>
                     </label>
                   </div>
 
                   <button
                     type="submit"
-                    className="bg-[var(--button-bg)] hover:bg-[var(--button-hover)] w-full sm:w-1/3 my-2 py-3.5 text-sm font-medium text-white shadow hover:shadow-lg rounded-sm uppercase outline-none transition-colors duration-300"
+                    className="bg-black hover:bg-[#FF1837] w-full sm:w-1/2 mt-4 py-4 text-xs font-black text-white shadow-lg hover:shadow-[0_10px_25px_-5px_rgba(255,24,55,0.4)] rounded-xl uppercase tracking-[0.2em] outline-none transition-all duration-500 transform hover:-translate-y-1"
                   >
                     {language === "bangla"
                       ? translations.saveButton.bangla

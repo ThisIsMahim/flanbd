@@ -468,44 +468,29 @@
 .btn-checkout {
   width: 100%;
   margin-top: 1.5rem;
-  padding: 1rem;
-  background: var(--accent);
-  color: var(--text-inverse);
+  padding: 1.125rem;
+  background: var(--text-primary) !important;
+  color: var(--text-inverse) !important;
   border: none;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-md);
   font-family: var(--font-display);
   font-weight: 800;
   font-size: var(--text-xs);
   text-transform: uppercase;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.2em;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
   position: relative;
   overflow: hidden;
-}
-
-.btn-checkout::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--accent);
-  transform: translateX(-101%);
-  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.btn-checkout:hover::after {
-  transform: translateX(0);
-}
-
-.btn-checkout span,
-.btn-checkout > * {
-  position: relative;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   z-index: 1;
 }
 
 .btn-checkout:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  background: #FF1837 !important;
+  color: #ffffff !important;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(255, 24, 55, 0.4);
 }
 
 /* Trust Badges */
@@ -569,8 +554,9 @@
 }
 
 .btn-guest-checkout:hover {
-  border-color: var(--text-primary);
-  background: var(--bg-subtle);
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--text-inverse);
 }
 
 /* ===================================

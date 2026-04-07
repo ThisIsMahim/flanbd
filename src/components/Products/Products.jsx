@@ -25,7 +25,7 @@ import SkeletonProduct from "./SkeletonProduct";
 import "./Products.css";
 import "../Home/SliderStyles.css"; // Card styles
 
-const PRICE_STEP = 100;
+const PRICE_STEP = 10;
 const FIXED_RESULT_PER_PAGE = 9;
 
 const Products = () => {
@@ -153,24 +153,44 @@ const Products = () => {
     return () => setIsSliderMounted(false);
   }, []);
 
+  const [localPriceRange, setLocalPriceRange] = useState(priceRange);
+
+  useEffect(() => {
+    setLocalPriceRange(priceRange);
+  }, [priceRange]);
+
   const priceHandler = (e, newPrice) => {
     if (isSliderMounted) {
-      setPriceRange([Math.max(priceMin, newPrice[0]), Math.min(priceMax, newPrice[1])]);
+      setLocalPriceRange(newPrice);
     }
+  };
+
+  const handlePriceCommitted = (e, newPrice) => {
+    setPriceRange([Math.max(priceMin, newPrice[0]), Math.min(priceMax, newPrice[1])]);
   };
 
   const handleMinPriceChange = (e) => {
-    const val = Number(e.target.value);
-    if (val >= priceMin && val <= priceRange[1] - PRICE_STEP) {
-      setPriceRange([val, priceRange[1]]);
-    }
+    const val = e.target.value === "" ? 0 : Number(e.target.value);
+    setLocalPriceRange([val, localPriceRange[1]]);
   };
 
   const handleMaxPriceChange = (e) => {
-    const val = Number(e.target.value);
-    if (val >= priceRange[0] + PRICE_STEP && val <= priceMax) {
-      setPriceRange([priceRange[0], val]);
+    const val = e.target.value === "" ? priceMax : Number(e.target.value);
+    setLocalPriceRange([localPriceRange[0], val]);
+  };
+
+  const handlePriceInputBlur = () => {
+    let min = Math.max(priceMin, Math.min(localPriceRange[0], priceMax));
+    let max = Math.max(priceMin, Math.min(localPriceRange[1], priceMax));
+    
+    if (min > max) {
+      const temp = min;
+      min = max;
+      max = temp;
     }
+    
+    setLocalPriceRange([min, max]);
+    setPriceRange([min, max]);
   };
 
   const clearFilters = useCallback(() => {
@@ -262,25 +282,64 @@ const Products = () => {
           <span className="filter-group-title">Price Range</span>
           <Box sx={{ px: 1 }}>
             <Slider
-              value={priceRange}
+              value={localPriceRange}
               onChange={priceHandler}
+              onChangeCommitted={handlePriceCommitted}
               valueLabelDisplay="auto"
               min={priceMin}
               max={priceMax}
               step={PRICE_STEP}
               size="small"
               sx={{
-                color: "var(--accent)",
-                "& .MuiSlider-thumb": { backgroundColor: "#fff", border: "2px solid var(--accent)" },
-                "& .MuiSlider-track": { backgroundColor: "var(--accent)" },
-                "& .MuiSlider-rail": { backgroundColor: "var(--border-subtle)" },
+                color: "#FF1837",
+                '& .MuiSlider-thumb': {
+                  backgroundColor: "#fff",
+                  border: "2px solid #FF1837",
+                  width: 14,
+                  height: 14,
+                  '&:hover, &.Mui-focusVisible': {
+                    boxShadow: '0px 0px 0px 8px rgba(255, 24, 55, 0.16)',
+                  },
+                },
+                '& .MuiSlider-track': {
+                  backgroundColor: "#FF1837",
+                  border: 'none',
+                  height: 4,
+                },
+                '& .MuiSlider-rail': {
+                  backgroundColor: "#E2E2E2",
+                  opacity: 1,
+                  height: 4,
+                },
+                '& .MuiSlider-valueLabel': {
+                  backgroundColor: '#333',
+                  fontSize: '10px',
+                  fontWeight: 700,
+                  borderRadius: '4px',
+                },
               }}
             />
           </Box>
           <div className="price-input-row">
-            <input type="number" value={priceRange[0]} onChange={handleMinPriceChange} className="price-field" placeholder="Min" />
+            <input 
+              type="number" 
+              value={localPriceRange[0]} 
+              onChange={handleMinPriceChange} 
+              onBlur={handlePriceInputBlur}
+              onKeyDown={(e) => e.key === 'Enter' && handlePriceInputBlur()}
+              className="price-field" 
+              placeholder="Min" 
+            />
             <span style={{ color: "var(--text-muted)", fontSize: "0.8rem" }}>to</span>
-            <input type="number" value={priceRange[1]} onChange={handleMaxPriceChange} className="price-field" placeholder="Max" />
+            <input 
+              type="number" 
+              value={localPriceRange[1]} 
+              onChange={handleMaxPriceChange} 
+              onBlur={handlePriceInputBlur}
+              onKeyDown={(e) => e.key === 'Enter' && handlePriceInputBlur()}
+              className="price-field" 
+              placeholder="Max" 
+            />
           </div>
         </div>
 

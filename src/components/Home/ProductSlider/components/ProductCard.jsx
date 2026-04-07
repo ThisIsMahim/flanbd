@@ -111,7 +111,7 @@ const ProductCard = ({
             className={`flex-1 py-2.5 px-4 rounded-md font-bold text-xs uppercase tracking-wider transition-all duration-300 ${
               isProductInCart(product._id) 
                 ? 'bg-green-600 text-white shadow-md' 
-                : 'bg-black text-white hover:bg-gray-800 shadow-md hover:shadow-lg transform hover:-translate-y-0.5'
+                : 'bg-black text-white hover:bg-[#FF1837] shadow-md hover:shadow-lg transform hover:-translate-y-0.5'
             }`}
             onClick={() => isProductInCart(product._id) ? goToCartHandler() : addToCartHandler(product._id)}
           >
@@ -119,7 +119,7 @@ const ProductCard = ({
           </button>
           <Link 
             to={`/product/${product._id}`}
-            className="flex items-center justify-center w-11 h-11 rounded-md border border-gray-200 text-gray-600 hover:text-black hover:border-black transition-colors shrink-0"
+            className="flex items-center justify-center w-11 h-11 rounded-md border border-gray-200 text-gray-600 hover:text-white hover:bg-[#FF1837] hover:border-[#FF1837] transition-all duration-300 shrink-0"
             title="View Details"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
