@@ -10,6 +10,9 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import StarIcon from "@mui/icons-material/Star";
 import FlashOnIcon from "@mui/icons-material/FlashOn";
 import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import ShareIcon from "@mui/icons-material/Share";
+import CompareArrowsIcon from "@mui/icons-material/CompareArrows";
 
 // Components
 import Breadcrumb from "../Layouts/Breadcrumb";
@@ -147,23 +150,24 @@ const ProductDetails = () => {
               <span className="text-sm text-secondary">({product.numOfReviews || 0} reviews)</span>
             </div>
 
-            <div className="product-price-row">
+            <div className="product-price-row mt-6">
               <span className="product-current-price">৳{product.price?.toLocaleString()}</span>
               {hasDiscount && (
-                <>
+                <div className="product-price-info-group">
                   <span className="product-old-price">৳{product.cuttedPrice?.toLocaleString()}</span>
-                  <span className="product-discount-tag">-{getDiscount(product.price, product.cuttedPrice)}%</span>
-                </>
+                  <span className="product-discount-tag">-{getDiscount(product.price, product.cuttedPrice)}% OFF</span>
+                  <span className="save-amount ml-2">SAVE ৳{(product.cuttedPrice - product.price).toLocaleString()}</span>
+                </div>
               )}
             </div>
 
             {product.description && (
               <p className="product-short-desc">
-                {product.description.replace(/<[^>]*>/g, '').substring(0, 200)}...
+                {product.description.replace(/<[^>]*>/g, '').substring(0, 250)}...
               </p>
             )}
 
-            {/* Colors */}
+            {/* Variations */}
             {product.images?.length > 1 && (
               <div className="color-selector">
                 <span className="selector-label">Available Variations</span>
@@ -184,46 +188,76 @@ const ProductDetails = () => {
               </div>
             )}
 
-            <div className="product-actions">
-              <button className="btn-add-cart" onClick={itemInCart ? () => navigate('/cart') : addToCartHandler}>
-                <ShoppingCartIcon />
-                {itemInCart ? "View in Cart" : "Add to Cart"}
-              </button>
-              <button className="btn-buy-now" onClick={buyNow} disabled={product.stock < 1}>
-                <FlashOnIcon />
-                {product.stock < 1 ? "Out of Stock" : "Buy It Now"}
-              </button>
+            <div className="product-actions-group">
+              <div className="product-main-actions">
+                <button 
+                  className={`btn-add-cart ${itemInCart ? 'active' : ''}`} 
+                  onClick={itemInCart ? () => navigate('/cart') : addToCartHandler}
+                >
+                  <ShoppingCartIcon fontSize="small" />
+                  {itemInCart ? "View in Cart" : "Add to Cart"}
+                </button>
+                <button 
+                  className="btn-buy-now" 
+                  onClick={buyNow} 
+                  disabled={product.stock < 1}
+                >
+                  <FlashOnIcon fontSize="small" />
+                  {product.stock < 1 ? "Out of Stock" : "Buy It Now"}
+                </button>
+              </div>
+              
+              <div className="product-secondary-actions">
+                <button className="secondary-action-btn">
+                  <FavoriteBorderIcon fontSize="small" />
+                  Add to Wishlist
+                </button>
+                <button className="secondary-action-btn">
+                  <ShareIcon fontSize="small" />
+                  Share
+                </button>
+                <button className="secondary-action-btn">
+                  <CompareArrowsIcon fontSize="small" />
+                  Compare
+                </button>
+              </div>
             </div>
 
             <ProductHighlightsBlock highlights={product.highlights} />
           </div>
         </div>
 
-        {/* Details & Reviews */}
+        {/* Bottom Details */}
         <section className="product-bottom-section">
           <div className="product-details-tabs">
-            <nav className="flex gap-8">
+            <div className="flex gap-6 md:gap-12 min-w-max">
               {['Description', 'Specifications', `Reviews (${product.numOfReviews})`].map((tab, i) => (
                 <button
                   key={i}
-                  className={`py-4 font-bold border-b-2 transition-all ${activeTab === i ? 'border-accent text-primary' : 'border-transparent text-muted'}`}
+                  className={`tab-btn ${activeTab === i ? 'active' : ''}`}
                   onClick={() => setActiveTab(i)}
                 >
                   {tab}
                 </button>
               ))}
-            </nav>
+            </div>
           </div>
 
           <div className="tab-content">
-            {activeTab === 0 && <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: product.description }} />}
-            {activeTab === 1 && <ProductInfoBlock product={product} />}
-            {activeTab === 2 && <ProductReviewsBlock product={product} />}
+            {activeTab === 0 && (
+              <div className="animate-fade-in prose max-w-none text-secondary break-words overflow-x-hidden w-full">
+                <div dangerouslySetInnerHTML={{ __html: product.description }} />
+              </div>
+            )}
+            {activeTab === 1 && <div className="animate-fade-in"><ProductInfoBlock product={product} /></div>}
+            {activeTab === 2 && <div className="animate-fade-in"><ProductReviewsBlock product={product} /></div>}
           </div>
         </section>
 
         {/* Similar Products */}
-        <DealSlider title="Similar Products" />
+        <div className="mt-20 border-t border-border pt-20">
+          <DealSlider title="Similar Products" />
+        </div>
       </main>
     </>
   );

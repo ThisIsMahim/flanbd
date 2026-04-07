@@ -283,21 +283,21 @@ const GuestCheckout = () => {
   return (
     <>
       <MetaData title="Guest Checkout" />
-      <main className="w-full mt-20">
-        <div className="flex flex-col sm:flex-row gap-3.5 w-full sm:w-11/12 mt-0 sm:mt-4 m-auto sm:mb-7">
-          <div className="flex-1">
-              <Paper elevation={3} className="p-6">
-                <Typography variant="h4" component="h1" gutterBottom className="text-center">
-                  {translations.title}
-                </Typography>
-                <Typography variant="body1" className="text-center mb-6 text-gray-600">
-                  {translations.subtitle}
-                </Typography>
+      <main className="w-full mt-20 md:mt-24 mb-16">
+        <div className="max-w-6xl w-full px-4 sm:px-6 lg:px-8 mx-auto">
+          <Typography variant="h4" component="h1" gutterBottom className="font-bold text-[var(--primary-blue-dark)]">
+            {translations.title}
+          </Typography>
+          <Typography variant="body1" className="mb-6 text-gray-500">
+            {translations.subtitle}
+          </Typography>
 
-                <form onSubmit={submitHandler}>
+          <div className="flex flex-col lg:flex-row gap-8 w-full">
+            <div className="flex-1">
+                <form onSubmit={submitHandler} className="space-y-8">
                   {/* Guest Information */}
                   <Box mb={4}>
-                    <Typography variant="h6" gutterBottom>
+                    <Typography variant="h6" gutterBottom className="font-semibold text-gray-800 border-b pb-2 mb-4">
                       {translations.guestInfo}
                     </Typography>
                     <Grid container spacing={3}>
@@ -337,7 +337,7 @@ const GuestCheckout = () => {
 
                   {/* Shipping Information */}
                   <Box mb={4}>
-                    <Typography variant="h6" gutterBottom>
+                    <Typography variant="h6" gutterBottom className="font-semibold text-gray-800 border-b pb-2 mb-4">
                       {language === "english" ? "Shipping Information" : "শিপিং তথ্য"}
                     </Typography>
                     <Grid container spacing={3}>
@@ -426,7 +426,7 @@ const GuestCheckout = () => {
 
                   {/* Items In Your Order */}
                   <Box mb={4}>
-                    <Typography variant="h6" gutterBottom>
+                    <Typography variant="h6" gutterBottom className="font-semibold text-gray-800 border-b pb-2 mb-4">
                       {language === "english" ? "Items In Your Order" : "আপনার অর্ডারের আইটেম"}
                     </Typography>
                     <div className="bg-gray-50 rounded border divide-y">
@@ -445,7 +445,7 @@ const GuestCheckout = () => {
 
                   {/* Payment Method */}
                   <Box mb={4}>
-                    <Typography variant="h6" gutterBottom>
+                    <Typography variant="h6" gutterBottom className="font-semibold text-gray-800 border-b pb-2 mb-4">
                       {translations.paymentMethod}
                     </Typography>
                     <FormControl component="fieldset">
@@ -527,40 +527,22 @@ const GuestCheckout = () => {
                     )}
                   </Box>
 
-                  {/* Order Summary */}
-                  <Box mb={4}>
-                    <Typography variant="h6" gutterBottom>
-                      {language === "english" ? "Order Summary" : "অর্ডার সারসংক্ষেপ"}
-                    </Typography>
-                    <Box className="bg-gray-50 p-4 rounded">
-                      <Typography variant="body2">
-                        {language === "english" ? "Items Subtotal" : "আইটেম উপমোট"}: ৳{itemsSubtotal}
-                      </Typography>
-                      <Typography variant="body2">
-                        {language === "english" ? "Delivery Charge" : "ডেলিভারি চার্জ"}: ৳{deliveryCharge}
-                      </Typography>
-                      {couponDiscount > 0 && (
-                        <Typography variant="body2" color="success.main">
-                          {language === "english" ? "Coupon Discount" : "কুপন ছাড়"}: -৳{couponDiscount}
-                        </Typography>
-                      )}
-                      <Typography variant="h6" className="mt-2">
-                        {language === "english" ? "Total" : "মোট"}: ৳{grandTotal}
-                      </Typography>
-                    </Box>
-                  </Box>
-
                 </form>
-              </Paper>
-          </div>
+            </div>
 
-          <PriceSidebar 
-            cartItems={cartItems} 
-            guestShippingInfo={guestShippingInfo}
-            onSubmit={submitHandler}
-            isProcessing={isProcessing}
-            translations={translations}
-          />
+            <div className="w-full lg:w-[400px]">
+              <div className="sticky top-24">
+                <PriceSidebar 
+                  cartItems={cartItems} 
+                  guestShippingInfo={guestShippingInfo}
+                  onSubmit={submitHandler}
+                  isProcessing={isProcessing}
+                  translations={translations}
+                  btnText={translations.placeOrder}
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </main>
 

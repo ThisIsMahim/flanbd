@@ -124,7 +124,7 @@
   border: none;
   border-radius: var(--radius-full);
   font-weight: 700;
-  font-size: var(--text-base);
+  font-size: var(--text-sm);
   cursor: pointer;
   transition: all var(--transition-base);
 }
@@ -142,6 +142,7 @@
   color: var(--text-primary);
   border-radius: var(--radius-full);
   font-weight: 700;
+  font-size: var(--text-sm);
   cursor: pointer;
   transition: all var(--transition-base);
 }

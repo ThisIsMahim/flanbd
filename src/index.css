@@ -39,7 +39,12 @@
 .ql-editor h1 { font-size: 2em; }
 .ql-editor h2 { font-size: 1.5em; }
 .ql-editor h3 { font-size: 1.17em; }
-.ql-editor p { margin: 0 0 1em; }
+.ql-editor p { 
+  margin: 0 0 1em; 
+  word-wrap: break-word; 
+  overflow-wrap: break-word; 
+  white-space: pre-wrap; 
+}
 .ql-editor ol, .ql-editor ul { padding-left: 1.5em; margin: 0 0 1em; }
 .ql-editor li { margin-bottom: 0.5em; }
 .ql-editor blockquote { border-left: 3px solid var(--border); margin: 0 0 1em; padding-left: 1em; }

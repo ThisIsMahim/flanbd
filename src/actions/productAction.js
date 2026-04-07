@@ -130,7 +130,10 @@ export const getProductDetails = (id) => async (dispatch) => {
 export const newReview = (reviewData) => async (dispatch) => {
   try {
     dispatch({ type: NEW_REVIEW_REQUEST });
-    const config = { header: { "Content-Type": "application/json" } };
+    const config = { 
+      headers: { "Content-Type": "application/json" },
+      withCredentials: true 
+    };
     const { data } = await axios.put(
       `${process.env.REACT_APP_BACKEND_URL}/api/v1/review`,
       reviewData,
@@ -144,7 +147,7 @@ export const newReview = (reviewData) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: NEW_REVIEW_FAIL,
-      payload: error.response.data.message,
+      payload: error.response?.data?.message || error.message,
     });
   }
 };

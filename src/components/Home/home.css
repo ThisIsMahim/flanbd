@@ -44,14 +44,14 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.2em;
-  font-size: var(--text-xs);
+  font-size: 12px;
   margin-bottom: 0.75rem;
   display: block;
 }
 
 .home-section-header .section-title {
   font-family: var(--font-display);
-  font-size: var(--text-4xl);
+  font-size: 38px;
   font-weight: 800;
   line-height: 1.1;
   letter-spacing: -0.04em;

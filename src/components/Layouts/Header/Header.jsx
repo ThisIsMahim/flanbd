@@ -8,6 +8,13 @@ import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import axios from "axios";
+import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import LogoutIcon from '@mui/icons-material/Logout';
+import LoginIcon from '@mui/icons-material/Login';
+import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import "./Header.css";
 
 const Header = () => {
@@ -23,6 +30,8 @@ const Header = () => {
   const [searchValue, setSearchValue] = useState("");
   const [categories, setCategories] = useState([]);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [accountDropdownOpen, setAccountDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -34,6 +43,14 @@ const Header = () => {
     axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/v1/categories`)
       .then(res => setCategories(res.data.categories))
       .catch(() => { });
+
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setAccountDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const handleSearch = (e) => {
@@ -44,6 +61,14 @@ const Header = () => {
   };
 
   const isActive = (path) => location.pathname === path;
+
+  const handleLogout = () => {
+    dispatch(logoutUser());
+    setAccountDropdownOpen(false);
+    navigate("/login");
+  };
+
+  const closeDropdown = () => setAccountDropdownOpen(false);
 
   return (
     <>
@@ -68,15 +93,73 @@ const Header = () => {
             <button className="header-icon-btn" onClick={() => setSearchOpen(true)}>
               <SearchIcon sx={{ fontSize: 22 }} />
             </button>
-            <Link to="/account" className="header-icon-btn">
-              {isAuthenticated ? (
-                <div className="w-6 h-6 rounded-full bg-accent text-white flex items-center justify-center text-[10px] font-bold">
-                  {user.name[0].toUpperCase()}
+            <div className="account-dropdown-container" ref={dropdownRef}>
+              <button
+                className="header-icon-btn profile-trigger"
+                onClick={() => setAccountDropdownOpen(!accountDropdownOpen)}
+              >
+                {isAuthenticated ? (
+                  <div className="profile-avatar-circle">
+                    {user.name && user.name[0].toUpperCase()}
+                  </div>
+                ) : (
+                  <PersonOutlineOutlinedIcon sx={{ fontSize: 24 }} />
+                )}
+              </button>
+
+              {accountDropdownOpen && (
+                <div className="account-dropdown-menu animate-scale-in">
+                  {isAuthenticated ? (
+                    <>
+                      <div className="account-dropdown-header">
+                        <p className="user-greeting">Hi, {user.name.split(' ')[0]}</p>
+                        <p className="user-email">{user.email}</p>
+                      </div>
+                      <div className="account-dropdown-divider" />
+                      <Link to="/orders" className="account-dropdown-item" onClick={closeDropdown}>
+                        <ShoppingBagIcon sx={{ fontSize: 18 }} />
+                        <span>My Orders</span>
+                      </Link>
+                      <Link to="/account" className="account-dropdown-item" onClick={closeDropdown}>
+                        <ManageAccountsIcon sx={{ fontSize: 18 }} />
+                        <span>Profile Settings</span>
+                      </Link>
+                      <Link to="/wishlist" className="account-dropdown-item" onClick={closeDropdown}>
+                        <FavoriteBorderIcon sx={{ fontSize: 18 }} />
+                        <span>My Wishlist</span>
+                      </Link>
+                      {user.role === "admin" && (
+                        <Link to="/admin/dashboard" className="account-dropdown-item" onClick={closeDropdown}>
+                          <DashboardIcon sx={{ fontSize: 18 }} />
+                          <span>Admin Panel</span>
+                        </Link>
+                      )}
+                      <div className="account-dropdown-divider" />
+                      <button className="account-dropdown-item logout-btn" onClick={handleLogout}>
+                        <LogoutIcon sx={{ fontSize: 18 }} />
+                        <span>Log Out</span>
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <div className="account-dropdown-header">
+                        <p className="user-greeting">Welcome back</p>
+                        <p className="user-email">Sign in to your account</p>
+                      </div>
+                      <div className="account-dropdown-divider" />
+                      <Link to="/login" className="account-dropdown-item primary" onClick={closeDropdown}>
+                        <LoginIcon sx={{ fontSize: 18 }} />
+                        <span>Log In</span>
+                      </Link>
+                      <Link to="/register" className="account-dropdown-item" onClick={closeDropdown}>
+                        <AppRegistrationIcon sx={{ fontSize: 18 }} />
+                        <span>Create Account</span>
+                      </Link>
+                    </>
+                  )}
                 </div>
-              ) : (
-                <PersonOutlineOutlinedIcon sx={{ fontSize: 24 }} />
               )}
-            </Link>
+            </div>
             <Link to="/cart" className="header-icon-btn">
               <ShoppingBagOutlinedIcon sx={{ fontSize: 22 }} />
               {cartItems.length > 0 && <span className="cart-badge">{cartItems.length}</span>}

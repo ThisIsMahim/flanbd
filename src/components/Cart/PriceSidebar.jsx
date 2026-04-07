@@ -6,7 +6,7 @@ import { myOrdersSummary } from "../../actions/orderAction";
 import { CircularProgress } from "@mui/material";
 import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
 
-const PriceSidebar = ({ cartItems, guestShippingInfo, onSubmit, isProcessing }) => {
+const PriceSidebar = ({ cartItems, guestShippingInfo, onSubmit, isProcessing, btnText }) => {
   const dispatch = useDispatch();
   const { language } = useContext(LanguageContext);
   const { shippingInfo: cartShippingInfo } = useSelector((state) => state.cart) || {};
@@ -141,7 +141,7 @@ const PriceSidebar = ({ cartItems, guestShippingInfo, onSubmit, isProcessing }) 
           className="btn-checkout"
         >
           <span>
-            {isProcessing ? <CircularProgress size={18} color="inherit" /> : t("Proceed to Checkout", "চেকআউটে যান")}
+            {isProcessing ? <CircularProgress size={18} color="inherit" /> : (btnText || t("Proceed to Checkout", "চেকআউটে যান"))}
           </span>
         </button>
       )}

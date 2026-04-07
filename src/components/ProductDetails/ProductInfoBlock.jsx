@@ -3,38 +3,29 @@ import React from "react";
 const ProductInfoBlock = ({ product }) => {
   if (!product || !product.specifications || product.specifications.length === 0) {
     return (
-      <div style={{ padding: '2rem', textAlign: 'center', color: 'var(--text-muted)' }}>
+      <div className="py-12 text-center text-muted font-medium bg-subtle rounded-3xl">
         No detailed specifications available for this product.
       </div>
     );
   }
 
   return (
-    <div className="product-specs-container">
-      <h3 style={{
-        fontFamily: 'var(--font-display)',
-        fontSize: 'var(--text-xl)',
-        fontWeight: 700,
-        color: 'var(--text-primary)',
-        marginBottom: '1.5rem'
-      }}>
-        Technical Specifications
+    <div className="product-specs-container max-w-4xl">
+      <h3 className="font-display text-2xl font-bold mb-8 uppercase tracking-wide text-primary">
+        Technical Details
       </h3>
-      <div style={{ border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-lg)', overflow: 'hidden' }}>
+      <div className="space-y-0 border border-border rounded-2xl overflow-hidden bg-surface">
         {product.specifications.map((spec, i) => (
           <div
             key={i}
-            style={{
-              display: 'flex',
-              padding: '1rem 1.5rem',
-              borderBottom: i === product.specifications.length - 1 ? 'none' : '1px solid var(--border-subtle)',
-              background: i % 2 === 0 ? 'var(--bg-surface)' : 'var(--bg-subtle)'
-            }}
+            className={`flex flex-col sm:flex-row sm:items-center py-4 px-6 border-b border-border last:border-none transition-colors hover:bg-subtle/30 ${
+              i % 2 === 0 ? "bg-surface" : "bg-subtle/10"
+            }`}
           >
-            <div style={{ width: '35%', fontWeight: 600, color: 'var(--text-secondary)', fontSize: 'var(--text-sm)' }}>
+            <div className="w-full sm:w-1/3 font-bold text-primary text-xs uppercase tracking-wider mb-1 sm:mb-0">
               {spec.title}
             </div>
-            <div style={{ flex: 1, color: 'var(--text-primary)', fontSize: 'var(--text-sm)' }}>
+            <div className="flex-1 text-secondary text-sm font-medium leading-relaxed">
               {spec.description}
             </div>
           </div>

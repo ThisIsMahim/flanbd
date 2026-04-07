@@ -270,7 +270,7 @@ const Products = () => {
     }
   }, [category, categoriesData]);
 
-  const FilterContent = () => (
+  const sidebarContent = (
     <div className="filter-card">
       <div className="filter-header">
         <h2 className="filter-title">Filters</h2>
@@ -422,7 +422,7 @@ const Products = () => {
           {/* Desktop Sidebar */}
           {!isMobile && (
             <aside className="filter-sidebar">
-              <FilterContent />
+              {sidebarContent}
             </aside>
           )}
 
@@ -433,7 +433,7 @@ const Products = () => {
             onClose={() => setMobileFiltersOpen(false)}
             sx={{ "& .MuiDrawer-paper": { width: 280 } }}
           >
-            <FilterContent />
+            {sidebarContent}
           </Drawer>
 
           {/* Product Grid */}

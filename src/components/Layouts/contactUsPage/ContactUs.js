@@ -94,11 +94,11 @@ const ContactUs = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-32 pb-16 md:pt-40 md:pb-24 px-4 relative overflow-hidden">
+    <div className="min-h-screen bg-gray-50 pt-20 pb-12 md:pt-24 md:pb-16 px-4 relative overflow-hidden">
       <MetaData title="Contact Us | Flan" />
       
       <div className="container mx-auto z-10 relative max-w-6xl">
-        <header className="text-center mb-16 flex flex-col items-center justify-center">
+        <header className="text-center mb-10 flex flex-col items-center justify-center">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 transition-transform hover:scale-105 duration-300">
             {t.header}
           </h1>
