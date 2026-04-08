@@ -239,6 +239,13 @@
   gap: 1rem;
 }
 
+@media (max-width: 640px) {
+  .product-main-actions {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+}
+
 .btn-add-cart {
   background: #0A0A0A;
   color: #FFFFFF !important;
@@ -485,6 +492,11 @@
   .secondary-action-btn {
     font-size: 11px;
     gap: 0.3rem;
+    flex: 1;
+    justify-content: center;
+    border: 1px solid var(--border-subtle);
+    padding: 0.5rem;
+    border-radius: 4px;
   }
 
   .product-bottom-section {

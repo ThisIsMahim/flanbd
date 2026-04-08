@@ -65,6 +65,7 @@ import CancellationReturn from "./components/Layouts/Footer/CancellationReturn";
 import TermsConditions from "./components/Layouts/Footer/TermsConditions";
 import ShippingPolicies from "./components/Layouts/Footer/Shipping";
 import HomeBlogSection from "./components/Home/HomeBlogSection";
+import MobileBottomNav from "./components/Layouts/Header/MobileBottomNav";
 
 // Configure axios defaults
 axios.defaults.withCredentials = true;
@@ -431,7 +432,8 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
         {/* <ChatButton /> */}
-        {!pathname.startsWith("/admin") && <Footer />}
+        {pathname !== "/login" && pathname !== "/register" && <MobileBottomNav />}
+        {!pathname.startsWith("/admin") && pathname !== "/login" && pathname !== "/register" && <Footer />}
       </LanguageProvider>
     </HelmetProvider>
   );

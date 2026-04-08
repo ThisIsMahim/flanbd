@@ -249,25 +249,41 @@
   padding-bottom: 2rem;
 }
 
-/* Mobile Filter Floating Button */
+/* Mobile Filter Floating Button — Premium Black Style */
 .mobile-filter-trigger {
   position: fixed;
-  bottom: 5rem;
+  bottom: 5.5rem; /* Lifted to clear the bottom navigation bar */
   left: 50%;
   transform: translateX(-50%);
   z-index: 100;
-  background: none;
-  color: #000000;
-  padding: 0;
-  border-radius: 0;
+  background: #000000;
+  color: #ffffff;
+  padding: 0.75rem 1.75rem;
+  border-radius: 50px;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-weight: 900;
-  font-size: var(--text-base);
-  box-shadow: none;
-  border: none;
+  justify-content: center;
+  gap: 0.6rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+  white-space: nowrap;
+}
+
+.mobile-filter-trigger:hover {
+  background: #1a1a1a;
+  transform: translateX(-50%) translateY(-3px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+}
+
+.mobile-filter-trigger svg {
+  font-size: 20px !important;
 }
 
 /* Responsive */

@@ -81,28 +81,28 @@ const Register = () => {
         initial={{ x: "100%", opacity: 0.5 }}
         animate={{ x: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="w-full lg:w-7/12 flex items-center justify-center p-6 sm:p-10 lg:p-16 bg-white relative"
+        className="w-full lg:w-7/12 flex items-center justify-center p-4 sm:p-6 lg:p-10 bg-white relative"
       >
         <div className="w-full max-w-lg relative z-10">
           
           {/* Mobile Logo Fallback */}
-          <div className="lg:hidden mb-10 text-center">
+          <div className="lg:hidden mb-4 text-center">
              <Link to="/">
-               <img src="/logo.png" alt="Flan" className="h-10 mx-auto object-contain" />
+               <img src="/logo12.png" alt="Flan" className="h-10 mx-auto object-contain mix-blend-multiply" />
              </Link>
           </div>
 
-          <div className="mb-10">
-            <h1 className="text-4xl sm:text-5xl font-black text-gray-900 mb-3 font-display tracking-tight">Create Account</h1>
-            <p className="text-gray-500 font-medium text-sm sm:text-base">Join Flan and level up your shopping experience.</p>
+          <div className="mb-5">
+            <h1 className="text-2xl sm:text-3xl font-black text-gray-900 mb-1 font-display tracking-tight">Create Account</h1>
+            <p className="text-gray-500 font-medium text-xs sm:text-sm">Join Flan and level up your shopping experience.</p>
           </div>
 
-          <form onSubmit={handleRegister} className="space-y-5">
+          <form onSubmit={handleRegister} className="space-y-4">
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
               {/* Name Field */}
-              <div className="space-y-2">
-                <label className="text-xs font-black text-gray-400 uppercase tracking-[0.2em] pl-1">{t("Full Name", "পুরো নাম")}</label>
+              <div className="space-y-1">
+                <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.1em] pl-1">{t("Full Name", "পুরো নাম")}</label>
                 <input
                   type="text"
                   name="name"
@@ -110,13 +110,13 @@ const Register = () => {
                   onChange={handleChange}
                   required
                   placeholder="John Doe"
-                  className="w-full px-5 py-4 bg-gray-50 text-gray-900 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition-all duration-300"
+                  className="w-full px-4 py-3 bg-gray-50 text-xs sm:text-sm text-gray-900 border border-gray-200 rounded-lg focus:bg-white focus:outline-none focus:ring-2 focus:ring-accent/10 focus:border-accent transition-all duration-300"
                 />
               </div>
 
               {/* Email Field */}
-              <div className="space-y-2">
-                <label className="text-xs font-black text-gray-400 uppercase tracking-[0.2em] pl-1">{t("Email Address", "ইমেইল")}</label>
+              <div className="space-y-1">
+                <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.1em] pl-1">{t("Email Address", "ইমেইল")}</label>
                 <input
                   type="email"
                   name="email"
@@ -124,15 +124,15 @@ const Register = () => {
                   onChange={handleChange}
                   required
                   placeholder="name@example.com"
-                  className="w-full px-5 py-4 bg-gray-50 text-gray-900 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition-all duration-300"
+                  className="w-full px-4 py-3 bg-gray-50 text-xs sm:text-sm text-gray-900 border border-gray-200 rounded-lg focus:bg-white focus:outline-none focus:ring-2 focus:ring-accent/10 focus:border-accent transition-all duration-300"
                 />
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
               {/* Password Field */}
-              <div className="space-y-2">
-                <label className="text-xs font-black text-gray-400 uppercase tracking-[0.2em] pl-1">{t("Password", "পাসওয়ার্ড")}</label>
+              <div className="space-y-1">
+                <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.1em] pl-1">{t("Password", "পাসওয়ার্ড")}</label>
                 <input
                   type="password"
                   name="password"
@@ -140,13 +140,13 @@ const Register = () => {
                   onChange={handleChange}
                   required
                   placeholder="••••••••"
-                  className="w-full px-5 py-4 bg-gray-50 text-gray-900 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition-all duration-300"
+                  className="w-full px-4 py-3 bg-gray-50 text-xs sm:text-sm text-gray-900 border border-gray-200 rounded-lg focus:bg-white focus:outline-none focus:ring-2 focus:ring-accent/10 focus:border-accent transition-all duration-300"
                 />
               </div>
 
               {/* Confirm Password Field */}
-              <div className="space-y-2">
-                 <label className="text-xs font-black text-gray-400 uppercase tracking-[0.2em] pl-1">{t("Confirm Password", "পাসওয়ার্ড নিশ্চিত করুন")}</label>
+              <div className="space-y-1">
+                 <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.1em] pl-1">{t("Confirm Password", "পাসওয়ার্ড নিশ্চিত করুন")}</label>
                  <input
                   type="password"
                   name="cpassword"
@@ -154,31 +154,31 @@ const Register = () => {
                   onChange={handleChange}
                   required
                   placeholder="••••••••"
-                  className="w-full px-5 py-4 bg-gray-50 text-gray-900 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:ring-4 focus:ring-accent/10 focus:border-accent transition-all duration-300"
+                  className="w-full px-4 py-3 bg-gray-50 text-xs sm:text-sm text-gray-900 border border-gray-200 rounded-lg focus:bg-white focus:outline-none focus:ring-2 focus:ring-accent/10 focus:border-accent transition-all duration-300"
                 />
               </div>
             </div>
 
             {/* Avatar Selection */}
-            <div className="pt-2 space-y-4">
-              <label className="text-xs font-black text-gray-400 uppercase tracking-[0.2em] pl-1">{t("Choose Your Identity", "প্রোফাইল ছবি বেছে নিন")}</label>
-              <div className="flex flex-wrap gap-3 sm:gap-4 p-2">
+            <div className="pt-1 space-y-2">
+              <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.1em] pl-1">{t("Choose Your Identity", "প্রোফাইল ছবি বেছে নিন")}</label>
+              <div className="flex flex-wrap gap-2.5 p-1">
                 {notebookAvatars.map((url) => (
                   <button
                     type="button"
                     key={url}
                     onClick={() => setSelectedAvatar(url)}
-                    className={`relative w-14 h-14 rounded-2xl overflow-hidden transition-all duration-500 group/avatar ${
+                    className={`relative w-11 h-11 sm:w-12 sm:h-12 rounded-xl overflow-hidden transition-all duration-300 group/avatar ${
                       selectedAvatar === url 
-                        ? 'ring-4 ring-accent ring-offset-2 scale-110 shadow-xl z-10' 
-                        : 'hover:scale-105 hover:shadow-md grayscale hover:grayscale-0 opacity-60 hover:opacity-100'
+                        ? 'ring-2 ring-accent ring-offset-2 scale-105 shadow-md z-10' 
+                        : 'hover:scale-105 hover:shadow-sm grayscale hover:grayscale-0 opacity-70 hover:opacity-100'
                     }`}
                   >
-                    <div className={`absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200 group-hover/avatar:from-accent/5 group-hover/avatar:to-accent/10 transition-colors ${selectedAvatar === url ? 'from-accent/10 to-accent/20' : ''}`} />
+                    <div className={`absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200 transition-colors ${selectedAvatar === url ? 'from-accent/5 to-accent/10' : ''}`} />
                     <img 
                       src={url} 
                       alt="Avatar" 
-                      className={`relative w-full h-full object-contain p-2.5 transition-transform duration-500 ${selectedAvatar === url ? 'scale-110' : 'group-hover/avatar:scale-110'}`} 
+                      className={`relative w-full h-full object-contain p-2 transition-transform duration-300 ${selectedAvatar === url ? 'scale-110' : 'group-hover/avatar:scale-110'}`} 
                     />
                   </button>
                 ))}
@@ -189,17 +189,17 @@ const Register = () => {
             <button 
               type="submit" 
               disabled={loading}
-              className="group w-full py-4 px-6 mt-6 flex items-center justify-between text-white bg-black hover:bg-[#FF1837] focus:ring-4 focus:ring-red-500/20 rounded-xl font-bold uppercase tracking-wider text-sm transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed shadow-lg hover:shadow-[0_10px_30px_-10px_rgba(255,24,55,0.4)]"
+              className="group w-full py-3 px-6 mt-3 flex items-center justify-center gap-2 text-white bg-black hover:bg-[#FF1837] focus:ring-4 focus:ring-red-500/20 rounded-lg font-bold uppercase tracking-wider text-xs transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed shadow-md hover:shadow-[0_8px_20px_-8px_rgba(255,24,55,0.4)]"
             >
               <span>{loading ? "Creating..." : t("Create Account", "অ্যাকাউন্ট তৈরি করুন")}</span>
-              <ArrowRightAltIcon className="group-hover:translate-x-2 transition-transform duration-300" />
+              <ArrowRightAltIcon className="group-hover:translate-x-1 transition-transform duration-300 text-sm" />
             </button>
             
           </form>
 
           {/* Login Link */}
-          <div className="mt-10 text-center">
-             <p className="text-sm font-medium text-gray-500">
+          <div className="mt-5 text-center">
+             <p className="text-xs font-medium text-gray-500">
                Already a customer?{' '}
                <Link to="/login" className="text-accent font-bold hover:underline underline-offset-4 decoration-2 transition-all">
                  Login Here

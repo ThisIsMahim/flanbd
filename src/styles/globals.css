@@ -52,8 +52,8 @@
 
   /* Spacing - Fluid & Rhythmic */
   --container-max: 1440px;
-  --section-gap: clamp(4rem, 10vw, 8rem);
-  --section-px: clamp(1.5rem, 5vw, 6rem);
+  --section-gap: clamp(2.5rem, 8vw, 8rem);
+  --section-px: clamp(1rem, 5vw, 6rem);
 
   /* Radius */
   --radius-sm: 4px;
@@ -141,7 +141,8 @@ h5, h6 {
 }
 
 /* Per-level sizing, line-height, and letter-spacing */
-h1 { font-size: var(--text-5xl); line-height: 0.95; letter-spacing: 0.02em; }
+/* Per-level sizing, line-height, and letter-spacing */
+h1 { font-size: var(--text-5xl); line-height: 1.05; letter-spacing: 0.02em; }
 h2 { font-size: var(--text-4xl); line-height: 1.0;  letter-spacing: 0.01em; }
 h3 { font-size: var(--text-3xl); line-height: 1.05; letter-spacing: 0.01em; }
 h4 { font-size: var(--text-2xl); line-height: 1.1;  letter-spacing: 0.01em; }
