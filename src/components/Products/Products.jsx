@@ -459,7 +459,7 @@ const Products = () => {
   return (
     <>
       <MetaData title="All Products | FlanBD" />
-      <main className="bg-[var(--bg-primary)] mt-24">
+      <main className="bg-[var(--bg-primary)] pt-44 md:pt-48 pb-16">
         <div className="products-hero-section">
           <Breadcrumb items={breadcrumbItems.slice(0, -1)} />
           <h1 className="products-hero-title">

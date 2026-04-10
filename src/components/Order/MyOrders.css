@@ -5,7 +5,7 @@
 .orders-page {
   min-height: 100vh;
   background: var(--bg-primary);
-  padding-top: 120px;
+  padding-top: 176px;
   padding-bottom: 4rem;
 }
 
@@ -642,7 +642,7 @@
 
 @media (max-width: 640px) {
   .orders-page {
-    padding-top: 144px;
+    padding-top: 192px;
     padding-bottom: 2rem;
   }
 

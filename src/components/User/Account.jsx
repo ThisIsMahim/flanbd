@@ -38,7 +38,7 @@ const Account = () => {
   const lifetimeTotal = summary?.lifetimeTotal || 0;
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-36 pb-16">
+    <div className="min-h-screen bg-gray-50 pt-44 md:pt-48 pb-16">
       <MetaData title={t("My Profile | Flan", "আমার প্রোফাইল | Flan")} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row gap-6 lg:gap-8 items-start">
