@@ -6,29 +6,33 @@
   padding: 0;
   background: var(--bg-surface);
   display: grid;
-  grid-template-columns: 1fr 450px;
-  min-height: 100vh;
+  grid-template-columns: 1fr 1fr;
+  min-height: unset;
+  max-height: 85vh;
+  overflow: hidden;
 }
 
 .qv-gallery {
-  background: var(--bg-subtle);
+  background: #f7f7f7;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 4rem;
+  padding: 3rem 2rem;
   position: relative;
+  overflow-y: auto;
 }
 
 .qv-main-image {
   width: 100%;
-  max-width: 600px;
+  max-width: 450px;
   aspect-ratio: 1;
-  background: var(--bg-surface);
-  border-radius: var(--radius-2xl);
+  background: transparent;
+  border-radius: var(--radius-xl);
   overflow: hidden;
-  box-shadow: var(--shadow-xl);
-  border: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .qv-main-image img {
@@ -59,12 +63,13 @@
 }
 
 .qv-info {
-  padding: 4rem 3rem;
+  padding: 3rem 3rem 3rem 2.5rem;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
   background: var(--bg-surface);
   border-left: 1px solid var(--border-subtle);
+  overflow-y: auto;
 }
 
 .qv-brand {
@@ -77,9 +82,11 @@
 
 .qv-title {
   font-family: var(--font-display);
-  font-size: var(--text-3xl);
+  font-size: var(--text-2xl);
   font-weight: 800;
-  line-height: 1.2;
+  line-height: 1.25;
+  color: var(--text-primary);
+  margin-top: -0.5rem;
 }
 
 .qv-price-row {
@@ -155,40 +162,48 @@
 
 .qv-close-btn {
   position: absolute;
-  top: 2rem;
-  right: 2rem;
+  top: 1.5rem;
+  right: 1.5rem;
   z-index: 10;
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  border: 1px solid var(--border-subtle);
-  background: var(--bg-surface);
+  border: none;
+  background: rgba(0,0,0,0.05);
+  color: var(--text-primary);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: all var(--transition-base);
-  box-shadow: var(--shadow-sm);
 }
 
 .qv-close-btn:hover {
-  background: var(--bg-subtle);
-  transform: rotate(90deg);
+  background: rgba(0,0,0,0.1);
+  transform: scale(1.05);
 }
 
 /* Responsiveness */
-@media (max-width: 1024px) {
+@media (max-width: 900px) {
   .qv-dialog-container {
     grid-template-columns: 1fr;
+    max-height: 100vh;
   }
   
   .qv-info {
     border-left: none;
     border-top: 1px solid var(--border-subtle);
-    padding: 3rem 2rem;
+    padding: 2rem;
   }
   
   .qv-gallery {
     padding: 2rem;
+  }
+  
+  .qv-close-btn {
+    top: 1rem;
+    right: 1rem;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   }
 }

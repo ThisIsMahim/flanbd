@@ -35,19 +35,22 @@ const QuickViewDialog = ({
     <Dialog
       open={open}
       onClose={onClose}
-      fullScreen
+      maxWidth="lg"
+      fullWidth
       PaperProps={{
         sx: {
-          borderRadius: 0,
+          borderRadius: "24px",
           backgroundColor: "#fff",
-          boxShadow: "none",
+          boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
+          overflow: "hidden",
+          margin: "16px"
         }
       }}
       sx={{
         zIndex: 1400,
         "& .MuiBackdrop-root": {
-          backgroundColor: "rgba(0,0,0,0.4)",
-          backdropFilter: "blur(8px)",
+          backgroundColor: "rgba(0,0,0,0.5)",
+          backdropFilter: "blur(5px)",
         },
       }}
     >

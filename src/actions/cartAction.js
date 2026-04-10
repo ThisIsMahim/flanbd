@@ -21,7 +21,12 @@ export const addItemsToCart = (id, quantity = 1, selectedImageUrl) => async (dis
         },
     });
 
-    localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems))
+    localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems));
+    
+    // Dispatch custom event to open CartDrawer only on desktop
+    if (typeof window !== "undefined" && window.innerWidth >= 768) {
+        window.dispatchEvent(new CustomEvent('openCartDrawer'));
+    }
 }
 
 // remove cart item

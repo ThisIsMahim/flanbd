@@ -157,7 +157,7 @@ const MyOrders = () => {
 
       <div className="orders-page">
         {/* Page Header */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-10 mb-8 flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div className="orders-header">
           <div className="flex-1">
             <div className="mb-3 flex items-center">
               <Link to="/account" className="inline-flex items-center gap-2 text-[10px] sm:text-[11px] text-gray-500 font-bold uppercase tracking-widest hover:text-gray-900 transition-colors group">
@@ -170,25 +170,29 @@ const MyOrders = () => {
             <h1 className="text-3xl sm:text-4xl font-black text-gray-900 tracking-tight">{t("My Orders", "আমার অর্ডার")}</h1>
           </div>
 
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
-            {/* Gold Progress Compact */}
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 mt-4 sm:mt-0">
+            {/* Gold Progress Premium Layout */}
             {!summary?.isGold && summary?.lifetimeTotal !== undefined && (
-              <div className="flex-1 sm:w-64 flex flex-col gap-1.5 bg-transparent md:bg-gray-50/50 md:p-3 md:rounded md:border border-gray-100">
-                <div className="flex justify-between items-center">
-                  <span className="text-[9px] font-bold uppercase tracking-widest text-gray-500">
+              <div className="flex-1 sm:w-72 flex flex-col gap-2 bg-gradient-to-r from-[#faf8f5] to-white p-4 rounded-xl border border-[#eedfc3]/50 shadow-sm relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-[#eedfc3]/20 via-transparent to-transparent rounded-bl-full pointer-events-none"></div>
+                
+                <div className="flex justify-between items-center relative z-10">
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-amber-800/70">
                     {t("Progress to Gold", "গোল্ডে অগ্রগতি")}
                   </span>
-                  <span className="text-[10px] font-black text-gray-900">
+                  <span className="text-xs font-black text-amber-900">
                     {Math.min(100, Math.round(((summary?.lifetimeTotal || 0) / 44930) * 100))}%
                   </span>
                 </div>
-                <div className="w-full bg-gray-200 rounded-full h-1 overflow-hidden">
+                
+                <div className="w-full bg-amber-900/10 rounded-full h-1.5 overflow-hidden relative z-10">
                   <div
-                    className="bg-[#c9a96e] h-1 rounded-full transition-all duration-1000"
+                    className="bg-gradient-to-r from-[#d4af37] to-[#aa8c2c] h-full rounded-full transition-all duration-1000 shadow-[0_0_10px_rgba(212,175,55,0.5)]"
                     style={{ width: `${Math.min(100, Math.round(((summary?.lifetimeTotal || 0) / 44930) * 100))}%` }}
                   />
                 </div>
-                <span className="text-[8px] font-medium text-gray-400 break-words leading-tight">
+                
+                <span className="text-[9px] font-medium text-amber-900/60 break-words leading-tight relative z-10">
                   {t(
                     `Spend ৳${Math.max(0, 44930 - (summary?.lifetimeTotal || 0)).toLocaleString()} more for Gold (-10%)`,
                     `গোল্ডের জন্য আরও ৳${Math.max(0, 44930 - (summary?.lifetimeTotal || 0)).toLocaleString()} খরচ করুন (-10%)`
@@ -197,7 +201,7 @@ const MyOrders = () => {
               </div>
             )}
 
-            <button className="md:hidden flex items-center justify-center gap-2 px-4 py-3 bg-gray-900 text-white rounded text-[10px] font-bold uppercase tracking-widest" onClick={() => setMobileFiltersOpen(true)}>
+            <button className="lg:hidden flex items-center justify-center gap-2 px-4 py-3.5 bg-gray-900 text-white rounded-xl text-[10px] font-bold uppercase tracking-widest shadow-md hover:bg-black transition-colors" onClick={() => setMobileFiltersOpen(true)}>
               <FilterListIcon sx={{ fontSize: 16 }} />
               {t("Filters", "ফিল্টার")}
             </button>
@@ -240,22 +244,43 @@ const MyOrders = () => {
             ) : (
               <>
                 {/* Stats Row */}
-                <div className="grid grid-cols-3 gap-6 p-0 md:p-6 rounded border border-gray-100">
-                  <div className="flex flex-col">
-                    <span className="text-[9px] font-bold uppercase tracking-[0.15em] text-gray-400 mb-2">{t("Lifetime Total", "মোট ব্যয়")}</span>
-                    <span className="text-2xl font-black tracking-tight text-gray-900">৳{(summary?.lifetimeTotal || 0).toLocaleString()}</span>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-8">
+                  <div className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100/50 flex flex-col justify-center">
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center">
+                        <ShoppingBagOutlinedIcon sx={{ fontSize: 16, color: '#3b82f6' }} />
+                      </div>
+                      <span className="text-[10px] font-bold uppercase tracking-[0.1em] text-gray-500">{t("Lifetime Total", "মোট ব্যয়")}</span>
+                    </div>
+                    <span className="text-3xl font-black tracking-tight text-gray-900 mt-2">৳{(summary?.lifetimeTotal || 0).toLocaleString()}</span>
                   </div>
-                  <div className="flex flex-col md:border-l border-gray-200 md:pl-6">
-                    <span className="text-[9px] font-bold uppercase tracking-[0.15em] text-gray-400 mb-2">{t("Last 12 Months", "গত ১২ মাস")}</span>
-                    <span className="text-2xl font-black tracking-tight text-gray-900">৳{(summary?.lastYearTotal || 0).toLocaleString()}</span>
+                  
+                  <div className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100/50 flex flex-col justify-center">
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-8 h-8 rounded-full bg-purple-50 flex items-center justify-center">
+                        <svg className="w-4 h-4 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                      </div>
+                      <span className="text-[10px] font-bold uppercase tracking-[0.1em] text-gray-500">{t("Last 12 Months", "গত ১২ মাস")}</span>
+                    </div>
+                    <span className="text-3xl font-black tracking-tight text-gray-900 mt-2">৳{(summary?.lastYearTotal || 0).toLocaleString()}</span>
                   </div>
-                  <div className="flex flex-col md:border-l border-gray-200 md:pl-6">
-                    <span className="text-[9px] font-bold uppercase tracking-[0.15em] text-gray-400 mb-2">{t("Status", "স্ট্যাটাস")}</span>
-                    <div className="mt-1">
+                  
+                  <div className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100/50 flex flex-col justify-center">
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-8 h-8 rounded-full bg-amber-50 flex items-center justify-center">
+                        <svg className="w-4 h-4 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" />
+                        </svg>
+                      </div>
+                      <span className="text-[10px] font-bold uppercase tracking-[0.1em] text-gray-500">{t("Status", "স্ট্যাটাস")}</span>
+                    </div>
+                    <div className="mt-2">
                       {summary?.isGold ? (
                         <GoldUserBadge size="small" showAnimation={false} />
                       ) : (
-                        <span className="text-[13px] font-bold uppercase tracking-widest text-gray-900">{t("Standard", "স্ট্যান্ডার্ড")}</span>
+                        <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold leading-none bg-gray-100 text-gray-800 uppercase tracking-widest">{t("Standard", "স্ট্যান্ডার্ড")}</span>
                       )}
                     </div>
                   </div>
@@ -264,18 +289,22 @@ const MyOrders = () => {
 
 
                 {/* Search */}
-                <div className="flex items-center border-b-2 border-gray-100 focus-within:border-gray-900 transition-colors mb-8 mt-8">
+                <div className="flex items-center bg-gray-50/50 border border-gray-200 rounded-xl focus-within:border-gray-900 focus-within:ring-1 focus-within:ring-gray-900 transition-all mb-8 mt-2 overflow-hidden shadow-sm">
+                  <div className="pl-4 text-gray-400">
+                    <SearchIcon sx={{ fontSize: 20 }} />
+                  </div>
                   <input
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     type="search"
-                    placeholder={t("Search your orders...", "অর্ডার খুঁজুন...")}
-                    className="w-full bg-transparent border-none outline-none py-3 text-sm font-medium text-gray-900 placeholder:text-gray-400"
+                    placeholder={t("Search your orders by item name...", "অর্ডার খুঁজুন...")}
+                    className="w-full bg-transparent border-none outline-none py-3.5 px-3 text-sm font-medium text-gray-900 placeholder:text-gray-400"
                   />
-                  <button type="button" className="flex items-center gap-2 px-4 text-[10px] font-bold text-gray-900 uppercase tracking-widest hover:text-gray-500 transition-all">
-                    <SearchIcon sx={{ fontSize: 16 }} />
-                    <span className="hidden sm:inline">{t("Search", "খুঁজুন")}</span>
-                  </button>
+                  {searchQuery && (
+                    <button type="button" onClick={() => setSearchQuery("")} className="pr-4 text-gray-400 hover:text-gray-900 transition-colors">
+                      <CloseIcon sx={{ fontSize: 16 }} />
+                    </button>
+                  )}
                 </div>
 
                 {/* Results */}
