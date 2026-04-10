@@ -159,10 +159,13 @@ const MyOrders = () => {
         {/* Page Header */}
         <div className="max-w-7xl mx-auto px-4 sm:px-10 mb-8 flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="flex-1">
-            <div className="text-[10px] sm:text-[11px] text-gray-400 font-bold uppercase tracking-widest mb-3 flex items-center gap-3">
-              <Link to="/" className="hover:text-gray-900 transition-colors">Home</Link>
-              <span className="text-gray-300">/</span>
-              <span className="text-gray-900">{t("My Orders", "আমার অর্ডার")}</span>
+            <div className="mb-3 flex items-center">
+              <Link to="/account" className="inline-flex items-center gap-2 text-[10px] sm:text-[11px] text-gray-500 font-bold uppercase tracking-widest hover:text-gray-900 transition-colors group">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
+                </svg>
+                {t("Back to Account", "অ্যাকাউন্টে ফিরে যান")}
+              </Link>
             </div>
             <h1 className="text-3xl sm:text-4xl font-black text-gray-900 tracking-tight">{t("My Orders", "আমার অর্ডার")}</h1>
           </div>

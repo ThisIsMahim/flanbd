@@ -88,6 +88,19 @@ const orderSchema = new mongoose.Schema({
             type: String,
             required: true
         },
+        method: {
+            type: String,
+            required: true
+        },
+        transactionId: {
+            type: String,
+        },
+        phoneNumber: {
+            type: String,
+        },
+        amount: {
+            type: Number,
+        },
         status: {
             type: String,
             required: true

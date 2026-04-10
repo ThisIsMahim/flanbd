@@ -13,7 +13,8 @@ import PersonIcon from '@mui/icons-material/Person';
 import './MobileBottomNav.css';
 
 const MobileBottomNav = () => {
-  const { cartItems } = useSelector((state) => state.cart);
+  const { cartItems = [] } = useSelector((state) => state.cart || {});
+  const { wishlistItems = [] } = useSelector((state) => state.wishlist || {});
   const location = useLocation();
 
   // Don't show on admin pages
@@ -46,8 +47,13 @@ const MobileBottomNav = () => {
 
 
       <Link to="/wishlist" className={`bottom-nav-item ${isActive('/wishlist') ? 'active' : ''}`}>
-        <div className="bottom-nav-icon-wrapper">
+        <div className="bottom-nav-icon-wrapper relative">
           {isActive('/wishlist') ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+          {wishlistItems?.length > 0 && (
+            <span className="absolute -top-1.5 -right-2 bg-[#ff1837] text-white text-[9px] font-bold w-[16px] h-[16px] flex items-center justify-center rounded-full leading-none">
+              {wishlistItems.length}
+            </span>
+          )}
         </div>
         <span>Wishlist</span>
       </Link>

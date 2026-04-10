@@ -53,10 +53,10 @@ const OrderTable = () => {
             });
 
             const data = response.data;
-            
+
             if (data.status === 'success') {
                 enqueueSnackbar('Fraud check completed successfully', { variant: 'success' });
-                
+
                 // Refresh orders list
                 dispatch(getAllOrders());
             } else {
@@ -80,10 +80,10 @@ const OrderTable = () => {
             });
 
             const data = response.data;
-            
+
             if (data.status === 'success') {
                 enqueueSnackbar('Bulk fraud check completed successfully', { variant: 'success' });
-                
+
                 // Refresh orders list
                 dispatch(getAllOrders());
             } else {
@@ -118,14 +118,28 @@ const OrderTable = () => {
 
     const columns = [
         {
-            field: "id",
-            headerName: "Order ID",
-            minWidth: 200,
-            flex: 1,
+            field: "customer",
+            headerName: "Customer",
+            minWidth: 180,
+            flex: 0.5,
             headerClassName: 'super-app-theme--header',
             renderCell: (params) => (
-                <div className="font-medium text-gray-800">
-                    {params.row.id}
+                <div className="flex flex-col leading-tight py-2">
+                    <span className="font-bold text-gray-900 text-xs">{params.row.customerName}</span>
+                    <span className="text-[10px] text-gray-500">{params.row.customerEmail}</span>
+                    <span className="text-[10px] text-[var(--accent)] font-medium">{params.row.customerPhone}</span>
+                </div>
+            )
+        },
+        {
+            field: "id",
+            headerName: "Order ID",
+            minWidth: 160,
+            flex: 0.3,
+            headerClassName: 'super-app-theme--header',
+            renderCell: (params) => (
+                <div className="font-mono text-[10px] text-gray-500">
+                    #{params.row.id.slice(-8).toUpperCase()}
                 </div>
             )
         },
@@ -153,88 +167,103 @@ const OrderTable = () => {
         },
         {
             field: "fraudRisk",
-            headerName: "Fraud Risk",
-            minWidth: 120,
-            flex: 0.2,
+            headerName: "Fraud Check",
+            minWidth: 150,
+            flex: 0.3,
             headerClassName: 'super-app-theme--header',
             renderCell: (params) => {
                 const fraudCheck = params.row.fraudCheck;
                 if (!fraudCheck) {
-                    return <span className="text-sm bg-gray-100 p-1 px-2 font-medium rounded-full text-gray-800">Not Checked</span>;
+                    return <span className="text-[10px] bg-gray-100 p-1 px-2 font-medium rounded text-gray-400 italic">Not Checked</span>;
                 }
                 return (
-                    <span className={`text-sm p-1 px-2 font-medium rounded-full ${getRiskLevelColor(fraudCheck.riskLevel)}`}>
-                        {fraudCheck.riskLevel}
-                    </span>
-                );
-            },
-        },
-        {
-            field: "successRatio",
-            headerName: "Success Ratio",
-            minWidth: 120,
-            flex: 0.2,
-            headerClassName: 'super-app-theme--header',
-            renderCell: (params) => {
-                const fraudCheck = params.row.fraudCheck;
-                if (!fraudCheck) {
-                    return <span className="text-sm text-gray-500">-</span>;
-                }
-                return (
-                    <span className={`text-sm font-medium ${
-                        fraudCheck.successRatio >= 70 ? 'text-green-600' : 
-                        fraudCheck.successRatio >= 40 ? 'text-yellow-600' : 'text-red-600'
-                    }`}>
-                        {fraudCheck.successRatio}%
-                    </span>
+                    <div className="flex flex-col leading-tight border-l-2 pl-2" style={{ borderColor: fraudCheck.riskLevel === 'HIGH' ? '#ef4444' : fraudCheck.riskLevel === 'MEDIUM' ? '#f59e0b' : '#10b981' }}>
+                        <span className={`text-[10px] font-bold ${fraudCheck.riskLevel === 'HIGH' ? 'text-red-600' : fraudCheck.riskLevel === 'MEDIUM' ? 'text-amber-600' : 'text-green-600'}`}>
+                            {fraudCheck.riskLevel} RISK
+                        </span>
+                        <span className="text-[9px] text-gray-500 font-medium whitespace-nowrap overflow-hidden text-ellipsis">SR: {fraudCheck.successRatio}%</span>
+                    </div>
                 );
             },
         },
         {
             field: "itemsQty",
-            headerName: "Items Qty",
+            headerName: "Qty",
             type: "number",
-            minWidth: 100,
+            minWidth: 60,
             flex: 0.1,
             headerClassName: 'super-app-theme--header',
             renderCell: (params) => (
-                <div className="font-medium">
+                <div className="font-bold text-gray-600">
                     {params.row.itemsQty}
                 </div>
             )
         },
         {
+            field: "payment",
+            headerName: "Payment",
+            minWidth: 160,
+            flex: 0.4,
+            headerClassName: 'super-app-theme--header',
+            renderCell: (params) => {
+                const isCOD = params.row.paymentMethod?.toLowerCase() === 'cod' || params.row.paymentMethod?.toLowerCase() === 'pending';
+                return (
+                    <div className="flex flex-col leading-tight py-1">
+                        <span className={`font-bold text-xs uppercase tracking-wider ${isCOD ? 'text-gray-500' : 'text-purple-700'}`}>
+                            {params.row.paymentMethod}
+                        </span>
+                        {!isCOD && (
+                            <div className="flex flex-col mt-0.5">
+                                {params.row.paymentPhone && (
+                                    <span className="text-[10px] font-bold text-gray-800">
+                                        Num: {params.row.paymentPhone}
+                                    </span>
+                                )}
+                                {params.row.paymentId && (
+                                    <span className="text-[10px] font-mono text-purple-600 bg-purple-50 px-1 rounded border border-purple-100 mt-0.5 w-fit">
+                                        TX: {params.row.paymentId}
+                                    </span>
+                                )}
+                            </div>
+                        )}
+                        {isCOD && (
+                            <span className="text-[9px] text-gray-400 italic">No Transaction</span>
+                        )}
+                    </div>
+                );
+            }
+        },
+        {
             field: "amount",
-            headerName: "Amount (Discounted)",
+            headerName: "Amount",
             type: "number",
-            minWidth: 220,
-            flex: 0.25,
+            minWidth: 120,
+            flex: 0.2,
             headerClassName: 'super-app-theme--header',
             renderCell: (params) => {
                 return (
-                    <span className="font-medium text-gray-800">৳{params.row.amount.toLocaleString()}</span>
+                    <span className="font-bold text-gray-900 text-sm">৳{params.row.amount.toLocaleString()}</span>
                 );
             },
         },
         {
             field: "deliveryArea",
-            headerName: "Delivery Area",
-            minWidth: 160,
+            headerName: "Area",
+            minWidth: 100,
             flex: 0.2,
             headerClassName: 'super-app-theme--header',
             renderCell: (params) => (
-                <span className="font-medium text-gray-700">{params.row.deliveryArea === 'inside' ? 'Inside Dhaka' : 'Outside Dhaka'}</span>
+                <span className="text-[10px] font-bold text-blue-600 uppercase tracking-tighter bg-blue-50 px-1 rounded">{params.row.deliveryArea === 'inside' ? 'Inside' : 'Outside'}</span>
             )
         },
         {
             field: "orderOn",
-            headerName: "Order On",
-            type: "date",
-            minWidth: 200,
-            flex: 0.5,
+            headerName: "Date",
+            minWidth: 120,
+            flex: 0.3,
             headerClassName: 'super-app-theme--header',
             renderCell: (params) => (
-                <div className="text-gray-600">
+                <div className="text-[11px] text-gray-600 font-medium">
                     {params.row.orderOn}
                 </div>
             )
@@ -250,11 +279,11 @@ const OrderTable = () => {
             renderCell: (params) => {
                 const phoneNumber = params.row.phoneNumber;
                 const isRechecking = recheckingOrder === params.row.id;
-                
+
                 return (
                     <div className="flex space-x-2">
                         <Actions editRoute={"order"} deleteHandler={deleteOrderHandler} id={params.row.id} />
-                        
+
                         {params.row.fraudCheck ? (
                             <button
                                 onClick={() => handleFraudDetailsClick(params.row)}
@@ -266,11 +295,10 @@ const OrderTable = () => {
                             <button
                                 onClick={() => handleRecheckFraud(params.row.id, phoneNumber)}
                                 disabled={isRechecking || !phoneNumber}
-                                className={`text-xs px-2 py-1 rounded ${
-                                    isRechecking || !phoneNumber 
-                                        ? 'bg-gray-300 text-gray-500 cursor-not-allowed' 
-                                        : 'bg-green-500 hover:bg-green-600 text-white'
-                                }`}
+                                className={`text-xs px-2 py-1 rounded ${isRechecking || !phoneNumber
+                                    ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                                    : 'bg-green-500 hover:bg-green-600 text-white'
+                                    }`}
                             >
                                 {isRechecking ? 'Checking...' : 'Recheck'}
                             </button>
@@ -286,9 +314,15 @@ const OrderTable = () => {
     orders && orders.forEach((order) => {
         rows.unshift({
             id: order._id,
+            customerName: order.user ? order.user.name : order.guestUser?.name,
+            customerEmail: order.user ? order.user.email : order.guestUser?.email,
+            customerPhone: order.shippingInfo?.phoneNo || order.guestUser?.phone,
             itemsQty: order.orderItems.length,
             amount: order.totalPrice,
             deliveryArea: order.shippingInfo?.deliveryArea,
+            paymentMethod: order.paymentInfo?.method || "COD",
+            paymentId: order.paymentInfo?.transactionId || order.paymentInfo?.id,
+            paymentPhone: order.paymentInfo?.phoneNumber,
             orderOn: formatDate(order.createdAt),
             status: order.orderStatus,
             fraudCheck: order.fraudCheck,
@@ -308,11 +342,10 @@ const OrderTable = () => {
                     <button
                         onClick={handleBulkRecheck}
                         disabled={recheckingOrder}
-                        className={`px-4 py-2 rounded-lg font-medium ${
-                            recheckingOrder 
-                                ? 'bg-gray-300 text-gray-500 cursor-not-allowed' 
-                                : 'bg-green-500 hover:bg-green-600 text-white'
-                        }`}
+                        className={`px-4 py-2 rounded-lg font-medium ${recheckingOrder
+                            ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                            : 'bg-green-500 hover:bg-green-600 text-white'
+                            }`}
                     >
                         {recheckingOrder ? 'Checking...' : 'Recheck All Orders'}
                     </button>
@@ -373,10 +406,9 @@ const OrderTable = () => {
                             <div className="grid grid-cols-3 gap-4">
                                 <div>
                                     <h3 className="font-semibold text-gray-700">Success Ratio</h3>
-                                    <p className={`text-lg font-bold ${
-                                        selectedOrder.fraudCheck.successRatio >= 70 ? 'text-green-600' : 
+                                    <p className={`text-lg font-bold ${selectedOrder.fraudCheck.successRatio >= 70 ? 'text-green-600' :
                                         selectedOrder.fraudCheck.successRatio >= 40 ? 'text-yellow-600' : 'text-red-600'
-                                    }`}>
+                                        }`}>
                                         {selectedOrder.fraudCheck.successRatio}%
                                     </p>
                                 </div>

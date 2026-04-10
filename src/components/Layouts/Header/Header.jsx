@@ -26,8 +26,9 @@ const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { isAuthenticated, user } = useSelector((state) => state.user);
-  const { cartItems } = useSelector((state) => state.cart);
+  const { isAuthenticated, user } = useSelector((state) => state.user || {});
+  const { cartItems = [] } = useSelector((state) => state.cart || {});
+  const { wishlistItems = [] } = useSelector((state) => state.wishlist || {});
 
   const [isScrolled, setIsScrolled] = useState(false);
   const [searchValue, setSearchValue] = useState("");
@@ -179,7 +180,11 @@ const Header = () => {
                 </div>
               )}
             </div>
-            <button className="header-icon-btn cart-icon-desktop" onClick={() => setCartDrawerOpen(true)} aria-label="Open cart">
+            <Link to="/wishlist" className="header-icon-btn wishlist-icon-desktop relative" aria-label="Wishlist">
+              <FavoriteBorderIcon sx={{ fontSize: 20 }} />
+              {wishlistItems?.length > 0 && <span className="cart-badge bg-[#FF1837]">{wishlistItems.length}</span>}
+            </Link>
+            <button className="header-icon-btn cart-icon-desktop relative" onClick={() => setCartDrawerOpen(true)} aria-label="Open cart">
               <ShoppingBagOutlinedIcon sx={{ fontSize: 20 }} />
               {cartItems.length > 0 && <span className="cart-badge">{cartItems.length}</span>}
             </button>

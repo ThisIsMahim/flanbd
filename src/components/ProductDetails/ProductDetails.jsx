@@ -10,6 +10,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import StarIcon from "@mui/icons-material/Star";
 import FlashOnIcon from "@mui/icons-material/FlashOn";
 import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ShareIcon from "@mui/icons-material/Share";
 import CompareArrowsIcon from "@mui/icons-material/CompareArrows";
@@ -27,6 +28,7 @@ import ProductReviewsBlock from "./ProductReviewsBlock";
 // Actions
 import { addItemsToCart } from "../../actions/cartAction";
 import { clearErrors, getProductDetails, getSimilarProducts } from "../../actions/productAction";
+import { addToWishlist, removeFromWishlist } from "../../actions/wishlistAction";
 
 // Utils
 import { getDiscount } from "../../utils/functions";
@@ -46,9 +48,10 @@ const ProductDetails = () => {
   const [selectedImageUrl, setSelectedImageUrl] = useState(location.state?.selectedImageUrl || null);
   const [resolvedProductId, setResolvedProductId] = useState(null);
 
-  const { product, loading, error } = useSelector((state) => state.productDetails);
-  const { cartItems } = useSelector((state) => state.cart);
-  const { isAuthenticated } = useSelector((state) => state.user);
+  const { product, loading, error } = useSelector((state) => state.productDetails || {});
+  const { cartItems = [] } = useSelector((state) => state.cart || {});
+  const { wishlistItems = [] } = useSelector((state) => state.wishlist || {});
+  const { isAuthenticated } = useSelector((state) => state.user || {});
 
   // Resolve ID from slug if necessary
   useEffect(() => {
@@ -73,6 +76,18 @@ const ProductDetails = () => {
 
   const productId = params.id && /^[a-fA-F0-9]{24}$/.test(params.id) ? params.id : resolvedProductId;
   const itemInCart = productId ? cartItems.some((i) => i.product === productId) : false;
+  const itemInWishlist = productId ? wishlistItems?.some((i) => i.product === productId) : false;
+
+  const handleWishlistClick = () => {
+    if (!productId) return;
+    if (itemInWishlist) {
+      dispatch(removeFromWishlist(productId));
+      enqueueSnackbar("Removed from Wishlist", { variant: "success" });
+    } else {
+      dispatch(addToWishlist(productId));
+      enqueueSnackbar("Added to Wishlist", { variant: "success" });
+    }
+  };
 
   // Category detection
   const displayCategory = product?.categories?.[0]?.name || product?.category || (product?.brand?.name ? "" : "General");
@@ -215,9 +230,13 @@ const ProductDetails = () => {
               </div>
 
               <div className="product-secondary-actions">
-                <button className="secondary-action-btn">
-                  <FavoriteBorderIcon fontSize="small" />
-                  Add to Wishlist
+                <button className="secondary-action-btn" onClick={handleWishlistClick}>
+                  {itemInWishlist ? (
+                    <FavoriteIcon fontSize="small" sx={{ color: '#ff1837' }} />
+                  ) : (
+                    <FavoriteBorderIcon fontSize="small" />
+                  )}
+                  {itemInWishlist ? "Wishlisted" : "Add to Wishlist"}
                 </button>
                 <button className="secondary-action-btn">
                   <ShareIcon fontSize="small" />

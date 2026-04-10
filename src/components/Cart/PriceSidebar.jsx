@@ -6,7 +6,7 @@ import { myOrdersSummary } from "../../actions/orderAction";
 import { CircularProgress } from "@mui/material";
 import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
 
-const PriceSidebar = ({ cartItems, guestShippingInfo, onSubmit, isProcessing, btnText }) => {
+const PriceSidebar = ({ cartItems, guestShippingInfo, onSubmit, isProcessing, btnText, paymentMethod }) => {
   const dispatch = useDispatch();
   const { language } = useContext(LanguageContext);
   const { shippingInfo: cartShippingInfo } = useSelector((state) => state.cart) || {};
@@ -37,8 +37,12 @@ const PriceSidebar = ({ cartItems, guestShippingInfo, onSubmit, isProcessing, bt
     ? Math.round((amountAfterGold * (coupon?.value || 0)) / 100)
     : (coupon?.value || 0);
 
-  const grandTotal = Math.max(0, amountAfterGold - (couponDiscount || 0));
-  const totalSavings = (totalDiscount || 0) + (goldDiscount || 0) + (couponDiscount || 0);
+  const paymentMethodDiscount = (paymentMethod === "bkash" || paymentMethod === "nagad")
+    ? Math.round((itemsSubtotal - goldDiscount) * 0.05)
+    : 0;
+
+  const grandTotal = Math.max(0, amountAfterGold - (couponDiscount || 0) - paymentMethodDiscount);
+  const totalSavings = (totalDiscount || 0) + (goldDiscount || 0) + (couponDiscount || 0) + paymentMethodDiscount;
 
   const [codeInput, setCodeInput] = useState("");
   const [applying, setApplying] = useState(false);
@@ -120,6 +124,13 @@ const PriceSidebar = ({ cartItems, guestShippingInfo, onSubmit, isProcessing, bt
         <div className="summary-row" style={{ marginTop: '0.75rem' }}>
           <span>{t("Coupon Discount", "কুপন ডিসকাউন্ট")}</span>
           <span style={{ color: 'var(--accent)' }}>-৳{(couponDiscount || 0).toLocaleString()}</span>
+        </div>
+      )}
+
+      {paymentMethodDiscount > 0 && (
+        <div className="summary-row" style={{ marginTop: '0.75rem' }}>
+          <span>{t("Payment Discount (5%)", "পেমেন্ট ডিসকাউন্ট (৫%)")}</span>
+          <span style={{ color: 'var(--accent)' }}>-৳{paymentMethodDiscount.toLocaleString()}</span>
         </div>
       )}
 

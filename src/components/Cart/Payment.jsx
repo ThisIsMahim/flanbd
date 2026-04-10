@@ -66,7 +66,12 @@ const Payment = () => {
   const couponDiscount = coupon?.type === 'percent'
     ? Math.round((amountAfterGold * (coupon?.value || 0)) / 100)
     : (coupon?.value || 0);
-  const grandTotal = Math.max(0, amountAfterGold - (couponDiscount || 0));
+
+  const paymentMethodDiscount = (paymentMethod === "bkash" || paymentMethod === "nagad")
+    ? Math.round((itemsSubtotal - goldDiscount) * 0.05)
+    : 0;
+
+  const grandTotal = Math.max(0, amountAfterGold - (couponDiscount || 0) - paymentMethodDiscount);
 
   // Translations
   const translations = {
@@ -299,10 +304,13 @@ const Payment = () => {
                         <div className="ml-8 mt-2 space-y-3">
                           <div className="text-sm text-gray-600">
                             {translations.sendAmount(
-                              itemsSubtotal.toFixed(2),
+                              grandTotal.toFixed(2),
                               "bKash",
-                              "017XX-XXXXXX"
+                              "01912244011"
                             )}
+                            <div className="text-xs text-red-500 mt-1 font-medium">
+                              *You get a 5% discount for paying with bKash. Please enter the transaction number after sending the money.
+                            </div>
                           </div>
                           <TextField
                             label={translations.yourNumber("bKash")}
@@ -344,10 +352,13 @@ const Payment = () => {
                         <div className="ml-8 mt-2 space-y-3">
                           <div className="text-sm text-gray-600">
                             {translations.sendAmount(
-                              itemsSubtotal.toFixed(2),
+                              grandTotal.toFixed(2),
                               "Nagad",
-                              "017XX-XXXXXX"
+                              "01912244011"
                             )}
+                            <div className="text-xs text-red-500 mt-1 font-medium">
+                              *You get a 5% discount for paying with Nagad. Please enter the transaction number after sending the money.
+                            </div>
                           </div>
                           <TextField
                             label={translations.yourNumber("Nagad")}
@@ -417,6 +428,14 @@ const Payment = () => {
                         </p>
                       )}
 
+                      {/* Payment Method Discount */}
+                      {paymentMethodDiscount > 0 && (
+                        <p className="flex justify-between">
+                          <span>Payment Method Discount (5%)</span>
+                          <span className="text-[#118c4f] font-medium">- ৳{paymentMethodDiscount.toLocaleString()}</span>
+                        </p>
+                      )}
+
                       <div className="border border-dashed"></div>
 
                       {/* Coupon Code Input */}
@@ -462,7 +481,7 @@ const Payment = () => {
 
                       {/* Savings Message */}
                       <p className="font-medium text-[#118c4f] text-sm">
-                        You will save ৳{((cartItems.reduce((sum, item) => sum + (item.cuttedPrice * item.quantity - item.price * item.quantity), 0)) + (goldDiscount || 0) + (couponDiscount || 0)).toLocaleString()} on this order
+                        You will save ৳{((cartItems.reduce((sum, item) => sum + (item.cuttedPrice * item.quantity - item.price * item.quantity), 0)) + (goldDiscount || 0) + (couponDiscount || 0) + (paymentMethodDiscount || 0)).toLocaleString()} on this order
                       </p>
                     </div>
                   </div>
@@ -482,7 +501,7 @@ const Payment = () => {
             </Stepper>
           </div>
 
-          <PriceSidebar cartItems={cartItems} />
+          <PriceSidebar cartItems={cartItems} paymentMethod={paymentMethod} />
         </div>
       </main>
 

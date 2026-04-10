@@ -6,26 +6,8 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { clearErrors, resetPassword } from "../../actions/userAction";
 import BackdropLoader from "../Layouts/BackdropLoader";
 import MetaData from "../Layouts/MetaData";
-
-// Inline Water Drop SVG Icon (Heroicons outline)
-const WaterDropIcon = ({ className = "", size = 40 }) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    fill="none"
-    viewBox="0 0 24 24"
-    strokeWidth={1.5}
-    stroke="currentColor"
-    className={className}
-    width={size}
-    height={size}
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M12 3.25c.41 0 .81.16 1.11.46 1.7 1.7 6.14 7.13 6.14 10.54A7.25 7.25 0 0 1 12 21.5a7.25 7.25 0 0 1-7.25-7.25c0-3.41 4.44-8.84 6.14-10.54.3-.3.7-.46 1.11-.46z"
-    />
-  </svg>
-);
+import LockResetIcon from '@mui/icons-material/LockReset';
+import SecurityIcon from '@mui/icons-material/Security';
 
 const ResetPassword = () => {
   const dispatch = useDispatch();
@@ -87,40 +69,45 @@ const ResetPassword = () => {
       <MetaData title="Reset Password | FlanBD" />
 
       {loading && <BackdropLoader />}
-      <main className="w-full min-h-screen bg-gradient-to-b from-blue-50 to-white flex flex-col items-center justify-center p-4 sm:p-8 mt-20">
+      <main className="w-full min-h-screen bg-gradient-to-b from-gray-50 to-white flex flex-col items-center justify-center p-4 sm:p-8 mt-20">
         <div className="w-full max-w-md">
           <Link
             to="/login"
-            className="flex items-center gap-2 text-primary-blue hover:text-blue-800 transition mb-6"
+            className="flex items-center gap-2 text-gray-500 hover:text-black transition mb-6 w-fit"
           >
             {/* Use a left arrow unicode for simplicity */}
-            <span className="text-lg">←</span>
-            <span className="text-sm font-medium">Back to Login</span>
+            <span className="text-lg font-bold">←</span>
+            <span className="text-xs font-bold uppercase tracking-widest">Back to Login</span>
           </Link>
 
-          <div className="bg-white rounded shadow-lg overflow-hidden border border-gray-100">
+          <div className="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
             {/* Header */}
-            <div className="bg-gradient-to-r from-primary-blue to-blue-800 py-6 px-8 text-center">
-              <h2 className="text-2xl font-bold text-white">
-                Reset Your Password
-              </h2>
-              <p className="text-blue-100 mt-1 text-sm">
-                Create a new secure password for your account
-              </p>
+            <div className="bg-black py-8 px-8 flex items-center gap-4">
+              <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center shrink-0">
+                <LockResetIcon fontSize="medium" className="text-white" />
+              </div>
+              <div>
+                <h2 className="text-2xl font-black text-white tracking-tight">
+                  Reset Password
+                </h2>
+                <p className="text-gray-400 mt-1 text-sm font-medium">
+                  Create a new secure password
+                </p>
+              </div>
             </div>
 
             {/* Form */}
             <div className="p-6 sm:p-8">
               <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="bg-blue-50 rounded-lg p-4 flex items-start gap-3 border border-blue-100">
+                <div className="bg-gray-50 rounded-lg p-4 flex items-start gap-4 border border-gray-200">
                   <div className="mt-0.5">
-                    <WaterDropIcon className="text-primary-blue" size={24} />
+                    <SecurityIcon className="text-gray-400" fontSize="small" />
                   </div>
                   <div>
-                    <h4 className="text-sm font-medium text-primary-blue">
+                    <h4 className="text-xs font-bold uppercase tracking-widest text-gray-900 mb-1">
                       Password Requirements
                     </h4>
-                    <ul className="text-xs text-gray-600 mt-1 list-disc list-inside space-y-0.5">
+                    <ul className="text-xs font-medium text-gray-500 mt-1 list-disc list-inside space-y-0.5">
                       <li>Minimum 8 characters</li>
                       <li>Include numbers and special characters</li>
                       <li>Not easy to guess</li>
@@ -141,8 +128,10 @@ const ResetPassword = () => {
                     helperText={passwordError}
                     InputProps={{
                       style: {
-                        borderRadius: "4px",
+                        borderRadius: "8px",
                         backgroundColor: "#f8fafc",
+                        fontWeight: "600",
+                        fontSize: "14px"
                       },
                     }}
                     variant="outlined"
@@ -157,8 +146,10 @@ const ResetPassword = () => {
                     required
                     InputProps={{
                       style: {
-                        borderRadius: "4px",
+                        borderRadius: "8px",
                         backgroundColor: "#f8fafc",
+                        fontWeight: "600",
+                        fontSize: "14px"
                       },
                     }}
                     variant="outlined"
@@ -167,22 +158,22 @@ const ResetPassword = () => {
 
                 <button
                   type="submit"
-                  className="w-full bg-black hover:bg-[#FF1837] text-white border-none py-3 px-4 rounded-md font-medium shadow hover:shadow-[0_10px_20px_-5px_rgba(255,24,55,0.4)] transition-all duration-300 transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+                  className="w-full bg-black hover:bg-[#FF1837] text-white py-4 px-6 rounded-lg text-xs font-bold uppercase tracking-wider transition-all duration-300 shadow-sm hover:shadow-[0_8px_16px_-6px_rgba(255,24,55,0.4)] disabled:opacity-70 flex justify-center items-center"
                 >
                   Reset Password
                 </button>
               </form>
 
-              <div className="mt-6 pt-6 border-t border-gray-100 flex flex-col sm:flex-row justify-between items-center gap-3">
+              <div className="mt-8 pt-6 border-t border-gray-100 flex flex-col sm:flex-row justify-between items-center gap-4">
                 <Link
                   to="/login"
-                  className="text-sm text-primary-blue hover:text-blue-800 font-medium hover:underline"
+                  className="text-xs font-bold uppercase tracking-wider text-black hover:text-[#FF1837] transition-colors"
                 >
-                  Remember your password? Sign in
+                  Remember password?
                 </Link>
                 <Link
                   to="/register"
-                  className="text-sm text-primary-blue hover:text-blue-800 font-medium hover:underline"
+                  className="text-xs font-bold uppercase tracking-wider text-black hover:text-[#FF1837] transition-colors"
                 >
                   Create new account
                 </Link>
@@ -190,8 +181,8 @@ const ResetPassword = () => {
             </div>
           </div>
 
-          <div className="mt-8 text-center text-xs text-gray-500">
-            © {new Date().getFullYear()} FlanBD. All rights reserved.
+          <div className="mt-8 text-center text-xs font-bold tracking-widest uppercase text-gray-400">
+            © {new Date().getFullYear()} FlanBD.
           </div>
         </div>
       </main>

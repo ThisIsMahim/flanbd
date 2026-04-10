@@ -82,7 +82,12 @@ const GuestCheckout = () => {
   const couponDiscount = coupon?.type === 'percent'
     ? Math.round((amountAfterGold * (coupon?.value || 0)) / 100)
     : (coupon?.value || 0);
-  const grandTotal = Math.max(0, amountAfterGold - (couponDiscount || 0));
+
+  const paymentMethodDiscount = (paymentMethod === "bkash" || paymentMethod === "nagad")
+    ? Math.round((itemsSubtotal - goldDiscount) * 0.05)
+    : 0;
+
+  const grandTotal = Math.max(0, amountAfterGold - (couponDiscount || 0) - paymentMethodDiscount);
 
   // Translations
   const translations = {
@@ -517,7 +522,10 @@ const GuestCheckout = () => {
                     <div className="bg-gray-50 p-4 border border-gray-200 mt-4 animate-fade-in-up">
                       <div className="flex flex-col gap-4">
                         <p className="text-xs font-semibold text-gray-800">
-                          Send <span className="text-sm font-bold mx-1 text-[#E2136E]">৳{grandTotal.toLocaleString()}</span> to bKash Personal Number: <span className="font-bold tracking-wider ml-1 text-black">017XX-XXXXXX</span>
+                          Send <span className="text-sm font-bold mx-1 text-[#E2136E]">৳{grandTotal.toLocaleString()}</span> to bKash Personal Number: <span className="font-bold tracking-wider ml-1 text-black">01912244011</span>
+                        </p>
+                        <p className="text-xs text-red-500 font-medium">
+                          *You get a 5% discount for paying with bKash. Please enter the transaction number after sending the money.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4">
                           <div className="space-y-1 flex-1">
@@ -553,7 +561,10 @@ const GuestCheckout = () => {
                     <div className="bg-gray-50 p-4 border border-gray-200 mt-4 animate-fade-in-up">
                       <div className="flex flex-col gap-4">
                         <p className="text-xs font-semibold text-gray-800">
-                          Send <span className="text-sm font-bold mx-1 text-[#ED1C24]">৳{grandTotal.toLocaleString()}</span> to Nagad Personal Number: <span className="font-bold tracking-wider ml-1 text-black">017XX-XXXXXX</span>
+                          Send <span className="text-sm font-bold mx-1 text-[#ED1C24]">৳{grandTotal.toLocaleString()}</span> to Nagad Personal Number: <span className="font-bold tracking-wider ml-1 text-black">01912244011</span>
+                        </p>
+                        <p className="text-xs text-red-500 font-medium">
+                          *You get a 5% discount for paying with Nagad. Please enter the transaction number after sending the money.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4">
                           <div className="space-y-1 flex-1">
@@ -597,6 +608,7 @@ const GuestCheckout = () => {
                   isProcessing={isProcessing}
                   translations={translations}
                   btnText={translations.placeOrder}
+                  paymentMethod={paymentMethod}
                 />
 
                 {/* Items In Your Order (Moved to Right Sidebar) */}
@@ -700,6 +712,12 @@ const GuestCheckout = () => {
                 <div className="flex justify-between text-sm text-green-600">
                   <span>{language === "english" ? "Coupon" : "কুপন"}</span>
                   <span>-৳{(couponDiscount || 0).toLocaleString()}</span>
+                </div>
+              )}
+              {paymentMethodDiscount > 0 && (
+                <div className="flex justify-between text-sm text-green-600">
+                  <span>{language === "english" ? "Payment Discount (5%)" : "পেমেন্ট ডিসকাউন্ট (৫%)"}</span>
+                  <span>-৳{paymentMethodDiscount.toLocaleString()}</span>
                 </div>
               )}
               <div className="border-t mt-2 pt-2 flex justify-between font-semibold">

@@ -5,7 +5,7 @@
 .account-page-wrapper {
   min-height: 100vh;
   background: var(--bg-primary);
-  padding-top: 120px;
+  padding-top: 140px !important;
   padding-bottom: 4rem;
 }
 
@@ -412,7 +412,7 @@
 
 @media (max-width: 640px) {
   .account-page-wrapper {
-    padding-top: 100px;
+    padding-top: 130px;
     padding-bottom: 2rem;
   }
 

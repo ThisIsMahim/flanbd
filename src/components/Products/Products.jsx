@@ -17,7 +17,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { addItemsToCart } from "../../actions/cartAction";
 import { clearErrors, getProducts } from "../../actions/productAction";
 import DealSlider from "../home/DealSlider/DealSlider";
-import HomeContactSection from "../home/HomeContactSection";
+// import HomeContactSection from "../home/HomeContactSection";
 import ProductCard from "../home/ProductSlider/components/ProductCard";
 import QuickViewDialog from "../home/ProductSlider/components/QuickViewDialog";
 import Breadcrumb from "../Layouts/Breadcrumb";

@@ -191,12 +191,12 @@
 /* Search Bar Row */
 .header-search-row {
   background: transparent;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-top: 1px solid rgba(255, 255, 255, 0.03);
   display: flex;
   align-items: flex-start;
   z-index: 10;
   height: auto;
-  padding: 6px 0 10px 0;
+  padding: 6px 0 12px 0;
   width: 100%;
 }
 
@@ -208,20 +208,27 @@
 }
 
 .search-bar-inner {
-  background: rgba(255, 255, 255, 0.04);
+  max-width: 600px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  height: 32px;
-  border-radius: var(--radius-md, 6px);
+  height: 36px;
+  border-radius: 50px;
   display: flex;
   align-items: center;
-  padding: 0 12px;
-  transition: all 0.3s ease;
+  padding: 0 8px 0 16px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.search-bar-inner:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.12);
 }
 
 .search-bar-inner:focus-within {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.15);
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--accent);
+  box-shadow: 0 0 15px rgba(255, 24, 55, 0.1);
 }
 
 .search-category-select {
@@ -595,6 +602,10 @@
 
   .header-icon-btn {
     padding: 0.5rem;
+  }
+
+  .wishlist-icon-desktop {
+    display: none !important;
   }
 }
 

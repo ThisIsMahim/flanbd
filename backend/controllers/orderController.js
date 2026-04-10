@@ -38,7 +38,7 @@ exports.newOrder = asyncErrorHandler(async (req, res, next) => {
     const lastYearTotal = lastYearAggregate.length ? lastYearAggregate[0].total : 0;
     const isGoldUser = lastYearTotal >= 10000;
 
-    // Calculation order: items -> minus gold (10% on items ONLY) -> add delivery -> minus coupon
+    // Calculation order: items -> minus gold (10% on items ONLY) -> add delivery -> minus coupon -> minus payment discount
     const goldDiscount = isGoldUser ? Math.round(itemsTotal * 0.10) : 0;
     const baseWithDelivery = Math.max(0, (itemsTotal - goldDiscount) + deliveryCharge);
 
@@ -59,7 +59,11 @@ exports.newOrder = asyncErrorHandler(async (req, res, next) => {
         }
     }
 
-    const finalTotal = Math.max(0, baseWithDelivery - couponDiscount);
+    const paymentMethodDiscount = (paymentInfo?.method === "bkash" || paymentInfo?.method === "nagad")
+        ? Math.round((itemsTotal - goldDiscount) * 0.05)
+        : 0;
+
+    const finalTotal = Math.max(0, baseWithDelivery - couponDiscount - paymentMethodDiscount);
 
     // Perform fraud check for the customer's phone number
     let fraudCheckResult = null;
@@ -97,7 +101,7 @@ exports.newOrder = asyncErrorHandler(async (req, res, next) => {
         user: req.user._id,
         orderType: 'authenticated',
         couponCode: appliedCoupon ? appliedCoupon.code : undefined,
-        discount: goldDiscount + couponDiscount,
+        discount: goldDiscount + couponDiscount + paymentMethodDiscount,
         fraudCheck: fraudCheckResult
     });
 
@@ -370,7 +374,7 @@ exports.guestOrder = asyncErrorHandler(async (req, res, next) => {
     // Compute delivery charge from shipping info
     const deliveryCharge = shippingInfo?.deliveryArea === 'inside' ? 70 : 130;
 
-    // Guest users don't get gold discount
+    // Calculation order: items -> minus gold (10% on items ONLY) -> add delivery -> minus coupon -> minus payment discount
     const goldDiscount = 0;
     const baseWithDelivery = Math.max(0, (itemsTotal - goldDiscount) + deliveryCharge);
 
@@ -391,7 +395,11 @@ exports.guestOrder = asyncErrorHandler(async (req, res, next) => {
         }
     }
 
-    const finalTotal = Math.max(0, baseWithDelivery - couponDiscount);
+    const paymentMethodDiscount = (paymentInfo?.method === "bkash" || paymentInfo?.method === "nagad")
+        ? Math.round((itemsTotal - goldDiscount) * 0.05)
+        : 0;
+
+    const finalTotal = Math.max(0, baseWithDelivery - couponDiscount - paymentMethodDiscount);
 
     // Perform fraud check for the customer's phone number
     let fraudCheckResult = null;
@@ -433,7 +441,7 @@ exports.guestOrder = asyncErrorHandler(async (req, res, next) => {
         },
         orderType: 'guest',
         couponCode: appliedCoupon ? appliedCoupon.code : undefined,
-        discount: goldDiscount + couponDiscount,
+        discount: goldDiscount + couponDiscount + paymentMethodDiscount,
         fraudCheck: fraudCheckResult
     });
 
