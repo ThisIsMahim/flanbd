@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearErrors, getSliderProducts } from "../../actions/productAction";
 import MetaData from "../Layouts/MetaData";
 import SimpleBanner from "./Banner/EnhancedBanner";
-import DealSlider from "./DealSlider/DealSlider";
+import DealSlider from "./DealSlider/DealSlider.jsx";
 import "./Home.css";
 import ReviewScreenshotsCarousel from "./ReviewScreenshotsCarousel";
 import TrustedCompaniesCarousel from "./TrustedCompaniesCarousel";
@@ -14,7 +14,7 @@ import HomeBlogSection from "./HomeBlogSection";
 import HomeContactSection from "./HomeContactSection";
 
 // Lazy load heavy components
-const ProductSlider = lazy(() => import("./ProductSlider/ProductSlider"));
+const ProductSlider = lazy(() => import("./ProductSlider/ProductSlider.jsx"));
 
 // Loading fallback
 const LoadingFallback = () => (
