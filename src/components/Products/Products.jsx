@@ -16,15 +16,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { addItemsToCart } from "../../actions/cartAction";
 import { clearErrors, getProducts } from "../../actions/productAction";
-import DealSlider from "../home/DealSlider/DealSlider";
-// import HomeContactSection from "../home/HomeContactSection";
-import ProductCard from "../home/ProductSlider/components/ProductCard";
-import QuickViewDialog from "../home/ProductSlider/components/QuickViewDialog";
+import DealSlider from "../Home/DealSlider/DealSlider";
+// import HomeContactSection from "../Home/HomeContactSection";
+import ProductCard from "../Home/ProductSlider/components/ProductCard";
+import QuickViewDialog from "../Home/ProductSlider/components/QuickViewDialog";
 import Breadcrumb from "../Layouts/Breadcrumb";
 import MetaData from "../Layouts/MetaData";
 import SkeletonProduct from "./SkeletonProduct";
 import "./Products.css";
-import "../home/SliderStyles.css"; // Card styles
+import "../Home/SliderStyles.css"; // Card styles
 
 const PRICE_STEP = 10;
 const FIXED_RESULT_PER_PAGE = 9;

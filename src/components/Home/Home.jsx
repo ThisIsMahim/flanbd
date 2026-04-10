@@ -5,7 +5,7 @@ import { clearErrors, getSliderProducts } from "../../actions/productAction";
 import MetaData from "../Layouts/MetaData";
 import SimpleBanner from "./Banner/EnhancedBanner";
 import DealSlider from "./DealSlider/DealSlider";
-import "./home.css";
+import "./Home.css";
 import ReviewScreenshotsCarousel from "./ReviewScreenshotsCarousel";
 import TrustedCompaniesCarousel from "./TrustedCompaniesCarousel";
 import GoldUserAnimation from "../common/GoldUserAnimation";
@@ -84,7 +84,7 @@ const Home = () => {
           <section className="home-section">
             <TrustedCompaniesCarousel />
           </section>
-          
+
           <section className="home-section">
             <HomeBlogSection />
           </section>

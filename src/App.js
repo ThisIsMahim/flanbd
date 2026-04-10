@@ -37,7 +37,7 @@ import Payment from "./components/Cart/Payment";
 import GuestCheckout from "./components/Cart/GuestCheckout";
 import GuestOrderTracking from "./components/Cart/GuestOrderTracking";
 
-import Home from "./components/home/Home";
+import Home from "./components/Home/Home.jsx";
 import Footer from "./components/Layouts/Footer/Footer";
 import Header from "./components/Layouts/Header/Header";
 import AboutUs from "./components/Layouts/aboutUsPage/AboutUs";
@@ -49,7 +49,7 @@ import MyOrders from "./components/Order/MyOrders";
 import OrderDetails from "./components/Order/OrderDetails";
 import OrderHistory from "./components/User/OrderHistory";
 import ProductDetails from "./components/ProductDetails/ProductDetails";
-import Products from "./components/products/Products";
+import Products from "./components/Products/Products";
 import Account from "./components/User/Account";
 import ForgotPassword from "./components/User/ForgotPassword";
 import Login from "./components/User/Login";
