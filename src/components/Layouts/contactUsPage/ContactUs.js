@@ -1,12 +1,9 @@
-import LocationOnIcon from "@mui/icons-material/LocationOn";
-import PhoneIcon from "@mui/icons-material/Phone";
-import EmailIcon from "@mui/icons-material/Email";
-import SendIcon from "@mui/icons-material/Send";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
-import { useContext, useEffect, useState } from "react";
 import { LanguageContext } from "../../../utils/LanguageContext";
 import MetaData from "../MetaData";
-import "./ContactUs.css";
+import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
+import "./ContactUs.css"; // Left for any future global additions, but completely empty
 
 const ContactUs = () => {
   const { language } = useContext(LanguageContext);
@@ -36,8 +33,8 @@ const ContactUs = () => {
       labelEmail: "Email Address",
       labelSub: "Subject",
       labelMsg: "Your Message",
-      btnSend: "Send Message",
-      btnSending: "Sending...",
+      btnSend: "SEND MESSAGE",
+      btnSending: "SENDING...",
       success: "Message sent! We'll be in touch soon.",
       error: "Something went wrong. Please try again.",
     },
@@ -63,6 +60,18 @@ const ContactUs = () => {
   };
 
   const t = translations[language] || translations.english;
+
+  // Format header text to highlight the last word with our red accent
+  const renderStyledHeader = (text) => {
+    const words = text.split(" ");
+    if (words.length <= 1) return <span className="text-[#ff1837]">{text}</span>;
+    const lastWord = words.pop();
+    return (
+      <>
+        {words.join(" ")} <span className="text-[#ff1837]">{lastWord}</span>
+      </>
+    );
+  };
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -94,169 +103,174 @@ const ContactUs = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-20 pb-12 md:pt-24 md:pb-16 px-4 relative overflow-hidden">
+    <div className="bg-white flex items-center justify-center pt-24 pb-8 sm:pt-32 sm:pb-12 px-5 font-sans min-h-[calc(100vh-80px)]">
       <MetaData title="Contact Us | Flan" />
       
-      <div className="container mx-auto z-10 relative max-w-6xl">
-        <header className="text-center mb-10 flex flex-col items-center justify-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 transition-transform hover:scale-105 duration-300">
-            {t.header}
-          </h1>
-          <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-            {t.tagline}
-          </p>
-        </header>
+      <div className="w-full max-w-[850px] mx-auto">
+        <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+          
+          {/* Left Info Panel */}
+          <div className="lg:col-span-5 space-y-10 lg:-mt-6">
+            <div className="relative group/header">
+               {/* Animated minimal dash */}
+               <div className="w-8 h-1 bg-[#ff1837] mb-6 transition-all duration-700 ease-out group-hover/header:w-16"></div>
+               <h1 className="text-4xl sm:text-5xl lg:text-5xl font-black text-[#0f0f0f] mb-3 tracking-tighter leading-[1.05]">
+                 {renderStyledHeader(t.header)}
+               </h1>
+               <p className="text-base sm:text-[17px] font-medium text-gray-500 leading-relaxed max-w-[280px]">
+                 {t.tagline}
+               </p>
+            </div>
+            
+            <div className="space-y-7 border-l-2 border-gray-100 pl-6 relative">
+              {/* Animated left border highlight */}
+              <div className="absolute left-[-2px] top-0 w-[2px] h-0 bg-[#ff1837] transition-all duration-700 hover-border-anim"></div>
 
-        <main className="grid lg:grid-cols-5 gap-10">
-          {/* Info Panel */}
-          <section className="lg:col-span-2 space-y-8">
-            <div className="bg-white p-8 md:p-10 rounded-3xl shadow-xl border border-gray-100 h-full hover:shadow-2xl transition-shadow duration-300">
-              <h3 className="text-2xl font-bold text-gray-900 mb-8 border-b pb-4">
-                {t.infoLoc}
-              </h3>
+              {/* Address */}
+              <div className="group flex flex-col gap-1 cursor-default relative">
+                <div className="absolute -left-[29px] top-1.5 w-2 h-2 rounded-full bg-white border-2 border-gray-300 group-hover:border-[#ff1837] transition-colors duration-300"></div>
+                <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] transition-colors group-hover:text-gray-600">{t.infoLoc}</p>
+                <p className="text-[14px] sm:text-[15px] font-extrabold text-gray-900 tracking-tight group-hover:translate-x-1 group-hover:text-[#ff1837] transition-all duration-300">{t.infoAddr}</p>
+              </div>
               
-              <div className="space-y-8 mt-6">
-                <div className="flex items-start group">
-                  <div className="w-14 h-14 bg-red-50 group-hover:bg-red-500 group-hover:text-white rounded-full flex items-center justify-center text-red-500 transition-all duration-300 flex-shrink-0 shadow-sm">
-                    <LocationOnIcon fontSize="medium" />
-                  </div>
-                  <div className="ml-5 mt-1">
-                    <p className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-1">Address</p>
-                    <p className="text-gray-800 font-medium text-lg">{t.infoAddr}</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start group">
-                  <div className="w-14 h-14 bg-red-50 group-hover:bg-red-500 group-hover:text-white rounded-full flex items-center justify-center text-red-500 transition-all duration-300 flex-shrink-0 shadow-sm">
-                    <PhoneIcon fontSize="medium" />
-                  </div>
-                  <div className="ml-5 mt-1">
-                    <p className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-1">Phone</p>
-                    <a href={`tel:${t.infoPhone}`} className="text-gray-800 font-medium text-lg hover:text-red-500 transition-colors">
-                      {t.infoPhone}
-                    </a>
-                  </div>
-                </div>
-
-                <div className="flex items-start group">
-                  <div className="w-14 h-14 bg-red-50 group-hover:bg-red-500 group-hover:text-white rounded-full flex items-center justify-center text-red-500 transition-all duration-300 flex-shrink-0 shadow-sm">
-                    <EmailIcon fontSize="medium" />
-                  </div>
-                  <div className="ml-5 mt-1">
-                    <p className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-1">Email</p>
-                    <a href={`mailto:${t.infoEmail}`} className="text-gray-800 font-medium text-lg hover:text-red-500 transition-colors">
-                      {t.infoEmail}
-                    </a>
-                  </div>
-                </div>
+              {/* Phone */}
+              <div className="group flex flex-col gap-1 relative">
+                <div className="absolute -left-[29px] top-1.5 w-2 h-2 rounded-full bg-white border-2 border-gray-300 group-hover:border-[#ff1837] transition-colors duration-300"></div>
+                <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] transition-colors group-hover:text-gray-600">Phone</p>
+                <a href={`tel:${t.infoPhone}`} className="text-[14px] sm:text-[15px] font-extrabold text-gray-900 tracking-tight w-fit group-hover:translate-x-1 group-hover:text-[#ff1837] transition-all duration-300">
+                  {t.infoPhone}
+                </a>
+              </div>
+              
+              {/* Email */}
+              <div className="group flex flex-col gap-1 relative">
+                <div className="absolute -left-[29px] top-1.5 w-2 h-2 rounded-full bg-white border-2 border-gray-300 group-hover:border-[#ff1837] transition-colors duration-300"></div>
+                <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] transition-colors group-hover:text-gray-600">Email</p>
+                <a href={`mailto:${t.infoEmail}`} className="text-[14px] sm:text-[15px] font-extrabold text-gray-900 tracking-tight w-fit group-hover:translate-x-1 group-hover:text-[#ff1837] transition-all duration-300">
+                  {t.infoEmail}
+                </a>
               </div>
             </div>
-          </section>
+          </div>
 
-          {/* Form Panel */}
-          <section className="lg:col-span-3">
-            <div className="bg-white p-8 md:p-10 rounded-3xl shadow-xl border border-gray-100 hover:shadow-2xl transition-shadow duration-300 relative h-full">
-              {/* Decorative abstract shape */}
-              <div className="absolute top-0 right-0 -mt-4 -mr-4 w-20 h-20 bg-red-100 rounded-full blur-xl opacity-50 z-0"></div>
+          {/* Right Form Panel */}
+          <div className="lg:col-span-7 bg-white p-6 sm:p-8 border border-gray-100 rounded-[16px] shadow-[0_4px_30px_rgb(0,0,0,0.03)] border-gray-100/60">
+            <div className="mb-5">
+              <h2 className="text-xl sm:text-2xl font-extrabold text-black mb-1.5 tracking-tight">{t.formTitle}</h2>
+              <p className="text-gray-500 font-medium text-xs sm:text-[13px]">{t.formTag}</p>
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-4">
               
-              <div className="relative z-10 mb-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-2">{t.formTitle}</h2>
-                <p className="text-gray-500">{t.formTag}</p>
-              </div>
-
-              <form onSubmit={handleSubmit} className="relative z-10">
-                <div className="grid md:grid-cols-2 gap-6 mb-6">
-                  <div className="space-y-2">
-                    <label className="text-sm font-semibold text-gray-700 ml-1 uppercase tracking-wide">{t.labelName}</label>
-                    <input 
-                      type="text" 
-                      name="name" 
-                      value={formData.name} 
-                      onChange={handleChange} 
-                      placeholder="John Doe"
-                      required 
-                      className="w-full px-5 py-3.5 bg-gray-50/50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500 transition-all duration-300 text-gray-800 placeholder-gray-400" 
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-semibold text-gray-700 ml-1 uppercase tracking-wide">{t.labelPhone}</label>
-                    <input 
-                      type="tel" 
-                      name="phone" 
-                      value={formData.phone} 
-                      onChange={handleChange} 
-                      placeholder="+880 1..."
-                      className="w-full px-5 py-3.5 bg-gray-50/50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500 transition-all duration-300 text-gray-800 placeholder-gray-400" 
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-2 mb-6">
-                  <label className="text-sm font-semibold text-gray-700 ml-1 uppercase tracking-wide">{t.labelEmail}</label>
-                  <input 
-                    type="email" 
-                    name="email" 
-                    value={formData.email} 
-                    onChange={handleChange} 
-                    placeholder="john@example.com"
-                    required 
-                    className="w-full px-5 py-3.5 bg-gray-50/50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500 transition-all duration-300 text-gray-800 placeholder-gray-400" 
-                  />
-                </div>
-
-                <div className="space-y-2 mb-6">
-                  <label className="text-sm font-semibold text-gray-700 ml-1 uppercase tracking-wide">{t.labelSub}</label>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {/* Name */}
+                <div className="space-y-1.5">
+                  <label className="text-[8.5px] font-black text-gray-400 uppercase tracking-[0.15em] ml-1">{t.labelName}</label>
                   <input 
                     type="text" 
-                    name="subject" 
-                    value={formData.subject} 
+                    name="name" 
+                    value={formData.name} 
                     onChange={handleChange} 
-                    placeholder="How can we help?"
+                    placeholder="John Doe"
                     required 
-                    className="w-full px-5 py-3.5 bg-gray-50/50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500 transition-all duration-300 text-gray-800 placeholder-gray-400" 
+                    className="w-full px-3.5 py-3 bg-[#f9f9f9] text-black font-semibold text-xs placeholder-gray-300 border border-gray-100 rounded-lg focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#ff1837]/20 focus:border-[#ff1837]/30 transition-all duration-300"
                   />
                 </div>
-
-                <div className="space-y-2 mb-8">
-                  <label className="text-sm font-semibold text-gray-700 ml-1 uppercase tracking-wide">{t.labelMsg}</label>
-                  <textarea 
-                    name="message" 
-                    value={formData.message} 
+                
+                {/* Phone */}
+                <div className="space-y-1.5">
+                  <label className="text-[8.5px] font-black text-gray-400 uppercase tracking-[0.15em] ml-1">{t.labelPhone}</label>
+                  <input 
+                    type="tel" 
+                    name="phone" 
+                    value={formData.phone} 
                     onChange={handleChange} 
-                    placeholder="Write your message here..."
-                    required 
-                    rows="5" 
-                    className="w-full px-5 py-3.5 bg-gray-50/50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500 transition-all duration-300 text-gray-800 placeholder-gray-400 resize-none" 
+                    placeholder="+880 1..."
+                    className="w-full px-3.5 py-3 bg-[#f9f9f9] text-black font-semibold text-xs placeholder-gray-300 border border-gray-100 rounded-lg focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#ff1837]/20 focus:border-[#ff1837]/30 transition-all duration-300"
                   />
                 </div>
+              </div>
 
-                {status.msg && (
-                  <div className={`p-4 rounded-xl mb-6 border ${
-                    status.type === 'success' 
-                      ? 'bg-green-50 text-green-700 border-green-200' 
-                      : 'bg-red-50 text-red-700 border-red-200'
-                  } font-medium flex items-center`}>
-                    {status.msg}
+              {/* Email */}
+              <div className="space-y-1.5">
+                <label className="text-[8.5px] font-black text-gray-400 uppercase tracking-[0.15em] ml-1">{t.labelEmail}</label>
+                <input 
+                  type="email" 
+                  name="email" 
+                  value={formData.email} 
+                  onChange={handleChange} 
+                  placeholder="john@example.com"
+                  required 
+                  className="w-full px-3.5 py-3 bg-[#f9f9f9] text-black font-semibold text-xs placeholder-gray-300 border border-gray-100 rounded-lg focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#ff1837]/20 focus:border-[#ff1837]/30 transition-all duration-300"
+                />
+              </div>
+
+              {/* Subject */}
+              <div className="space-y-1.5">
+                <label className="text-[8.5px] font-black text-gray-400 uppercase tracking-[0.15em] ml-1">{t.labelSub}</label>
+                <input 
+                  type="text" 
+                  name="subject" 
+                  value={formData.subject} 
+                  onChange={handleChange} 
+                  placeholder="Order Tracking Inquiry"
+                  required 
+                  className="w-full px-3.5 py-3 bg-[#f9f9f9] text-black font-semibold text-xs placeholder-gray-300 border border-gray-100 rounded-lg focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#ff1837]/20 focus:border-[#ff1837]/30 transition-all duration-300"
+                />
+              </div>
+
+              {/* Message */}
+              <div className="space-y-1.5 pb-1">
+                <label className="text-[8.5px] font-black text-gray-400 uppercase tracking-[0.15em] ml-1">{t.labelMsg}</label>
+                <textarea 
+                  name="message" 
+                  value={formData.message} 
+                  onChange={handleChange} 
+                  placeholder="Write your message here..."
+                  required 
+                  rows="3" 
+                  className="w-full px-3.5 py-3 bg-[#f9f9f9] text-black font-semibold text-xs placeholder-gray-300 border border-gray-100 rounded-lg focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#ff1837]/20 focus:border-[#ff1837]/30 transition-all duration-300 resize-none hide-scrollbar"
+                />
+              </div>
+
+              {/* Status Alert */}
+              {status.msg && (
+                <div className={`p-2.5 text-[10px] font-extrabold uppercase tracking-widest rounded-lg mb-1 text-center transition-all ${
+                  status.type === 'success' 
+                    ? 'bg-green-50 text-green-700' 
+                    : 'bg-red-50 text-red-700'
+                }`}>
+                  {status.msg}
+                </div>
+              )}
+
+              {/* Submit Button */}
+              <button 
+                type="submit" 
+                disabled={isSubmitting}
+                className="group w-full sm:w-auto py-3 px-7 flex items-center justify-center gap-2 text-white bg-[#0f0f0f] hover:bg-[#ff1837] focus:outline-none focus:ring-2 focus:ring-[#ff1837]/30 rounded-lg font-extrabold uppercase tracking-[0.2em] text-[10px] transition-all duration-500 disabled:opacity-70 disabled:cursor-not-allowed hover:shadow-[0_4px_14px_-6px_rgba(255,24,55,0.5)] hover:-translate-y-0.5 ml-auto"
+              >
+                <span className="ml-1">{isSubmitting ? t.btnSending : t.btnSend}</span>
+                {!isSubmitting && (
+                  <div className="w-4 h-4 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-colors duration-300">
+                     <ArrowRightAltIcon className="group-hover:translate-x-0.5 transition-transform duration-300 rounded-full" style={{ fontSize: '12px' }} />
                   </div>
                 )}
+              </button>
 
-                <div>
-                  <button 
-                    type="submit" 
-                    disabled={isSubmitting}
-                    className="w-full md:w-auto px-10 py-4 bg-red-500 hover:bg-red-600 text-white font-bold rounded-xl shadow-lg shadow-red-500/30 transition-all duration-300 flex items-center justify-center group disabled:opacity-70 disabled:cursor-not-allowed"
-                  >
-                    <span>{isSubmitting ? t.btnSending : t.btnSend}</span>
-                    {!isSubmitting && (
-                      <SendIcon className="ml-2 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" fontSize="small" />
-                    )}
-                  </button>
-                </div>
-              </form>
-            </div>
-          </section>
-        </main>
+            </form>
+          </div>
+
+        </div>
       </div>
+      
+      {/* CSS to ensure scrollbar hiding and hover anim */}
+      <style dangerouslySetInnerHTML={{__html: `
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .group\\/header:hover ~ .border-l-2 .hover-border-anim { height: 100%; }
+        .border-l-2:hover .hover-border-anim { height: 100%; }
+      `}} />
     </div>
   );
 };

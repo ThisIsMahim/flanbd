@@ -31,7 +31,7 @@ class SearchFeatures {
         const queryCopy = { ...this.queryStr };
         
         // Removing fields from the query
-        const removeFields = ["keyword", "page", "limit", "rentOnly"];
+        const removeFields = ["keyword", "page", "limit"];
         removeFields.forEach((key) => delete queryCopy[key]);
 
         // Handle category filtering
@@ -49,13 +49,7 @@ class SearchFeatures {
         let queryStr = JSON.stringify(queryCopy);
         queryStr = queryStr.replace(/\b(gt|gte|lt|lte)\b/g, (key) => `$${key}`);
 
-        // Parse the query string to an object
         const filter = JSON.parse(queryStr);
-
-        // Add isRent filter if rentOnly is true
-        if (this.queryStr.rentOnly === 'true') {
-            filter.isRent = true;
-        }
 
         this.query = this.query.find(filter);
         return this;

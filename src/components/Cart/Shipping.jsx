@@ -1,8 +1,3 @@
-import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import Select from "@mui/material/Select";
-import TextField from "@mui/material/TextField";
 import { useSnackbar } from "notistack";
 import { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -34,7 +29,7 @@ const Shipping = () => {
   // Enhanced translations with fallbacks
   const translations = {
     metaTitle: {
-              english: "FlanBD: Shipping Details",
+      english: "FlanBD: Shipping Details",
       bangla: "ডাঃ ওয়াটার: শিপিং বিবরণ",
     },
     address: {
@@ -177,133 +172,157 @@ const Shipping = () => {
         <div className="flex flex-col sm:flex-row gap-3.5 w-full sm:w-11/12 mt-0 sm:mt-4 m-auto sm:mb-7 overflow-hidden">
           <div className="flex-1">
             <Stepper activeStep={1} language={language}>
-              <div className="w-full bg-white">
+              <div className="w-full bg-white md:p-6 p-4 rounded-b-lg shadow-sm border-x border-b border-gray-200 text-gray-900">
                 <form
                   onSubmit={shippingSubmit}
                   autoComplete="off"
-                  className="flex flex-col justify-start gap-3 w-full sm:w-3/4 mx-1 sm:mx-8 my-4"
+                  className="flex flex-col gap-4 w-full"
                 >
-                  <TextField
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                    fullWidth
-                    label={t("address", "label")}
-                    placeholder={t("address", "placeholder")}
-                    variant="outlined"
-                    required
-                  />
-
-                  <div className="flex gap-6">
-                    <TextField
-                      value={pincode}
-                      onChange={(e) => setPincode(e.target.value)}
-                      type="number"
-                      label={t("pincode", "label")}
-                      placeholder={t("pincode", "placeholder")}
-                      fullWidth
-                      variant="outlined"
+                  <div className="space-y-1">
+                    <label className="text-[10px] font-bold tracking-widest text-gray-600 uppercase">
+                      {t("address", "label")}
+                    </label>
+                    <input
+                      type="text"
+                      value={address}
+                      onChange={(e) => setAddress(e.target.value)}
+                      placeholder={t("address", "placeholder")}
                       required
-                    />
-                    <TextField
-                      value={phoneNo}
-                      onChange={(e) => setPhoneNo(e.target.value)}
-                      type="number"
-                      label={t("phoneNo", "label")}
-                      placeholder={t("phoneNo", "placeholder")}
-                      fullWidth
-                      variant="outlined"
-                      required
+                      className="w-full px-3 py-2 bg-gray-50 border border-gray-100 text-gray-900 focus:bg-white focus:outline-none focus:border-[var(--accent)] transition-all text-xs"
                     />
                   </div>
 
-                  <div className="flex gap-6">
-                    <TextField
-                      value={city}
-                      onChange={(e) => setCity(e.target.value)}
-                      label={t("city", "label")}
-                      placeholder={t("city", "placeholder")}
-                      fullWidth
-                      variant="outlined"
-                      required
-                    />
-                    <TextField
-                      label={t("landmark", "label")}
-                      placeholder={t("landmark", "placeholder")}
-                      fullWidth
-                      variant="outlined"
-                    />
-                  </div>
-
-                  <div className="flex gap-6">
-                    <FormControl fullWidth>
-                      <InputLabel id="country-select">
-                        {t("country", "label")}
-                      </InputLabel>
-                      <Select
-                        labelId="country-select"
-                        id="country-select"
-                        defaultValue={country}
-                        disabled
-                        label={t("country", "label")}
-                      >
-                        <MenuItem value={"IN"}>
-                          {language === "english" ? "Bangladesh" : "Bangladesh"}
-                        </MenuItem>
-                      </Select>
-                    </FormControl>
-
-                    <FormControl fullWidth disabled={!country}>
-                      <InputLabel id="state-select">
-                        {t("district", "label")}
-                      </InputLabel>
-                      <Select
-                        labelId="state-select"
-                        id="state-select"
-                        value={state}
-                        label={t("district", "label")}
-                        onChange={(e) => setState(e.target.value)}
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    <div className="space-y-1 flex-1">
+                      <label className="text-[10px] font-bold tracking-widest text-gray-600 uppercase">
+                        {t("city", "label")}
+                      </label>
+                      <input
+                        type="text"
+                        value={city}
+                        onChange={(e) => setCity(e.target.value)}
+                        placeholder={t("city", "placeholder")}
                         required
-                      >
-                        {states.map((item) => (
-                          <MenuItem key={item.code} value={item.code}>
-                            {language === "bangla"
-                              ? item.bangla_name || item.name
-                              : item.name}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
+                        className="w-full px-3 py-2 bg-gray-50 border border-gray-100 text-gray-900 focus:bg-white focus:outline-none focus:border-[var(--accent)] transition-all text-xs"
+                      />
+                    </div>
+                    <div className="space-y-1 flex-1">
+                      <label className="text-[10px] font-bold tracking-widest text-gray-600 uppercase">
+                        {t("district", "label")}
+                      </label>
+                      <div className="relative">
+                        <select
+                          value={state}
+                          onChange={(e) => setState(e.target.value)}
+                          required
+                          className="w-full px-3 py-2 bg-gray-50 border border-gray-100 text-gray-900 appearance-none focus:bg-white focus:outline-none focus:border-[var(--accent)] transition-all text-xs pr-8"
+                        >
+                          <option value="" disabled>Select District</option>
+                          {states.map((item) => (
+                            <option key={item.code} value={item.code}>
+                              {language === "bangla"
+                                ? item.bangla_name || item.name
+                                : item.name}
+                            </option>
+                          ))}
+                        </select>
+                        <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none text-gray-400">
+                          <svg className="w-3 h-3 fill-current" viewBox="0 0 20 20">
+                            <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" fillRule="evenodd"></path>
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
                   </div>
 
-                  {/* Delivery Area Selection */}
-                  <div className="flex flex-col sm:flex-row gap-6 p-4 bg-gray-50 rounded-xl border border-gray-100">
-                    <label className="flex items-center gap-3 cursor-pointer group">
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    <div className="space-y-1 flex-1">
+                      <label className="text-[10px] font-bold tracking-widest text-gray-600 uppercase">
+                        {t("phoneNo", "label")}
+                      </label>
                       <input
-                        type="radio"
-                        name="deliveryArea"
-                        value="inside"
-                        checked={deliveryArea === "inside"}
-                        onChange={(e) => setDeliveryArea(e.target.value)}
-                        className="w-5 h-5 accent-[#FF1837] cursor-pointer"
+                        type="tel"
+                        value={phoneNo}
+                        onChange={(e) => setPhoneNo(e.target.value)}
+                        placeholder={t("phoneNo", "placeholder")}
+                        required
+                        className="w-full px-3 py-2 bg-gray-50 border border-gray-100 text-gray-900 focus:bg-white focus:outline-none focus:border-[var(--accent)] transition-all text-xs"
                       />
-                      <span className="text-sm font-bold text-gray-700 group-hover:text-black transition-colors uppercase tracking-wider">Inside Dhaka (৳70)</span>
-                    </label>
-                    <label className="flex items-center gap-3 cursor-pointer group">
+                    </div>
+                    <div className="space-y-1 flex-1">
+                      <label className="text-[10px] font-bold tracking-widest text-gray-600 uppercase">
+                        {t("pincode", "label")} <span className="text-gray-400 font-normal opacity-70 ml-1 lowercase tracking-normal">(optional)</span>
+                      </label>
                       <input
-                        type="radio"
-                        name="deliveryArea"
-                        value="outside"
-                        checked={deliveryArea === "outside"}
-                        onChange={(e) => setDeliveryArea(e.target.value)}
-                        className="w-5 h-5 accent-[#FF1837] cursor-pointer"
+                        type="text"
+                        value={pincode}
+                        onChange={(e) => setPincode(e.target.value)}
+                        placeholder={t("pincode", "placeholder")}
+                        className="w-full px-3 py-2 bg-gray-50 border border-gray-100 text-gray-900 focus:bg-white focus:outline-none focus:border-[var(--accent)] transition-all text-xs"
                       />
-                      <span className="text-sm font-bold text-gray-700 group-hover:text-black transition-colors uppercase tracking-wider">Outside Dhaka (৳130)</span>
+                    </div>
+                  </div>
+
+                  <div className="space-y-1 mt-1">
+                    <label className="text-[10px] font-bold tracking-widest text-gray-600 uppercase">
+                      Delivery Area
                     </label>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <label
+                        className={`flex items-center p-3 border cursor-pointer transition-all ${deliveryArea === "inside"
+                          ? "border-gray-900 ring-1 ring-gray-900 bg-gray-50/30"
+                          : "border-gray-200 hover:border-gray-300 bg-white"
+                          }`}
+                      >
+                        <div className={`flex items-center justify-center w-4 h-4 rounded-full border mr-2 shrink-0 bg-white ${deliveryArea === "inside" ? "border-gray-900" : "border-gray-300"}`}>
+                          {deliveryArea === "inside" && <div className="w-2 h-2 rounded-full bg-gray-900 block" style={{ backgroundColor: '#111827' }}></div>}
+                        </div>
+                        <input
+                          type="radio"
+                          name="deliveryArea"
+                          value="inside"
+                          checked={deliveryArea === "inside"}
+                          onChange={(e) => setDeliveryArea(e.target.value)}
+                          className="sr-only"
+                        />
+                        <div className="flex flex-col">
+                          <span className="font-bold text-xs text-gray-900">
+                            Inside Dhaka
+                          </span>
+                          <span className="text-[10px] text-gray-500">Delivery fee: ৳70</span>
+                        </div>
+                      </label>
+
+                      <label
+                        className={`flex items-center p-3 border cursor-pointer transition-all ${deliveryArea === "outside"
+                          ? "border-gray-900 ring-1 ring-gray-900 bg-gray-50/30"
+                          : "border-gray-200 hover:border-gray-300 bg-white"
+                          }`}
+                      >
+                        <div className={`flex items-center justify-center w-4 h-4 rounded-full border mr-2 shrink-0 bg-white ${deliveryArea === "outside" ? "border-gray-900" : "border-gray-300"}`}>
+                          {deliveryArea === "outside" && <div className="w-2 h-2 rounded-full bg-gray-900 block" style={{ backgroundColor: '#111827' }}></div>}
+                        </div>
+                        <input
+                          type="radio"
+                          name="deliveryArea"
+                          value="outside"
+                          checked={deliveryArea === "outside"}
+                          onChange={(e) => setDeliveryArea(e.target.value)}
+                          className="sr-only"
+                        />
+                        <div className="flex flex-col">
+                          <span className="font-bold text-xs text-gray-900">
+                            Outside Dhaka
+                          </span>
+                          <span className="text-[10px] text-gray-500">Delivery fee: ৳130</span>
+                        </div>
+                      </label>
+                    </div>
                   </div>
 
                   <button
                     type="submit"
-                    className="bg-black hover:bg-[#FF1837] w-full sm:w-1/2 mt-4 py-4 text-xs font-black text-white shadow-lg hover:shadow-[0_10px_25px_-5px_rgba(255,24,55,0.4)] rounded-xl uppercase tracking-[0.2em] outline-none transition-all duration-500 transform hover:-translate-y-1"
+                    className="mt-6 w-full py-3 bg-[#111827] hover:bg-[#ff0022] text-white text-[11px] font-bold uppercase tracking-[0.15em] transition-all outline-none rounded"
                   >
                     {language === "bangla"
                       ? translations.saveButton.bangla
@@ -314,7 +333,33 @@ const Shipping = () => {
             </Stepper>
           </div>
 
-          <PriceSidebar cartItems={cartItems} />
+          <div className="w-full lg:w-[380px]">
+            <div className="sticky top-24 space-y-6">
+              <PriceSidebar cartItems={cartItems} />
+
+              <div className="bg-white border border-gray-200 p-5 pt-4 rounded">
+                <h2 className="text-xs font-bold tracking-widest uppercase text-gray-900 mb-5">
+                  {language === "english" ? "Items In Your Order" : "আপনার অর্ডারের আইটেম"}
+                </h2>
+                <div className="flex flex-col gap-4">
+                  {cartItems.map((item, idx) => (
+                    <div key={idx} className="flex items-center gap-4 border-b border-gray-100 pb-4 last:border-0 last:pb-0">
+                      <div className="w-14 h-14 shrink-0 bg-white border border-gray-100 rounded overflow-hidden flex items-center justify-center p-1">
+                        <img src={item.image} alt={item.name} className="w-full h-full object-contain" />
+                      </div>
+                      <div className="flex-1 min-w-0 flex flex-col justify-center">
+                        <p className="font-bold text-gray-900 truncate text-[11px] leading-tight mb-1">{item.name}</p>
+                        <p className="text-[10px] font-medium text-gray-400">Qty: {item.quantity} <span className="mx-1">•</span> ৳{item.price}</p>
+                      </div>
+                      <div className="font-bold text-gray-900 text-xs tracking-wide">
+                        ৳{(item.price * item.quantity).toLocaleString()}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </main>
     </>

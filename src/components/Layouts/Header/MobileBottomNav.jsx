@@ -1,11 +1,15 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import HomeIcon from '@mui/icons-material/Home';
 import SearchIcon from '@mui/icons-material/Search';
+import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import PersonIcon from '@mui/icons-material/Person';
 import './MobileBottomNav.css';
 
 const MobileBottomNav = () => {
@@ -26,32 +30,32 @@ const MobileBottomNav = () => {
   return (
     <div className="mobile-bottom-nav">
       <Link to="/" className={`bottom-nav-item ${isActive('/') ? 'active' : ''}`}>
-        <HomeIcon />
+        <div className="bottom-nav-icon-wrapper">
+          {isActive('/') ? <HomeIcon /> : <HomeOutlinedIcon />}
+        </div>
         <span>Home</span>
       </Link>
-      
+
       <Link to="/products" className={`bottom-nav-item ${isActive('/products') ? 'active' : ''}`}>
-        <SearchIcon />
+        <div className="bottom-nav-icon-wrapper">
+          <SearchIcon />
+        </div>
         <span>Shop</span>
       </Link>
-      
-      <Link to="/cart" className={`bottom-nav-item ${isActive('/cart') ? 'active' : ''}`}>
-        <div className="cart-icon-wrapper">
-          <ShoppingBagIcon />
-          {cartItems.length > 0 && (
-            <span className="cart-badge">{cartItems.length}</span>
-          )}
-        </div>
-        <span>Cart</span>
-      </Link>
-      
+
+
+
       <Link to="/wishlist" className={`bottom-nav-item ${isActive('/wishlist') ? 'active' : ''}`}>
-        <FavoriteBorderIcon />
+        <div className="bottom-nav-icon-wrapper">
+          {isActive('/wishlist') ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+        </div>
         <span>Wishlist</span>
       </Link>
-      
+
       <Link to="/account" className={`bottom-nav-item ${isActive('/account') ? 'active' : ''}`}>
-        <PersonOutlineIcon />
+        <div className="bottom-nav-icon-wrapper">
+          {isActive('/account') ? <PersonIcon /> : <PersonOutlineIcon />}
+        </div>
         <span>Account</span>
       </Link>
     </div>

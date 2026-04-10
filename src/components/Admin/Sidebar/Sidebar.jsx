@@ -177,16 +177,16 @@ const Sidebar = memo(({ activeTab, setSidebarOpen, isMobile, sidebarOpen }) => {
 
   return (
     <div
-      className="flex flex-col h-full shadow-2xl rounded-r-2xl transition-all duration-300 min-w-[260px] -mt-5"
-      style={{ background: "var(--primary-bg)" }}
+      className="flex flex-col h-full shadow-2xl rounded-r-2xl transition-all duration-300 min-w-[260px]"
+      style={{ background: "var(--bg-surface, #ffffff)" }}
     >
       {/* Fixed Profile Section */}
       <div className="flex-shrink-0 relative">
         <div
           className="p-6 border-b rounded-tr-2xl"
           style={{
-            background: "var(--text-light)",
-            borderColor: "var(--border-light)",
+            background: "var(--bg-subtle, #f9fafb)",
+            borderColor: "var(--border, #e5e7eb)",
           }}
         >
           <div className="flex items-center gap-4">
@@ -198,14 +198,13 @@ const Sidebar = memo(({ activeTab, setSidebarOpen, isMobile, sidebarOpen }) => {
             />
             <div className="flex flex-col overflow-hidden">
               <span
-                className="font-semibold truncate text-lg"
-                style={{ color: "var(--primary-blue-dark)" }}
+                style={{ color: "var(--accent, #FF1837)" }}
               >
                 {user?.name}
               </span>
               <span
                 className="text-sm truncate font-medium"
-                style={{ color: "var(--primary-blue-light)" }}
+                style={{ color: "var(--text-secondary, #4A4A4A)" }}
               >
                 {user?.email}
               </span>
@@ -253,15 +252,15 @@ const Sidebar = memo(({ activeTab, setSidebarOpen, isMobile, sidebarOpen }) => {
                   style={
                     activeTab === item.tabIndex
                       ? {
-                          background: "var(--primary-blue-light)",
-                          color: "var(--primary-blue-dark)",
-                          fontWeight: 600,
-                          boxShadow: "0 2px 8px rgba(95, 111, 82, 0.08)",
-                        }
+                        background: "var(--accent-subtle, #fff1f2)",
+                        color: "var(--accent, #FF1837)",
+                        fontWeight: 600,
+                        boxShadow: "0 2px 8px rgba(255, 24, 55, 0.08)",
+                      }
                       : {
-                          color: "var(--primary-blue-dark)",
-                          background: "transparent",
-                        }
+                        color: "var(--text-primary, #0A0A0A)",
+                        background: "transparent",
+                      }
                   }
                 >
                   <span
@@ -269,8 +268,8 @@ const Sidebar = memo(({ activeTab, setSidebarOpen, isMobile, sidebarOpen }) => {
                     style={{
                       color:
                         activeTab === item.tabIndex
-                          ? "var(--primary-blue-dark)"
-                          : "var(--primary-blue-light)",
+                          ? "var(--accent, #FF1837)"
+                          : "var(--text-muted, #8E8E8E)",
                     }}
                   >
                     {item.icon}
@@ -288,15 +287,15 @@ const Sidebar = memo(({ activeTab, setSidebarOpen, isMobile, sidebarOpen }) => {
                   style={
                     activeTab === item.tabIndex
                       ? {
-                          background: "var(--primary-blue-light)",
-                          color: "var(--primary-blue-dark)",
-                          fontWeight: 600,
-                          boxShadow: "0 2px 8px rgba(95, 111, 82, 0.08)",
-                        }
+                        background: "var(--accent-subtle, #fff1f2)",
+                        color: "var(--accent, #FF1837)",
+                        fontWeight: 600,
+                        boxShadow: "0 2px 8px rgba(255, 24, 55, 0.08)",
+                      }
                       : {
-                          color: "var(--primary-blue-dark)",
-                          background: "transparent",
-                        }
+                        color: "var(--text-primary, #0A0A0A)",
+                        background: "transparent",
+                      }
                   }
                 >
                   <span
@@ -304,8 +303,8 @@ const Sidebar = memo(({ activeTab, setSidebarOpen, isMobile, sidebarOpen }) => {
                     style={{
                       color:
                         activeTab === item.tabIndex
-                          ? "var(--primary-blue-dark)"
-                          : "var(--primary-blue-light)",
+                          ? "var(--accent, #FF1837)"
+                          : "var(--text-muted, #8E8E8E)",
                     }}
                   >
                     {item.icon}
@@ -318,41 +317,20 @@ const Sidebar = memo(({ activeTab, setSidebarOpen, isMobile, sidebarOpen }) => {
         </nav>
       </div>
 
-      {/* Fixed Footer Section */}
-      <div
-        className="flex-shrink-0 p-5 border-t rounded-br-2xl"
-        style={{
-          background: "var(--text-light)",
-          borderColor: "var(--border-light)",
-        }}
-      >
-        <h5
-          className="mb-1 text-xs font-medium tracking-wide"
-          style={{ color: "var(--primary-blue-dark)" }}
-        >
-          {language === "english"
-            ? "Developed with ❤️ by:"
-            : "❤️ দিয়ে তৈরি করেছেন:"}
-        </h5>
-        <div className="flex flex-col gap-0.5">
-          <a
-            href="https://www.linkedin.com/in/jigar-sable"
-            target="_blank"
-            rel="noreferrer"
-            className="font-semibold text-sm transition-colors duration-200"
-            style={{ color: "var(--primary-blue-dark)" }}
+      {/* Desktop Footer - Back to Website */}
+      {!isMobile && (
+        <div className="flex-shrink-0 p-4 border-t border-gray-100 bg-gray-50 rounded-br-2xl">
+          <Link
+            to="/"
+            className="flex items-center justify-center gap-2 w-full py-3 px-4 bg-white text-blue-600 rounded-xl shadow-sm font-semibold text-sm hover:bg-blue-50 transition-all active:scale-95 border border-blue-100"
           >
-            SoftEnginelab
-          </a>
-          <a
-            href="mailto:jigarsable21@gmail.com"
-            className="text-xs transition-colors duration-200 font-medium"
-            style={{ color: "var(--primary-blue-light)" }}
-          >
-            contact@softenginelab.com
-          </a>
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            {language === "english" ? "Back to Website" : "ওয়েবসাইটে ফিরে যান"}
+          </Link>
         </div>
-      </div>
+      )}
     </div>
   );
 });

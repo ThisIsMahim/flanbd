@@ -104,12 +104,19 @@ const ReviewScreenshotsCarousel = () => {
           </div>
         </div>
       )}
-      <section className="review-screenshots-section">
-        <div className="home-section-header" ref={titleRef}>
-          <span className="section-subtitle">Testimonials</span>
-          <h2 className="section-title">What Our Clients Say</h2>
+      <section className="bg-white py-10 md:py-14 border-t border-gray-100 overflow-hidden">
+        {/* Section Header */}
+        <div className="text-center mb-10 md:mb-16" ref={titleRef}>
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <span className="w-8 h-[2px] bg-[#ff1837]"></span>
+            <span className="text-[10px] text-[#ff1837] font-black uppercase tracking-[0.25em]">Testimonials</span>
+            <span className="w-8 h-[2px] bg-[#ff1837]"></span>
+          </div>
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-black text-[#0f0f0f] tracking-tighter uppercase leading-[1.1]">
+            What Customers <span className="text-gray-400">Say</span>
+          </h2>
         </div>
-        
+
         <div className="review-carousel-outer">
 
           <div className="carousel-fade carousel-fade-left"></div>

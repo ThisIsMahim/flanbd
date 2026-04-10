@@ -99,46 +99,52 @@ const MyOrders = () => {
   };
 
   const FilterContent = () => (
-    <div className="orders-filter-card">
-      <div className="orders-filter-header">
-        <span>{t("Filters", "ফিল্টার")}</span>
-        <button className="orders-filter-clear" onClick={clearFilters}>
+    <div className="flex flex-col gap-8 pr-4">
+      <div className="flex justify-between items-center bg-gray-50/50 p-4 rounded-sm border border-gray-100">
+        <span className="font-bold text-[13px] uppercase tracking-widest text-gray-900">{t("Filters", "ফিল্টার")}</span>
+        <button className="text-[10px] font-bold text-gray-500 hover:text-gray-900 uppercase tracking-widest transition-colors" onClick={clearFilters}>
           {t("Clear", "সাফ")}
         </button>
       </div>
 
       {/* Status Filter */}
-      <div className="orders-filter-group">
-        <div className="orders-filter-group-title">{t("Order Status", "অর্ডার স্ট্যাটাস")}</div>
-        {statusOptions.map((opt, i) => (
-          <label key={opt} className={`orders-filter-option ${status === opt ? 'selected' : ''}`}>
-            <input
-              type="radio"
-              name="status"
-              value={opt}
-              checked={status === opt}
-              onChange={(e) => setStatus(e.target.value)}
-            />
-            {language === "bangla" ? statusOptionsBn[i] : opt}
-          </label>
-        ))}
+      <div className="flex flex-col gap-3">
+        <div className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">{t("Order Status", "অর্ডার স্ট্যাটাস")}</div>
+        <div className="flex flex-wrap gap-2">
+          {statusOptions.map((opt, i) => (
+            <button
+              key={opt}
+              type="button"
+              onClick={() => setStatus(opt)}
+              className={`px-4 py-2 rounded text-[11px] font-bold uppercase tracking-wider transition-all duration-200 border ${status === opt
+                ? 'bg-gray-900 text-white border-gray-900 shadow-sm'
+                : 'bg-white text-gray-500 border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+                }`}
+            >
+              {language === "bangla" ? statusOptionsBn[i] : opt}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Time Filter */}
-      <div className="orders-filter-group">
-        <div className="orders-filter-group-title">{t("Order Time", "অর্ডারের সময়")}</div>
-        {timeOptions.map((opt) => (
-          <label key={opt.value} className={`orders-filter-option ${+orderTime === opt.value ? 'selected' : ''}`}>
-            <input
-              type="radio"
-              name="ordertime"
-              value={opt.value}
-              checked={+orderTime === opt.value}
-              onChange={(e) => setOrderTime(e.target.value)}
-            />
-            {language === "bangla" ? opt.labelBn : opt.label}
-          </label>
-        ))}
+      <div className="flex flex-col gap-3">
+        <div className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">{t("Order Time", "অর্ডারের সময়")}</div>
+        <div className="flex flex-wrap gap-2">
+          {timeOptions.map((opt) => (
+            <button
+              key={opt.value}
+              type="button"
+              onClick={() => setOrderTime(opt.value)}
+              className={`px-4 py-2 rounded text-[11px] font-bold uppercase tracking-wider transition-all duration-200 border ${+orderTime === opt.value
+                ? 'bg-gray-900 text-white border-gray-900 shadow-sm'
+                : 'bg-white text-gray-500 border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+                }`}
+            >
+              {language === "bangla" ? opt.labelBn : opt.label}
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -151,20 +157,48 @@ const MyOrders = () => {
 
       <div className="orders-page">
         {/* Page Header */}
-        <div className="orders-header">
-          <div className="orders-header-left">
-            <div className="orders-breadcrumb">
-              <Link to="/">Home</Link>
-              <span>/</span>
-              <span>{t("My Orders", "আমার অর্ডার")}</span>
+        <div className="max-w-7xl mx-auto px-4 sm:px-10 mb-8 flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <div className="flex-1">
+            <div className="text-[10px] sm:text-[11px] text-gray-400 font-bold uppercase tracking-widest mb-3 flex items-center gap-3">
+              <Link to="/" className="hover:text-gray-900 transition-colors">Home</Link>
+              <span className="text-gray-300">/</span>
+              <span className="text-gray-900">{t("My Orders", "আমার অর্ডার")}</span>
             </div>
-            <h1>{t("My Orders", "আমার অর্ডার")}</h1>
+            <h1 className="text-3xl sm:text-4xl font-black text-gray-900 tracking-tight">{t("My Orders", "আমার অর্ডার")}</h1>
           </div>
 
-          <button className="orders-filter-toggle" onClick={() => setMobileFiltersOpen(true)}>
-            <FilterListIcon sx={{ fontSize: 16 }} />
-            {t("Filters", "ফিল্টার")}
-          </button>
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+            {/* Gold Progress Compact */}
+            {!summary?.isGold && summary?.lifetimeTotal !== undefined && (
+              <div className="flex-1 sm:w-64 flex flex-col gap-1.5 bg-transparent md:bg-gray-50/50 md:p-3 md:rounded md:border border-gray-100">
+                <div className="flex justify-between items-center">
+                  <span className="text-[9px] font-bold uppercase tracking-widest text-gray-500">
+                    {t("Progress to Gold", "গোল্ডে অগ্রগতি")}
+                  </span>
+                  <span className="text-[10px] font-black text-gray-900">
+                    {Math.min(100, Math.round(((summary?.lifetimeTotal || 0) / 44930) * 100))}%
+                  </span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-1 overflow-hidden">
+                  <div
+                    className="bg-[#c9a96e] h-1 rounded-full transition-all duration-1000"
+                    style={{ width: `${Math.min(100, Math.round(((summary?.lifetimeTotal || 0) / 44930) * 100))}%` }}
+                  />
+                </div>
+                <span className="text-[8px] font-medium text-gray-400 break-words leading-tight">
+                  {t(
+                    `Spend ৳${Math.max(0, 44930 - (summary?.lifetimeTotal || 0)).toLocaleString()} more for Gold (-10%)`,
+                    `গোল্ডের জন্য আরও ৳${Math.max(0, 44930 - (summary?.lifetimeTotal || 0)).toLocaleString()} খরচ করুন (-10%)`
+                  )}
+                </span>
+              </div>
+            )}
+
+            <button className="md:hidden flex items-center justify-center gap-2 px-4 py-3 bg-gray-900 text-white rounded text-[10px] font-bold uppercase tracking-widest" onClick={() => setMobileFiltersOpen(true)}>
+              <FilterListIcon sx={{ fontSize: 16 }} />
+              {t("Filters", "ফিল্টার")}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Drawer */}
@@ -177,7 +211,7 @@ const MyOrders = () => {
               width: "300px",
               maxWidth: "85vw",
               padding: "1rem",
-              background: "var(--bg-primary)",
+              background: "white",
             },
           }}
         >
@@ -203,87 +237,41 @@ const MyOrders = () => {
             ) : (
               <>
                 {/* Stats Row */}
-                <div className="orders-stats-row">
-                  <div className="orders-stat-item">
-                    <div className="orders-stat-label">{t("Lifetime Total", "মোট ব্যয়")}</div>
-                    <div className="orders-stat-value">৳{(summary?.lifetimeTotal || 0).toLocaleString()}</div>
+                <div className="grid grid-cols-3 gap-6 p-0 md:p-6 rounded border border-gray-100">
+                  <div className="flex flex-col">
+                    <span className="text-[9px] font-bold uppercase tracking-[0.15em] text-gray-400 mb-2">{t("Lifetime Total", "মোট ব্যয়")}</span>
+                    <span className="text-2xl font-black tracking-tight text-gray-900">৳{(summary?.lifetimeTotal || 0).toLocaleString()}</span>
                   </div>
-                  <div className="orders-stat-item">
-                    <div className="orders-stat-label">{t("Last 12 Months", "গত ১২ মাস")}</div>
-                    <div className="orders-stat-value">৳{(summary?.lastYearTotal || 0).toLocaleString()}</div>
+                  <div className="flex flex-col md:border-l border-gray-200 md:pl-6">
+                    <span className="text-[9px] font-bold uppercase tracking-[0.15em] text-gray-400 mb-2">{t("Last 12 Months", "গত ১২ মাস")}</span>
+                    <span className="text-2xl font-black tracking-tight text-gray-900">৳{(summary?.lastYearTotal || 0).toLocaleString()}</span>
                   </div>
-                  <div className="orders-stat-item">
-                    <div className="orders-stat-label">{t("Status", "স্ট্যাটাস")}</div>
-                    <div className="orders-stat-value">
+                  <div className="flex flex-col md:border-l border-gray-200 md:pl-6">
+                    <span className="text-[9px] font-bold uppercase tracking-[0.15em] text-gray-400 mb-2">{t("Status", "স্ট্যাটাস")}</span>
+                    <div className="mt-1">
                       {summary?.isGold ? (
                         <GoldUserBadge size="small" showAnimation={false} />
                       ) : (
-                        <span style={{ fontSize: 'var(--text-sm)' }}>{t("Standard", "স্ট্যান্ডার্ড")}</span>
+                        <span className="text-[13px] font-bold uppercase tracking-widest text-gray-900">{t("Standard", "স্ট্যান্ডার্ড")}</span>
                       )}
                     </div>
                   </div>
                 </div>
 
-                {/* Gold Progress Bar */}
-                {!summary?.isGold && (
-                  <div className="orders-gold-progress">
-                    <div className="orders-gold-top">
-                      <div className="orders-gold-label">
-                        {t("Progress to Gold", "গোল্ডে অগ্রগতি")}
-                      </div>
-                      <div className="orders-gold-pct">
-                        {Math.min(100, Math.round(((summary?.lifetimeTotal || 0) / 50000) * 100))}%
-                      </div>
-                    </div>
-                    <div className="orders-gold-bar-track">
-                      <div
-                        className="orders-gold-bar-fill"
-                        style={{ width: `${Math.min(100, Math.round(((summary?.lifetimeTotal || 0) / 50000) * 100))}%` }}
-                      />
-                    </div>
-                    <div className="orders-gold-note">
-                      {t(
-                        `Spend ৳${Math.max(0, 50000 - (summary?.lifetimeTotal || 0)).toLocaleString()} more to unlock Gold status — 10% lifetime discount on every order`,
-                        `গোল্ড স্ট্যাটাস আনলক করতে আরও ৳${Math.max(0, 50000 - (summary?.lifetimeTotal || 0)).toLocaleString()} খরচ করুন — প্রতিটি অর্ডারে ১০% আজীবন ছাড়`
-                      )}
-                    </div>
-                  </div>
-                )}
 
-                {/* Monthly Chart */}
-                {summary?.months?.length > 0 && (
-                  <div className="orders-chart">
-                    <div className="orders-chart-title">{t("Monthly Spend", "মাসিক ব্যয়")}</div>
-                    <div className="orders-chart-bars">
-                      {summary.months.map((m, idx) => {
-                        const max = Math.max(1, ...summary.months.map(mm => mm.total));
-                        const heightPct = Math.round((m.total / max) * 100);
-                        return (
-                          <div key={idx} className="orders-chart-bar-col">
-                            <div
-                              className={`orders-chart-bar ${m.total > 0 ? 'has-data' : ''}`}
-                              style={{ height: `${Math.max(4, heightPct * 0.8)}px` }}
-                              title={`৳${m.total.toLocaleString()}`}
-                            />
-                            <span className="orders-chart-label">{m.label}</span>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                )}
 
                 {/* Search */}
-                <div className="orders-search">
+                <div className="flex items-center border-b-2 border-gray-100 focus-within:border-gray-900 transition-colors mb-8 mt-8">
                   <input
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     type="search"
                     placeholder={t("Search your orders...", "অর্ডার খুঁজুন...")}
+                    className="w-full bg-transparent border-none outline-none py-3 text-sm font-medium text-gray-900 placeholder:text-gray-400"
                   />
-                  <button type="button">
-                    <SearchIcon sx={{ fontSize: 18 }} />
-                    {t("Search", "খুঁজুন")}
+                  <button type="button" className="flex items-center gap-2 px-4 text-[10px] font-bold text-gray-900 uppercase tracking-widest hover:text-gray-500 transition-all">
+                    <SearchIcon sx={{ fontSize: 16 }} />
+                    <span className="hidden sm:inline">{t("Search", "খুঁজুন")}</span>
                   </button>
                 </div>
 

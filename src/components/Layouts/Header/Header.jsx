@@ -15,6 +15,10 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import LogoutIcon from '@mui/icons-material/Logout';
 import LoginIcon from '@mui/icons-material/Login';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import CartDrawer from '../../Cart/CartDrawer';
 import "./Header.css";
 
 const Header = () => {
@@ -26,12 +30,16 @@ const Header = () => {
   const { cartItems } = useSelector((state) => state.cart);
 
   const [isScrolled, setIsScrolled] = useState(false);
-  const [searchOpen, setSearchOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [categories, setCategories] = useState([]);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [accountDropdownOpen, setAccountDropdownOpen] = useState(false);
+  const [mobileShopOpen, setMobileShopOpen] = useState(false);
+  const [cartDrawerOpen, setCartDrawerOpen] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState("All categories");
+  const [categoryMenuOpen, setCategoryMenuOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const categoryRef = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -48,15 +56,25 @@ const Header = () => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setAccountDropdownOpen(false);
       }
+      if (categoryRef.current && !categoryRef.current.contains(event.target)) {
+        setCategoryMenuOpen(false);
+      }
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  useEffect(() => {
+    setCategoryMenuOpen(false);
+    setMobileMenuOpen(false);
+  }, [location]);
+
   const handleSearch = (e) => {
     e.preventDefault();
-    if (searchValue.trim()) navigate(`/products/${searchValue}`);
-    setSearchOpen(false);
+    if (searchValue.trim()) {
+      const categoryPath = selectedCategory !== "All categories" ? `?category=${selectedCategory}` : "";
+      navigate(`/products/${searchValue}${categoryPath}`);
+    }
     setSearchValue("");
   };
 
@@ -74,9 +92,13 @@ const Header = () => {
     <>
       <header className={`header-wrapper ${isScrolled ? 'scrolled' : ''} ${location.pathname === '/' ? 'home-page' : ''}`}>
         <div className="header-container">
+          <button className="header-icon-btn mobile-menu-btn" onClick={() => setMobileMenuOpen(true)}>
+            <MenuIcon />
+          </button>
+
           {/* Logo */}
           <Link to="/" className="header-logo">
-            <img src="/logo.png" className="w-24" alt="Flan Logo" />
+            <img src="/logo.png" className="w-16" alt="Flan Logo" />
           </Link>
 
           {/* Nav */}
@@ -90,9 +112,6 @@ const Header = () => {
 
           {/* Actions */}
           <div className="header-actions">
-            <button className="header-icon-btn" onClick={() => setSearchOpen(true)}>
-              <SearchIcon sx={{ fontSize: 22 }} />
-            </button>
             <div className="account-dropdown-container" ref={dropdownRef}>
               <button
                 className="header-icon-btn profile-trigger"
@@ -103,7 +122,7 @@ const Header = () => {
                     {user.name && user.name[0].toUpperCase()}
                   </div>
                 ) : (
-                  <PersonOutlineOutlinedIcon sx={{ fontSize: 24 }} />
+                  <PersonOutlineOutlinedIcon sx={{ fontSize: 20 }} />
                 )}
               </button>
 
@@ -160,51 +179,138 @@ const Header = () => {
                 </div>
               )}
             </div>
-            <Link to="/cart" className="header-icon-btn">
-              <ShoppingBagOutlinedIcon sx={{ fontSize: 22 }} />
+            <button className="header-icon-btn cart-icon-desktop" onClick={() => setCartDrawerOpen(true)} aria-label="Open cart">
+              <ShoppingBagOutlinedIcon sx={{ fontSize: 20 }} />
               {cartItems.length > 0 && <span className="cart-badge">{cartItems.length}</span>}
-            </Link>
-            <button className="header-icon-btn mobile-menu-btn" onClick={() => setMobileMenuOpen(true)}>
-              <MenuIcon />
             </button>
+          </div>
+        </div>
+
+        {/* Search Bar Row (Permanent) */}
+        <div className="header-search-row">
+          <div className="header-search-container">
+            <div className="search-bar-inner">
+              <div className="search-category-select" ref={categoryRef}>
+                <button
+                  type="button"
+                  className="category-trigger"
+                  onClick={() => setCategoryMenuOpen(!categoryMenuOpen)}
+                >
+                  <span>{selectedCategory}</span>
+                  <span className={`chevron ${categoryMenuOpen ? 'up' : ''}`}>▼</span>
+                </button>
+
+                {categoryMenuOpen && (
+                  <div className="category-dropdown animate-scale-in">
+                    <div
+                      className="category-item"
+                      onClick={() => { setSelectedCategory("All categories"); setCategoryMenuOpen(false); }}
+                    >
+                      All categories
+                    </div>
+                    {categories.filter(cat => !cat.parent).map((cat) => (
+                      <div
+                        key={cat._id}
+                        className="category-item"
+                        onClick={() => { setSelectedCategory(cat.name); setCategoryMenuOpen(false); }}
+                      >
+                        {cat.name}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              <div className="search-divider" />
+
+              <form className="search-form" onSubmit={handleSearch}>
+                <input
+                  type="text"
+                  placeholder="Type here..."
+                  value={searchValue}
+                  onChange={(e) => setSearchValue(e.target.value)}
+                />
+                <button type="submit" className="search-submit-btn">
+                  <SearchIcon sx={{ fontSize: 16 }} />
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       </header>
 
-      {/* Search Overlay */}
-      {searchOpen && (
-        <div className="search-modal animate-fade-in">
-          <button className="search-close-btn" onClick={() => setSearchOpen(false)}>
-            <CloseIcon fontSize="large" />
+      {/* Mobile Menu Drawer */}
+      <div className={`mobile-menu-drawer ${mobileMenuOpen ? 'open' : ''}`}>
+        <div className="mobile-menu-header">
+          <button className="mobile-menu-close-btn" onClick={() => setMobileMenuOpen(false)}>
+            <CloseIcon fontSize="medium" />
           </button>
-          <div className="search-field-container">
-            <form onSubmit={handleSearch}>
-              <input
-                autoFocus
-                type="text"
-                className="search-input"
-                placeholder="Search products..."
-                value={searchValue}
-                onChange={(e) => setSearchValue(e.target.value)}
-              />
-              <p className="mt-4 text-secondary text-sm font-medium uppercase tracking-widest opacity-50">Press Enter to Search</p>
-            </form>
+        </div>
+        <div className="mobile-menu-content">
+          <div className={`mobile-nav-item-group ${mobileShopOpen ? 'active' : ''}`}>
+            <button
+              className="mobile-nav-link shop-toggle"
+              onClick={() => setMobileShopOpen(!mobileShopOpen)}
+            >
+              Shop
+              <span className={`dropdown-arrow ${mobileShopOpen ? 'open' : ''}`}>▼</span>
+            </button>
+            <div className={`mobile-shop-categories ${mobileShopOpen ? 'open' : ''}`}>
+              <Link to="/products" className="mobile-category-link" onClick={() => setMobileMenuOpen(false)}>
+                All Products
+              </Link>
+              {categories && categories.filter(cat => !cat.parent).map((cat) => (
+                <Link
+                  key={cat._id}
+                  to={`/products/${cat.name}`}
+                  className="mobile-category-link"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {cat.name}
+                </Link>
+              ))}
+            </div>
+          </div>
+          <Link to="/stories" className="mobile-nav-link" onClick={() => setMobileMenuOpen(false)}>
+            Stories
+          </Link>
+          <Link to="/about" className="mobile-nav-link" onClick={() => setMobileMenuOpen(false)}>
+            About
+          </Link>
+          <Link to="/contact" className="mobile-nav-link" onClick={() => setMobileMenuOpen(false)}>
+            Contact
+          </Link>
+          <Link to="/wishlist" className="mobile-nav-link" onClick={() => setMobileMenuOpen(false)}>
+            Wishlist
+          </Link>
+          <Link to="/orders" className="mobile-nav-link" onClick={() => setMobileMenuOpen(false)}>
+            Track Order
+          </Link>
+          <Link to="/login" className="mobile-nav-link" onClick={() => setMobileMenuOpen(false)}>
+            Sign In
+          </Link>
+          <Link to="/register" className="mobile-register-btn" onClick={() => setMobileMenuOpen(false)}>
+            Register
+          </Link>
+        </div>
+        <div className="mobile-menu-footer">
+          <div className="mobile-social-links">
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+              <FacebookIcon sx={{ fontSize: 20 }} />
+            </a>
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+              <InstagramIcon sx={{ fontSize: 20 }} />
+            </a>
+            <a href="https://wa.me/123456789" target="_blank" rel="noopener noreferrer">
+              <WhatsAppIcon sx={{ fontSize: 20 }} />
+            </a>
           </div>
         </div>
-      )}
+      </div>
+      {mobileMenuOpen && <div className="mobile-menu-overlay" onClick={() => setMobileMenuOpen(false)} />}
 
-      {/* Mobile Menu */}
-      {mobileMenuOpen && (
-        <div className="mobile-menu-overlay animate-fade-in">
-          <button className="mobile-menu-close-btn" onClick={() => setMobileMenuOpen(false)}>
-            <CloseIcon fontSize="large" />
-          </button>
-          <Link to="/products" className="mobile-nav-link" onClick={() => setMobileMenuOpen(false)}>Shop</Link>
-          <Link to="/stories" className="mobile-nav-link" onClick={() => setMobileMenuOpen(false)}>Stories</Link>
-          <Link to="/about" className="mobile-nav-link" onClick={() => setMobileMenuOpen(false)}>About</Link>
-          <Link to="/contact" className="mobile-nav-link" onClick={() => setMobileMenuOpen(false)}>Contact</Link>
-        </div>
-      )}
+      {/* Cart Drawer */}
+      <CartDrawer open={cartDrawerOpen} onClose={() => setCartDrawerOpen(false)} />
     </>
   );
 };

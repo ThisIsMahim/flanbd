@@ -10,6 +10,8 @@ import ReviewScreenshotsCarousel from "./ReviewScreenshotsCarousel";
 import TrustedCompaniesCarousel from "./TrustedCompaniesCarousel";
 import GoldUserAnimation from "../common/GoldUserAnimation";
 import GoldUserBadge from "../common/GoldUserBadge";
+import HomeBlogSection from "./HomeBlogSection";
+import HomeContactSection from "./HomeContactSection";
 
 // Lazy load heavy components
 const ProductSlider = lazy(() => import("./ProductSlider/ProductSlider"));
@@ -81,6 +83,14 @@ const Home = () => {
           {/* Trusted Brands */}
           <section className="home-section">
             <TrustedCompaniesCarousel />
+          </section>
+          
+          <section className="home-section">
+            <HomeBlogSection />
+          </section>
+
+          <section className="home-section">
+            <HomeContactSection />
           </section>
         </div>
       </main>

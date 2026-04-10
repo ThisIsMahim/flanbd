@@ -1,9 +1,11 @@
 import MenuIcon from "@mui/icons-material/Menu";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Outlet, useLocation } from "react-router-dom";
+import { useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
+import { Link, Outlet, useLocation } from "react-router-dom";
 import Sidebar from "./Sidebar/Sidebar";
+import { LanguageContext } from "../../utils/LanguageContext";
 
 const Dashboard = () => {
+  const { language } = useContext(LanguageContext);
   const [isMobile, setIsMobile] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -92,16 +94,12 @@ const Dashboard = () => {
     [activeTab, isMobile, sidebarOpen]
   );
 
-  const sidebarTopPosition = scrolled ? "70px" : "133px";
+  const sidebarTopPosition = "0px";
 
   return (
     <div className="relative flex flex-col min-h-screen bg-gray-50">
       {/* Header spacer - dynamically adjust based on scrolled state */}
-      <div
-        className={`will-change-transform transition-all duration-300 ${
-          scrolled ? "h-[30px]" : "h-[10px]"
-        } flex-shrink-0`}
-      />
+
 
       <div className="flex flex-1 overflow-hidden">
         {/* Mobile overlay */}
@@ -133,24 +131,31 @@ const Dashboard = () => {
         <div
           className={`
             flex-1 min-w-0 
-            ${!isMobile && sidebarOpen ? "ml-64" : "ml-0 mt-9"}
+            ${!isMobile && sidebarOpen ? "ml-64" : "ml-0"}
             overflow-y-auto
             transition-all duration-300 ease-in-out
-            lg:-mt-12
-          `} 
+          `}
         >
           <div className="sm:px-6">
             {/* Mobile menu button */}
             {isMobile && (
-              <button
-                onClick={handleSidebarToggle}
-                className="lg:hidden bg-white p-2 rounded-md shadow-sm hover:bg-gray-100 mb-2 ml-4 mt-4"
-                aria-label="Open menu"
-              >
-                <MenuIcon className="text-gray-600" />
-              </button>
+              <div className="flex items-center justify-between mb-4 mr-4">
+                <button
+                  onClick={handleSidebarToggle}
+                  className="lg:hidden bg-white p-2 rounded-md shadow-sm hover:bg-gray-100 ml-4 mt-4"
+                  aria-label="Open menu"
+                >
+                  <MenuIcon className="text-gray-600" />
+                </button>
+                <Link
+                  to="/"
+                  className="mt-4 px-4 py-2 bg-white text-blue-600 rounded-lg shadow-sm font-semibold text-sm hover:bg-blue-50 transition-all active:scale-95 border border-blue-100"
+                >
+                  {language === "english" ? "Back to Website" : "ওয়েবসাইটে ফিরে যান"}
+                </Link>
+              </div>
             )}
-            <div className="overflow-x-hidden relative lg:mt-20">
+            <div className="overflow-x-hidden relative">
               {isLoading && (
                 <div className="absolute inset-0 bg-white bg-opacity-75 flex items-center justify-center z-50">
                   <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>

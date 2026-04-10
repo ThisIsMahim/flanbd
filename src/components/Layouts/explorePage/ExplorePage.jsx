@@ -9,7 +9,7 @@ import { motion } from "framer-motion";
 import React, { useRef, useEffect, useState } from "react";
 import "./ExplorePage.css";
 import gsap from "gsap";
-import DealSlider from "../../Home/DealSlider/DealSlider";
+import DealSlider from "../../home/DealSlider/DealSlider";
 import ServiceBookingModal from "../servicesPage/ServiceBookingModal";
 
 const ExplorePage = () => {

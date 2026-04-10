@@ -1,92 +1,88 @@
 /* ===================================
-   DEAL SLIDER — Modern
+   DEAL SLIDER — Modern Minimal
    =================================== */
 
 .deal-slider-section {
   width: 100%;
-  padding-bottom: var(--section-gap);
+  padding-bottom: 4rem;
 }
 
 /* Deal Product Card */
 .deal-minimal-card {
-  background: var(--bg-surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-xl);
+  background: white;
+  border-radius: 4px;
   overflow: hidden;
   cursor: pointer;
-  transition: all var(--transition-base);
+  transition: all 0.3s ease;
   height: 100%;
   display: flex;
   flex-direction: column;
 }
 
-.deal-minimal-card:hover {
-  border-color: transparent;
-  box-shadow: var(--shadow-xl);
-  transform: translateY(-8px);
-}
-
 /* Image */
 .deal-minimal-image-container {
   position: relative;
-  aspect-ratio: 1;
+  aspect-ratio: 4/5;
   overflow: hidden;
-  background: var(--bg-subtle);
+  background: #f7f7f7;
 }
 
 .deal-minimal-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 1s var(--ease-out);
+  transition: transform 0.7s ease;
 }
 
 .deal-minimal-card:hover .deal-minimal-image {
-  transform: scale(1.1);
+  transform: scale(1.03);
 }
 
-/* Discount Badge */
+/* Discount Badge Minimal */
 .deal-discount-badge {
   position: absolute;
-  top: 1rem;
-  left: 1rem;
-  background: var(--accent);
-  color: var(--text-inverse);
-  font-size: var(--text-xs);
+  top: 0.75rem;
+  left: 0.75rem;
+  background: #ff1837;
+  color: white;
+  font-size: 10px;
   font-weight: 800;
-  padding: 0.4rem 0.8rem;
-  border-radius: var(--radius-sm);
+  padding: 0.25rem 0.6rem;
+  border-radius: 2px;
   z-index: 10;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-/* Info Section */
-.deal-minimal-info {
-  padding: 1.5rem;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.deal-minimal-category {
-  font-size: var(--text-xs);
-  color: var(--accent);
-  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
 }
 
+/* Info Section */
+.deal-minimal-info {
+  padding: 1rem 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  text-align: center;
+}
+
+.deal-minimal-category {
+  font-size: 9px;
+  color: #666;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+}
+
 .deal-minimal-title {
-  font-family: var(--font-body);
-  font-size: var(--text-base);
-  font-weight: 600;
-  color: var(--text-primary);
-  line-height: 1.4;
-  margin-bottom: 0.5rem;
+  font-size: 12px;
+  font-weight: 800;
+  color: #000;
+  line-height: 1.3;
+  margin-bottom: 0.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -94,105 +90,77 @@
 /* Price */
 .deal-minimal-price-row {
   display: flex;
-  align-items: baseline;
-  gap: 0.75rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
   margin-top: auto;
 }
 
 .deal-minimal-price {
-  font-size: var(--text-lg);
+  font-size: 14px;
   font-weight: 800;
-  color: var(--text-primary);
+  color: #000;
+  letter-spacing: 0.1em;
 }
 
 .deal-minimal-cutted {
-  font-size: var(--text-sm);
-  color: var(--text-muted);
+  font-size: 11px;
+  color: #999;
   text-decoration: line-through;
+  letter-spacing: 0.05em;
 }
 
-/* Pagination */
+/* Pagination Sleek */
 .pagination-container {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1.5rem;
+  gap: 1rem;
   margin-top: 3rem;
 }
 
 .pagination-control {
-  width: 56px;
-  height: 56px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  background: var(--bg-surface);
-  border: 1px solid var(--border);
-  color: var(--text-primary);
+  background: white;
+  border: 1px solid #eaeaea;
+  color: #000;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all var(--transition-base);
+  transition: all 0.3s;
 }
 
 .pagination-control:hover:not(:disabled) {
-  background: var(--text-primary);
-  border-color: var(--text-primary);
-  color: var(--text-inverse);
-  transform: scale(1.1);
+  background: #000;
+  border-color: #000;
+  color: white;
 }
 
 .pagination-control:disabled {
-  opacity: 0.2;
+  opacity: 0.3;
   cursor: not-allowed;
 }
 
 .pagination-dots {
   display: flex;
-  gap: 0.75rem;
+  gap: 0.5rem;
 }
 
 .pagination-dot {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
-  background: var(--border);
+  background: #eaeaea;
   border: none;
   cursor: pointer;
-  transition: all var(--transition-base);
+  transition: all 0.3s;
   padding: 0;
 }
 
 .pagination-dot.active {
-  background: var(--accent);
-  transform: scale(1.4);
-}
-
-
-.page-number:disabled {
-  background: var(--accent);
-  color: var(--text-inverse);
-  cursor: default;
-  font-weight: 700;
-}
-
-.page-dots {
-  color: var(--text-muted);
-  padding: 0 0.25rem;
-}
-
-/* ===================================
-   RESPONSIVE
-   =================================== */
-@media (max-width: 640px) {
-  .deal-minimal-info {
-    padding: 0.75rem;
-  }
-
-  .deal-minimal-title {
-    font-size: var(--text-xs);
-  }
-
-  .deal-minimal-price {
-    font-size: var(--text-sm);
-  }
+  background: #000;
+  transform: scale(1.3);
 }

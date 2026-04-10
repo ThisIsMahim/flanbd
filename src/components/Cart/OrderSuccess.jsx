@@ -38,21 +38,20 @@ const OrderSuccess = ({ success }) => {
         ? "Transaction Successful"
         : "ট্রানজেকশন সফল"
       : language === "english"
-      ? "Transaction Failed"
-      : "ট্রানজেকশন ব্যর্থ",
+        ? "Transaction Failed"
+        : "ট্রানজেকশন ব্যর্থ",
     heading: success
       ? language === "english"
         ? "Transaction Successful"
         : "লেনদেন সফল হয়েছে"
       : language === "english"
-      ? "Transaction Failed"
-      : "লেনদেন ব্যর্থ হয়েছে",
+        ? "Transaction Failed"
+        : "লেনদেন ব্যর্থ হয়েছে",
     redirectText:
       language === "english"
         ? `Redirecting to ${success ? (isAuthenticated ? "orders" : "home") : "cart"} in ${time} sec`
-        : `${time} সেকেন্ডে ${
-            success ? (isAuthenticated ? "অর্ডারসমূহ" : "হোম") : "কার্ট"
-          }-এ রিডাইরেক্ট করা হচ্ছে`,
+        : `${time} সেকেন্ডে ${success ? (isAuthenticated ? "অর্ডারসমূহ" : "হোম") : "কার্ট"
+        }-এ রিডাইরেক্ট করা হচ্ছে`,
     buttonText:
       language === "english"
         ? `go to ${success ? (isAuthenticated ? "orders" : "home") : "cart"}`
@@ -79,7 +78,7 @@ const OrderSuccess = ({ success }) => {
           </p>
           <Link
             to={success ? (isAuthenticated ? "/orders" : "/") : "/cart"}
-            className="bg-[var(--button-bg)] hover:bg-[var(--button-hover)] mt-2 py-2.5 px-6 text-white uppercase shadow hover:shadow-lg rounded-sm transition-colors duration-300"
+            className="bg-[#111827] hover:bg-[#ff0022] mt-2 py-2.5 px-6 text-white uppercase shadow hover:shadow-lg rounded-sm transition-colors duration-300"
           >
             {translations.buttonText}
           </Link>

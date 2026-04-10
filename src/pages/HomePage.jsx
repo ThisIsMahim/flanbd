@@ -1,6 +1,6 @@
 import React from 'react';
-import Hero from '../components/Home/Hero';
-import FeaturedProducts from '../components/Home/FeaturedProducts';
+import Hero from '../components/home/Hero';
+import FeaturedProducts from '../components/home/FeaturedProducts';
 import './HomePage.css';
 
 const HomePage = () => {

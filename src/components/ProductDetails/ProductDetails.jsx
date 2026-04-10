@@ -19,7 +19,7 @@ import Breadcrumb from "../Layouts/Breadcrumb";
 import Loader from "../Layouts/Loader";
 import MetaData from "../Layouts/MetaData";
 import OptimizedImg from "../common/OptimizedImg";
-import DealSlider from "../Home/DealSlider/DealSlider";
+import DealSlider from "../home/DealSlider/DealSlider";
 import ProductHighlightsBlock from "./ProductHighlightsBlock";
 import ProductInfoBlock from "./ProductInfoBlock";
 import ProductReviewsBlock from "./ProductReviewsBlock";
@@ -113,11 +113,19 @@ const ProductDetails = () => {
   return (
     <>
       <MetaData title={product.name} />
-      <main className="product-details-container mt-24">
-        <Breadcrumb product={product} />
+      <main className="product-details-container">
+        {/* <Breadcrumb product={product} /> */}
         <div className="product-main-row">
           {/* Left: Gallery */}
           <div className="product-gallery">
+            <div className="product-main-image">
+              <div className="product-tags">
+                <span className="tag-red">Hot Item</span>
+                <span className="tag-black">-15% Sale</span>
+              </div>
+              <OptimizedImg src={selectedImageUrl || product.images?.[0]?.url} alt={product.name} priority />
+            </div>
+
             <div className="product-thumbnails">
               {product.images?.map((img, i) => (
                 <div
@@ -132,32 +140,32 @@ const ProductDetails = () => {
                 </div>
               ))}
             </div>
-
-            <div className="product-main-image">
-              <OptimizedImg src={selectedImageUrl || product.images?.[0]?.url} alt={product.name} priority />
-            </div>
           </div>
 
           {/* Right: Info */}
           <div className="product-info-col">
+            <Breadcrumb product={product} />
             <div className="product-brand-cat">
               {product.brand?.name ? `${product.brand.name} • ` : ""}{displayCategory}
             </div>
-            <h1 className="product-title">{product.name}</h1>
 
-            <div className="flex items-center gap-2 mb-2">
-              <Rating value={product.ratings || 0} precision={0.5} readOnly size="small" />
-              <span className="text-sm text-secondary">({product.numOfReviews || 0} reviews)</span>
+            <h1 className="product-title">
+              {/* Split title if needed, otherwise normal title */}
+              {product.name}
+            </h1>
+
+            <div className="product-reviews-row mt-2">
+              <Rating value={product.ratings || 0} precision={0.5} readOnly size="medium" sx={{ color: '#C8102E' }} />
+              <span className="review-badge">{product.numOfReviews || 0} REVIEWS</span>
             </div>
 
-            <div className="product-price-row mt-6">
+            <div className="product-price-row mt-4">
               <span className="product-current-price">৳{product.price?.toLocaleString()}</span>
               {hasDiscount && (
-                <div className="product-price-info-group">
+                <>
                   <span className="product-old-price">৳{product.cuttedPrice?.toLocaleString()}</span>
-                  <span className="product-discount-tag">-{getDiscount(product.price, product.cuttedPrice)}% OFF</span>
-                  <span className="save-amount ml-2">SAVE ৳{(product.cuttedPrice - product.price).toLocaleString()}</span>
-                </div>
+                  <span className="product-discount-tag">Save {getDiscount(product.price, product.cuttedPrice)}%</span>
+                </>
               )}
             </div>
 
@@ -188,25 +196,24 @@ const ProductDetails = () => {
               </div>
             )}
 
-            <div className="product-actions-group">
+            <div className="product-actions-wrapper">
               <div className="product-main-actions">
-                <button 
-                  className={`btn-add-cart ${itemInCart ? 'active' : ''}`} 
+                <button
+                  className={`btn-add-cart ${itemInCart ? 'active' : ''}`}
                   onClick={itemInCart ? () => navigate('/cart') : addToCartHandler}
                 >
-                  <ShoppingCartIcon fontSize="small" />
-                  {itemInCart ? "View in Cart" : "Add to Cart"}
+                  {itemInCart ? "View in Cart" : "View in Cart"}
+                  {/* Changed text slightly to match the VIEW IN CART in reference */}
                 </button>
-                <button 
-                  className="btn-buy-now" 
-                  onClick={buyNow} 
+                <button
+                  className="btn-buy-now"
+                  onClick={buyNow}
                   disabled={product.stock < 1}
                 >
-                  <FlashOnIcon fontSize="small" />
                   {product.stock < 1 ? "Out of Stock" : "Buy It Now"}
                 </button>
               </div>
-              
+
               <div className="product-secondary-actions">
                 <button className="secondary-action-btn">
                   <FavoriteBorderIcon fontSize="small" />
@@ -230,17 +237,15 @@ const ProductDetails = () => {
         {/* Bottom Details */}
         <section className="product-bottom-section">
           <div className="product-details-tabs">
-            <div className="flex gap-6 md:gap-12 min-w-max">
-              {['Description', 'Specifications', `Reviews (${product.numOfReviews})`].map((tab, i) => (
-                <button
-                  key={i}
-                  className={`tab-btn ${activeTab === i ? 'active' : ''}`}
-                  onClick={() => setActiveTab(i)}
-                >
-                  {tab}
-                </button>
-              ))}
-            </div>
+            {['Description', 'Specifications', `Reviews (${product.numOfReviews || 0})`].map((tab, i) => (
+              <button
+                key={i}
+                className={`tab-btn ${activeTab === i ? 'active' : ''}`}
+                onClick={() => setActiveTab(i)}
+              >
+                {tab}
+              </button>
+            ))}
           </div>
 
           <div className="tab-content">

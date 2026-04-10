@@ -172,15 +172,15 @@ const Payment = () => {
           paymentMethod === "bkash"
             ? bKashTrxId
             : paymentMethod === "nagad"
-            ? nagadTrxId
-            : uuidv4(),
+              ? nagadTrxId
+              : uuidv4(),
         amount: grandTotal,
         phoneNumber:
           paymentMethod === "bkash"
             ? bKashNumber
             : paymentMethod === "nagad"
-            ? nagadNumber
-            : shippingInfo.phoneNo,
+              ? nagadNumber
+              : shippingInfo.phoneNo,
         timestamp: new Date().toISOString(),
       };
 
@@ -248,11 +248,11 @@ const Payment = () => {
     <>
       <MetaData title={translations.title} />
 
-      <main className="w-full mt-20">
+      <main className="w-full mt-32">
         <div className="flex flex-col sm:flex-row gap-3.5 w-full sm:w-11/12 mt-0 sm:mt-4 m-auto sm:mb-7">
           <div className="flex-1">
             <Stepper activeStep={3}>
-              <div className="w-full bg-white p-6 rounded-lg shadow text-[var(--primary-blue-dark)]">
+              <div className="w-full bg-white md:p-8 p-4 rounded-b-xl shadow-sm border-x border-b border-gray-100 text-gray-900">
                 <form onSubmit={submitHandler} className="flex flex-col gap-4">
                   <FormControl component="fieldset">
                     <h2 className="text-lg font-medium mb-4">
@@ -377,14 +377,14 @@ const Payment = () => {
                     <h1 className="px-6 py-3 border-b font-medium text-[var(--primary-blue-dark)] text-lg">
                       PRICE DETAILS
                     </h1>
-                    
+
                     <div className="flex flex-col gap-4 p-6 pb-3 text-[var(--primary-blue-dark)]">
                       {/* Price (items) */}
                       <p className="flex justify-between">
                         <span>Price ({cartItems.length} {cartItems.length === 1 ? 'item' : 'items'})</span>
                         <span>৳{cartItems.reduce((sum, item) => sum + item.cuttedPrice * item.quantity, 0).toLocaleString()}</span>
                       </p>
-                      
+
                       {/* Discount */}
                       <p className="flex justify-between">
                         <span>Discount</span>
@@ -392,7 +392,7 @@ const Payment = () => {
                           - ৳{cartItems.reduce((sum, item) => sum + (item.cuttedPrice * item.quantity - item.price * item.quantity), 0).toLocaleString()}
                         </span>
                       </p>
-                      
+
                       {/* Delivery Charges */}
                       <p className="flex justify-between">
                         <span>Delivery Charges</span>
@@ -400,7 +400,7 @@ const Payment = () => {
                           ৳{deliveryCharge}{shippingInfo?.deliveryArea === 'inside' ? ' (inside Dhaka)' : shippingInfo?.deliveryArea === 'outside' ? ' (outside Dhaka)' : ''}
                         </span>
                       </p>
-                      
+
                       {/* Gold User Additional Discount */}
                       {isGold && (
                         <p className="flex justify-between">
@@ -408,7 +408,7 @@ const Payment = () => {
                           <span className="text-[#118c4f] font-medium">- ৳{goldDiscount.toLocaleString()}</span>
                         </p>
                       )}
-                      
+
                       {/* Coupon Discount */}
                       {coupon && (
                         <p className="flex justify-between">
@@ -418,7 +418,7 @@ const Payment = () => {
                       )}
 
                       <div className="border border-dashed"></div>
-                      
+
                       {/* Coupon Code Input */}
                       <div className="flex items-center gap-2">
                         <input
@@ -441,23 +441,23 @@ const Payment = () => {
                           Apply
                         </button>
                         {coupon && (
-                          <button 
-                            onClick={() => dispatch(clearCoupon())} 
+                          <button
+                            onClick={() => dispatch(clearCoupon())}
                             className="px-3 py-2 rounded border text-sm"
                           >
                             Remove
                           </button>
                         )}
                       </div>
-                      
+
                       <div className="border border-dashed"></div>
-                      
+
                       {/* Total Amount */}
                       <p className="flex justify-between text-lg font-medium">
                         <span>Total Amount</span>
                         <span>৳{grandTotal.toLocaleString()}</span>
                       </p>
-                      
+
                       <div className="border border-dashed"></div>
 
                       {/* Savings Message */}
@@ -467,27 +467,16 @@ const Payment = () => {
                     </div>
                   </div>
 
-                  <Button
+                  <button
                     type="submit"
-                    variant="contained"
-                    color="primary"
-                    size="large"
-                    sx={{
-                      mt: 2,
-                      py: 1.5,
-                      fontWeight: "bold",
-                      backgroundColor: "var(--button-bg)",
-                      "&:hover": {
-                        backgroundColor: "var(--button-hover)",
-                      },
-                    }}
+                    className="mt-6 w-full py-3 bg-[#111827] hover:bg-[#ff0022] text-white text-[11px] font-bold uppercase tracking-[0.15em] transition-all outline-none rounded shadow-sm hover:shadow-md"
                   >
                     {paymentMethod === "cod"
                       ? translations.placeOrder
                       : translations.confirmPayment(
-                          paymentMethod === "bkash" ? "bKash" : "Nagad"
-                        )}
-                  </Button>
+                        paymentMethod === "bkash" ? "bKash" : "Nagad"
+                      )}
+                  </button>
                 </form>
               </div>
             </Stepper>
@@ -556,9 +545,9 @@ const Payment = () => {
             onClick={handleVerifyPayment}
             variant="contained"
             sx={{
-              backgroundColor: "var(--button-bg)",
+              backgroundColor: "#111827",
               "&:hover": {
-                backgroundColor: "var(--button-hover)",
+                backgroundColor: "#ff0022",
               },
             }}
             disabled={isProcessing}
@@ -571,8 +560,8 @@ const Payment = () => {
             {isProcessing
               ? translations.processing
               : paymentMethod === "cod"
-              ? translations.confirmCOD
-              : translations.confirmPayment("")}
+                ? translations.confirmCOD
+                : translations.confirmPayment("")}
           </Button>
         </DialogActions>
       </Dialog>

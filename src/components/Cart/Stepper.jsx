@@ -9,10 +9,10 @@ const Stepper = ({ activeStep, children }) => {
   const { shippingInfo, cartItems } = useSelector((state) => state.cart);
 
   // Handle null/undefined values for guest users
-  const address = shippingInfo 
+  const address = shippingInfo
     ? `${shippingInfo.address}, ${shippingInfo.city}, ${shippingInfo.state} - ${shippingInfo.pincode}`
     : "Address not provided";
-  
+
   const userName = user?.name || "Guest User";
   const userEmail = user?.email || "guest@example.com";
 
@@ -91,12 +91,12 @@ const Stepper = ({ activeStep, children }) => {
         return (
           <>
             {activeStep === index ? (
-              <div className="flex flex-col shadow rounded-sm">
-                <div className="flex items-center rounded-t-sm bg-[#FF1837] px-6 py-3 gap-4">
-                  <span className="h-6 w-6 flex items-center justify-center text-xs font-black bg-white rounded-md text-[#FF1837] shadow-sm">
+              <div className="flex flex-col shadow-sm rounded-xl overflow-hidden">
+                <div className="flex items-center rounded-t-xl bg-[#0A0A0A] px-6 py-4 gap-4 border border-b-0 border-[#0A0A0A]">
+                  <span className="h-6 w-6 shrink-0 flex items-center justify-center text-xs font-bold bg-[var(--accent)] rounded-full text-white shadow-sm">
                     {index + 1}
                   </span>
-                  <h2 className="font-black text-white tracking-[0.1em] uppercase text-sm">{getLabel(step)}</h2>
+                  <h2 className="font-bold text-white tracking-[0.1em] uppercase text-sm">{getLabel(step)}</h2>
                 </div>
                 {children}
               </div>
@@ -123,20 +123,20 @@ const Stepper = ({ activeStep, children }) => {
 
 const Step = ({ isDesc, label, desc, index }) => {
   return (
-    <div className="flex bg-white shadow px-4 py-3 pb-4 rounded-sm">
-      <span className="mt-2 ml-2 mr-4 h-6 w-6 flex items-center justify-center text-xs font-black bg-gray-50 rounded-md text-[#FF1837] border border-gray-200">
+    <div className="flex bg-white shadow-sm border border-gray-100 px-5 py-4 rounded-xl items-start transition-all hover:border-gray-200">
+      <span className="mt-0.5 mr-4 shrink-0 h-6 w-6 flex items-center justify-center text-xs font-bold bg-gray-100 rounded-full text-gray-500">
         {index + 1}
       </span>
-      <div className="flex flex-col mt-1 gap-0.5">
-        <h2 className="font-black text-gray-500 flex items-center gap-2 tracking-[0.05em] uppercase text-xs">
+      <div className="flex flex-col gap-1 w-full">
+        <h2 className="font-bold text-gray-400 flex items-center gap-2 tracking-widest uppercase text-xs">
           {label}
           {isDesc && (
-            <span className="text-[#FF1837] mb-1">
-              <CheckIcon sx={{ fontSize: "18px" }} />
+            <span className="text-[var(--accent)] ml-auto">
+              <CheckIcon sx={{ fontSize: "16px" }} />
             </span>
           )}
         </h2>
-        {isDesc && desc}
+        {isDesc && <div className="text-gray-900 text-sm mt-1">{desc}</div>}
       </div>
     </div>
   );

@@ -103,12 +103,12 @@ const GuestCheckout = () => {
     placeOrder: language === "english" ? "PLACE ORDER" : "অর্ডার করুন",
     orderSuccess: language === "english" ? "Order placed successfully!" : "অর্ডার সফলভাবে দেওয়া হয়েছে!",
     paymentFailed: language === "english" ? "Payment failed!" : "পেমেন্ট ব্যর্থ হয়েছে!",
-    missingInfo: (method) => language === "english" 
-      ? `Please provide ${method} number and transaction ID` 
+    missingInfo: (method) => language === "english"
+      ? `Please provide ${method} number and transaction ID`
       : `${method} নম্বর এবং লেনদেন আইডি প্রদান করুন`,
     confirmOrder: language === "english" ? "Confirm Order" : "অর্ডার নিশ্চিত করুন",
-    confirmMessage: language === "english" 
-      ? "Are you sure you want to place this order?" 
+    confirmMessage: language === "english"
+      ? "Are you sure you want to place this order?"
       : "আপনি কি এই অর্ডারটি দিতে নিশ্চিত?",
     cancel: language === "english" ? "Cancel" : "বাতিল করুন",
     confirm: language === "english" ? "Confirm" : "নিশ্চিত করুন",
@@ -187,20 +187,20 @@ const GuestCheckout = () => {
           paymentMethod === "bkash"
             ? bKashTrxId
             : paymentMethod === "nagad"
-            ? nagadTrxId
-            : uuidv4(),
+              ? nagadTrxId
+              : uuidv4(),
         amount: grandTotal,
         phoneNumber:
           paymentMethod === "bkash"
             ? bKashNumber
             : paymentMethod === "nagad"
-            ? nagadNumber
-            : guestShippingInfo.phoneNo || guestInfo.phone,
+              ? nagadNumber
+              : guestShippingInfo.phoneNo || guestInfo.phone,
         timestamp: new Date().toISOString(),
       };
 
       const orderData = {
-        shippingInfo: { 
+        shippingInfo: {
           ...guestShippingInfo,
           pincode: guestShippingInfo.pincode || "0000",
         },
@@ -283,263 +283,344 @@ const GuestCheckout = () => {
   return (
     <>
       <MetaData title="Guest Checkout" />
-      <main className="w-full mt-20 md:mt-24 mb-16">
+      <main className="w-full mt-36 md:mt-32 mb-16">
         <div className="max-w-6xl w-full px-4 sm:px-6 lg:px-8 mx-auto">
-          <Typography variant="h4" component="h1" gutterBottom className="font-bold text-[var(--primary-blue-dark)]">
-            {translations.title}
-          </Typography>
-          <Typography variant="body1" className="mb-6 text-gray-500">
-            {translations.subtitle}
-          </Typography>
+          <div className="flex flex-col items-center text-center w-full ">
+            <h1 className="text-3xl md:text-4xl font-display font-medium text-gray-900 mb-3 uppercase tracking-[0.1em]">
+              {translations.title}
+            </h1>
+            <p className="text-gray-500 max-w-md text-sm mx-auto">
+              {translations.subtitle}
+            </p>
+            <div className="w-10 h-[2px] bg-[var(--accent)] mt-5"></div>
+          </div>
 
-          <div className="flex flex-col lg:flex-row gap-8 w-full">
+          <div className="flex flex-col lg:flex-row gap-6 w-full">
             <div className="flex-1">
-                <form onSubmit={submitHandler} className="space-y-8">
-                  {/* Guest Information */}
-                  <Box mb={4}>
-                    <Typography variant="h6" gutterBottom className="font-semibold text-gray-800 border-b pb-2 mb-4">
-                      {translations.guestInfo}
-                    </Typography>
-                    <Grid container spacing={3}>
-                      <Grid item xs={12}>
-                        <TextField
-                          fullWidth
-                          label={translations.name}
-                          value={guestInfo.name}
-                          onChange={(e) => handleGuestInfoChange('name', e.target.value)}
-                          required
-                          variant="outlined"
-                        />
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <TextField
-                          fullWidth
-                          label={translations.email}
+              <form onSubmit={submitHandler} className="flex flex-col gap-6 w-full">
+                {/* Guest Information */}
+                <div className="bg-white border border-gray-200 p-5 pt-4">
+                  <h2 className="text-xs font-bold tracking-widest uppercase text-gray-900 mb-5">
+                    {translations.guestInfo}
+                  </h2>
+                  <div className="flex flex-col gap-4">
+                    <div className="space-y-1">
+                      <label className="text-[10px] font-bold tracking-widest text-gray-600 uppercase">
+                        {translations.name}
+                      </label>
+                      <input
+                        type="text"
+                        value={guestInfo.name}
+                        onChange={(e) => handleGuestInfoChange('name', e.target.value)}
+                        required
+                        className="w-full px-3 py-2 bg-gray-50 border border-gray-100 text-gray-900 focus:bg-white focus:outline-none focus:border-[var(--accent)] transition-all text-xs"
+                      />
+                    </div>
+                    <div className="flex flex-col sm:flex-row gap-4">
+                      <div className="space-y-1 flex-1">
+                        <label className="text-[10px] font-bold tracking-widest text-gray-600 uppercase">
+                          {translations.email}
+                        </label>
+                        <input
                           type="email"
                           value={guestInfo.email}
                           onChange={(e) => handleGuestInfoChange('email', e.target.value)}
                           required
-                          variant="outlined"
+                          className="w-full px-3 py-2 bg-gray-50 border border-gray-100 text-gray-900 focus:bg-white focus:outline-none focus:border-[var(--accent)] transition-all text-xs"
                         />
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <TextField
-                          fullWidth
-                          label={translations.phone}
+                      </div>
+                      <div className="space-y-1 flex-1">
+                        <label className="text-[10px] font-bold tracking-widest text-gray-600 uppercase">
+                          {translations.phone}
+                        </label>
+                        <input
+                          type="tel"
                           value={guestInfo.phone}
                           onChange={(e) => handleGuestInfoChange('phone', e.target.value)}
                           required
-                          variant="outlined"
+                          className="w-full px-3 py-2 bg-gray-50 border border-gray-100 text-gray-900 focus:bg-white focus:outline-none focus:border-[var(--accent)] transition-all text-xs"
                         />
-                      </Grid>
-                    </Grid>
-                  </Box>
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
-                  {/* Shipping Information */}
-                  <Box mb={4}>
-                    <Typography variant="h6" gutterBottom className="font-semibold text-gray-800 border-b pb-2 mb-4">
-                      {language === "english" ? "Shipping Information" : "শিপিং তথ্য"}
-                    </Typography>
-                    <Grid container spacing={3}>
-                      <Grid item xs={12}>
-                        <TextField
-                          fullWidth
-                          label={language === "english" ? "Address" : "ঠিকানা"}
-                          value={guestShippingInfo.address}
-                          onChange={(e) => handleShippingInfoChange('address', e.target.value)}
-                          required
-                          variant="outlined"
-                          multiline
-                          rows={2}
-                        />
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <TextField
-                          fullWidth
-                          label={language === "english" ? "City" : "শহর"}
+                {/* Shipping Information */}
+                <div className="bg-white border border-gray-200 p-5 pt-4">
+                  <h2 className="text-xs font-bold tracking-widest uppercase text-gray-900 mb-5">
+                    {language === "english" ? "Shipping Information" : "শিপিং তথ্য"}
+                  </h2>
+                  <div className="flex flex-col gap-4">
+                    <div className="space-y-1">
+                      <label className="text-[10px] font-bold tracking-widest text-gray-600 uppercase">
+                        {language === "english" ? "Address" : "ঠিকানা"}
+                      </label>
+                      <input
+                        type="text"
+                        value={guestShippingInfo.address}
+                        onChange={(e) => handleShippingInfoChange('address', e.target.value)}
+                        required
+                        className="w-full px-3 py-2 bg-gray-50 border border-gray-100 text-gray-900 focus:bg-white focus:outline-none focus:border-[var(--accent)] transition-all text-xs"
+                      />
+                    </div>
+
+                    <div className="flex flex-col sm:flex-row gap-4">
+                      <div className="space-y-1 flex-1">
+                        <label className="text-[10px] font-bold tracking-widest text-gray-600 uppercase">
+                          {language === "english" ? "City" : "শহর"}
+                        </label>
+                        <input
+                          type="text"
                           value={guestShippingInfo.city}
                           onChange={(e) => handleShippingInfoChange('city', e.target.value)}
                           required
-                          variant="outlined"
+                          className="w-full px-3 py-2 bg-gray-50 border border-gray-100 text-gray-900 focus:bg-white focus:outline-none focus:border-[var(--accent)] transition-all text-xs"
                         />
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <FormControl fullWidth required variant="outlined">
-                          <InputLabel>{language === "english" ? "District" : "জেলা"}</InputLabel>
-                          <Select
-                          value={guestShippingInfo.state}
-                          onChange={(e) => handleShippingInfoChange('state', e.target.value)}
-                            label={language === "english" ? "District" : "জেলা"}
+                      </div>
+                      <div className="space-y-1 flex-1">
+                        <label className="text-[10px] font-bold tracking-widest text-gray-600 uppercase">
+                          {language === "english" ? "District" : "জেলা"}
+                        </label>
+                        <div className="relative">
+                          <select
+                            value={guestShippingInfo.state}
+                            onChange={(e) => handleShippingInfoChange('state', e.target.value)}
+                            required
+                            className="w-full px-3 py-2 bg-gray-50 border border-gray-100 text-gray-900 appearance-none focus:bg-white focus:outline-none focus:border-[var(--accent)] transition-all text-xs pr-8"
                           >
+                            <option value="" disabled>Select District</option>
                             {districts.map((district) => (
-                              <MenuItem key={district} value={district}>
-                                {district}
-                              </MenuItem>
+                              <option key={district} value={district}>{district}</option>
                             ))}
-                          </Select>
-                        </FormControl>
-                      </Grid>
-                      {/* <Grid item xs={12} sm={6}>
-                        <TextField
-                          fullWidth
-                          label={language === "english" ? "Pincode (Optional)" : "পিনকোড (ঐচ্ছিক)"}
-                          value={guestShippingInfo.pincode}
-                          onChange={(e) => handleShippingInfoChange('pincode', e.target.value)}
-                          variant="outlined"
-                        />
-                      </Grid> */}
-                      <Grid item xs={12} sm={6}>
-                        <TextField
-                          fullWidth
-                          label={language === "english" ? "Phone Number" : "ফোন নম্বর"}
-                          value={guestShippingInfo.phoneNo}
-                          onChange={(e) => handleShippingInfoChange('phoneNo', e.target.value)}
-                          required
-                          variant="outlined"
-                        />
-                      </Grid>
-                      <Grid item xs={12}>
-                        <FormControl component="fieldset">
-                          <Typography variant="subtitle2" gutterBottom>
-                            {language === "english" ? "Delivery Area" : "ডেলিভারি এলাকা"}
-                          </Typography>
-                          <RadioGroup
-                            value={guestShippingInfo.deliveryArea}
-                            onChange={(e) => handleShippingInfoChange('deliveryArea', e.target.value)}
-                            row
-                          >
-                            <FormControlLabel
-                              value="inside"
-                              control={<Radio />}
-                              label={language === "english" ? "Inside Dhaka (৳70)" : "ঢাকার ভিতরে (৳৭০)"}
-                            />
-                            <FormControlLabel
-                              value="outside"
-                              control={<Radio />}
-                              label={language === "english" ? "Outside Dhaka (৳130)" : "ঢাকার বাইরে (৳১৩০)"}
-                            />
-                          </RadioGroup>
-                        </FormControl>
-                      </Grid>
-                    </Grid>
-                  </Box>
-
-                  {/* Items In Your Order */}
-                  <Box mb={4}>
-                    <Typography variant="h6" gutterBottom className="font-semibold text-gray-800 border-b pb-2 mb-4">
-                      {language === "english" ? "Items In Your Order" : "আপনার অর্ডারের আইটেম"}
-                    </Typography>
-                    <div className="bg-gray-50 rounded border divide-y">
-                      {cartItems.map((item, idx) => (
-                        <div key={idx} className="flex items-center gap-3 p-3">
-                          <img src={item.image} alt={item.name} className="w-14 h-14 object-cover rounded" />
-                          <div className="flex-1 min-w-0">
-                            <p className="font-medium truncate text-[var(--primary-blue-dark)]">{item.name}</p>
-                            <p className="text-sm text-gray-600">Qty: {item.quantity} × ৳{item.price}</p>
+                          </select>
+                          <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none text-gray-400">
+                            <svg className="w-3 h-3 fill-current" viewBox="0 0 20 20">
+                              <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" fillRule="evenodd"></path>
+                            </svg>
                           </div>
-                          <div className="font-semibold">৳{(item.price * item.quantity).toLocaleString()}</div>
                         </div>
-                      ))}
+                      </div>
                     </div>
-                  </Box>
 
-                  {/* Payment Method */}
-                  <Box mb={4}>
-                    <Typography variant="h6" gutterBottom className="font-semibold text-gray-800 border-b pb-2 mb-4">
-                      {translations.paymentMethod}
-                    </Typography>
-                    <FormControl component="fieldset">
-                      <RadioGroup
-                        value={paymentMethod}
-                        onChange={handlePaymentMethodChange}
+                    <div className="space-y-1 w-full sm:w-[calc(50%-8px)]">
+                      <label className="text-[10px] font-bold tracking-widest text-gray-600 uppercase">
+                        {language === "english" ? "Phone Number" : "ফোন নম্বর"}
+                      </label>
+                      <input
+                        type="tel"
+                        value={guestShippingInfo.phoneNo}
+                        onChange={(e) => handleShippingInfoChange('phoneNo', e.target.value)}
+                        required
+                        className="w-full px-3 py-2 bg-gray-50 border border-gray-100 text-gray-900 focus:bg-white focus:outline-none focus:border-[var(--accent)] transition-all text-xs"
+                      />
+                    </div>
+
+                    <div className="space-y-1 mt-1">
+                      <label className="text-[10px] font-bold tracking-widest text-gray-600 uppercase">
+                        {language === "english" ? "Delivery Area" : "ডেলিভারি এলাকা"}
+                      </label>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <label
+                          className={`flex items-center p-3 border cursor-pointer transition-all ${guestShippingInfo.deliveryArea === "inside"
+                            ? "border-gray-900 ring-1 ring-gray-900 bg-gray-50/30"
+                            : "border-gray-200 hover:border-gray-300 bg-white"
+                            }`}
+                        >
+                          <div className={`flex items-center justify-center w-4 h-4 rounded-full border mr-2 shrink-0 bg-white ${guestShippingInfo.deliveryArea === "inside" ? "border-gray-900" : "border-gray-300"}`}>
+                            {guestShippingInfo.deliveryArea === "inside" && <div className="w-2 h-2 rounded-full bg-gray-900 block" style={{ backgroundColor: '#111827' }}></div>}
+                          </div>
+                          <input
+                            type="radio"
+                            name="deliveryArea"
+                            value="inside"
+                            checked={guestShippingInfo.deliveryArea === "inside"}
+                            onChange={(e) => handleShippingInfoChange('deliveryArea', e.target.value)}
+                            className="sr-only"
+                          />
+                          <div className="flex flex-col">
+                            <span className="font-bold text-xs text-gray-900">
+                              {language === "english" ? "Inside Dhaka" : "ঢাকার ভিতরে"}
+                            </span>
+                            <span className="text-[10px] text-gray-500">৳70</span>
+                          </div>
+                        </label>
+
+                        <label
+                          className={`flex items-center p-3 border cursor-pointer transition-all ${guestShippingInfo.deliveryArea === "outside"
+                            ? "border-gray-900 ring-1 ring-gray-900 bg-gray-50/30"
+                            : "border-gray-200 hover:border-gray-300 bg-white"
+                            }`}
+                        >
+                          <div className={`flex items-center justify-center w-4 h-4 rounded-full border mr-2 shrink-0 bg-white ${guestShippingInfo.deliveryArea === "outside" ? "border-gray-900" : "border-gray-300"}`}>
+                            {guestShippingInfo.deliveryArea === "outside" && <div className="w-2 h-2 rounded-full bg-gray-900 block" style={{ backgroundColor: '#111827' }}></div>}
+                          </div>
+                          <input
+                            type="radio"
+                            name="deliveryArea"
+                            value="outside"
+                            checked={guestShippingInfo.deliveryArea === "outside"}
+                            onChange={(e) => handleShippingInfoChange('deliveryArea', e.target.value)}
+                            className="sr-only"
+                          />
+                          <div className="flex flex-col">
+                            <span className="font-bold text-xs text-gray-900">
+                              {language === "english" ? "Outside Dhaka" : "ঢাকার বাইরে"}
+                            </span>
+                            <span className="text-[10px] text-gray-500">৳130</span>
+                          </div>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Payment Method */}
+                <div className="bg-white border border-gray-200 p-5 pt-4">
+                  <h2 className="text-xs font-bold tracking-widest uppercase text-gray-900 mb-5">
+                    {translations.paymentMethod}
+                  </h2>
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    {[
+                      { id: "cod", label: translations.cod, icon: "/money.png" },
+                      { id: "bkash", label: translations.bkash, icon: "/bkash.png" },
+                      { id: "nagad", label: translations.nagad, icon: "/Nagad.png" }
+                    ].map((method) => (
+                      <label
+                        key={method.id}
+                        className={`flex-1 flex items-center p-3 border cursor-pointer transition-all ${paymentMethod === method.id
+                          ? "border-gray-900 ring-1 ring-gray-900 bg-gray-50/30"
+                          : "border-gray-200 hover:border-gray-300 bg-white"
+                          }`}
                       >
-                        <FormControlLabel
-                          value="cod"
-                          control={<Radio />}
-                          label={translations.cod}
+                        <div className={`flex items-center justify-center w-4 h-4 rounded-full border mr-2 shrink-0 bg-white ${paymentMethod === method.id ? "border-gray-900" : "border-gray-300"}`}>
+                          {paymentMethod === method.id && <div className="w-2 h-2 rounded-full bg-gray-900 block" style={{ backgroundColor: '#111827' }}></div>}
+                        </div>
+                        <input
+                          type="radio"
+                          name="paymentMethod"
+                          value={method.id}
+                          checked={paymentMethod === method.id}
+                          onChange={handlePaymentMethodChange}
+                          className="sr-only"
                         />
-                        <FormControlLabel
-                          value="bkash"
-                          control={<Radio />}
-                          label={translations.bkash}
-                        />
-                        <FormControlLabel
-                          value="nagad"
-                          control={<Radio />}
-                          label={translations.nagad}
-                        />
-                      </RadioGroup>
-                    </FormControl>
+                        <div className="flex items-center gap-2">
+                          <img src={method.icon} alt={method.label} className="h-5 w-5 object-contain" />
+                          <span className="font-bold text-xs whitespace-nowrap text-gray-900">
+                            {method.label}
+                          </span>
+                        </div>
+                      </label>
+                    ))}
+                  </div>
 
-                    {/* Payment Details */}
-                    {paymentMethod === "bkash" && (
-                      <Box mt={2}>
-                        <Grid container spacing={2}>
-                          <Grid item xs={12} sm={6}>
-                            <TextField
-                              fullWidth
-                              label={translations.bkashNumber}
+                  {paymentMethod === "bkash" && (
+                    <div className="bg-gray-50 p-4 border border-gray-200 mt-4 animate-fade-in-up">
+                      <div className="flex flex-col gap-4">
+                        <p className="text-xs font-semibold text-gray-800">
+                          Send <span className="text-sm font-bold mx-1 text-[#E2136E]">৳{grandTotal.toLocaleString()}</span> to bKash Personal Number: <span className="font-bold tracking-wider ml-1 text-black">017XX-XXXXXX</span>
+                        </p>
+                        <div className="flex flex-col sm:flex-row gap-4">
+                          <div className="space-y-1 flex-1">
+                            <label className="text-[10px] font-bold tracking-widest text-[#E2136E] uppercase">
+                              {translations.bkashNumber}
+                            </label>
+                            <input
+                              type="tel"
                               value={bKashNumber}
                               onChange={(e) => setBKashNumber(e.target.value)}
                               required
-                              variant="outlined"
+                              className="w-full px-3 py-2 bg-white border border-gray-200 text-gray-900 focus:outline-none focus:border-[#E2136E] transition-all text-xs"
                             />
-                          </Grid>
-                          <Grid item xs={12} sm={6}>
-                            <TextField
-                              fullWidth
-                              label={translations.bkashTrxId}
+                          </div>
+                          <div className="space-y-1 flex-1">
+                            <label className="text-[10px] font-bold tracking-widest text-[#E2136E] uppercase">
+                              {translations.bkashTrxId}
+                            </label>
+                            <input
+                              type="text"
                               value={bKashTrxId}
                               onChange={(e) => setBKashTrxId(e.target.value)}
                               required
-                              variant="outlined"
+                              className="w-full px-3 py-2 bg-white border border-gray-200 text-gray-900 focus:outline-none focus:border-[#E2136E] transition-all text-xs uppercase"
                             />
-                          </Grid>
-                        </Grid>
-                      </Box>
-                    )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
 
-                    {paymentMethod === "nagad" && (
-                      <Box mt={2}>
-                        <Grid container spacing={2}>
-                          <Grid item xs={12} sm={6}>
-                            <TextField
-                              fullWidth
-                              label={translations.nagadNumber}
+                  {paymentMethod === "nagad" && (
+                    <div className="bg-gray-50 p-4 border border-gray-200 mt-4 animate-fade-in-up">
+                      <div className="flex flex-col gap-4">
+                        <p className="text-xs font-semibold text-gray-800">
+                          Send <span className="text-sm font-bold mx-1 text-[#ED1C24]">৳{grandTotal.toLocaleString()}</span> to Nagad Personal Number: <span className="font-bold tracking-wider ml-1 text-black">017XX-XXXXXX</span>
+                        </p>
+                        <div className="flex flex-col sm:flex-row gap-4">
+                          <div className="space-y-1 flex-1">
+                            <label className="text-[10px] font-bold tracking-widest text-[#ED1C24] uppercase">
+                              {translations.nagadNumber}
+                            </label>
+                            <input
+                              type="tel"
                               value={nagadNumber}
                               onChange={(e) => setNagadNumber(e.target.value)}
                               required
-                              variant="outlined"
+                              className="w-full px-3 py-2 bg-white border border-gray-200 text-gray-900 focus:outline-none focus:border-[#ED1C24] transition-all text-xs"
                             />
-                          </Grid>
-                          <Grid item xs={12} sm={6}>
-                            <TextField
-                              fullWidth
-                              label={translations.nagadTrxId}
+                          </div>
+                          <div className="space-y-1 flex-1">
+                            <label className="text-[10px] font-bold tracking-widest text-[#ED1C24] uppercase">
+                              {translations.nagadTrxId}
+                            </label>
+                            <input
+                              type="text"
                               value={nagadTrxId}
                               onChange={(e) => setNagadTrxId(e.target.value)}
                               required
-                              variant="outlined"
+                              className="w-full px-3 py-2 bg-white border border-gray-200 text-gray-900 focus:outline-none focus:border-[#ED1C24] transition-all text-xs uppercase"
                             />
-                          </Grid>
-                        </Grid>
-                      </Box>
-                    )}
-                  </Box>
-
-                </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </form>
             </div>
 
-            <div className="w-full lg:w-[400px]">
-              <div className="sticky top-24">
-                <PriceSidebar 
-                  cartItems={cartItems} 
+            <div className="w-full lg:w-[380px]">
+              <div className="sticky top-24 space-y-6">
+                <PriceSidebar
+                  cartItems={cartItems}
                   guestShippingInfo={guestShippingInfo}
                   onSubmit={submitHandler}
                   isProcessing={isProcessing}
                   translations={translations}
                   btnText={translations.placeOrder}
                 />
+
+                {/* Items In Your Order (Moved to Right Sidebar) */}
+                <div className="bg-white border border-gray-200 p-5 pt-4">
+                  <h2 className="text-xs font-bold tracking-widest uppercase text-gray-900 mb-5">
+                    {language === "english" ? "Items In Your Order" : "আপনার অর্ডারের আইটেম"}
+                  </h2>
+                  <div className="flex flex-col gap-4">
+                    {cartItems.map((item, idx) => (
+                      <div key={idx} className="flex items-center gap-4 border-b border-gray-100 pb-4 last:border-0 last:pb-0">
+                        <div className="w-14 h-14 shrink-0 bg-white border border-gray-100 rounded overflow-hidden flex items-center justify-center p-1">
+                          <img src={item.image} alt={item.name} className="w-full h-full object-contain" />
+                        </div>
+                        <div className="flex-1 min-w-0 flex flex-col justify-center">
+                          <p className="font-bold text-gray-900 truncate text-[11px] leading-tight mb-1">{item.name}</p>
+                          <p className="text-[10px] font-medium text-gray-400">Qty: {item.quantity} <span className="mx-1">•</span> ৳{item.price}</p>
+                        </div>
+                        <div className="font-bold text-gray-900 text-xs tracking-wide">
+                          ৳{(item.price * item.quantity).toLocaleString()}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           </div>

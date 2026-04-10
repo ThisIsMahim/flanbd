@@ -1,8 +1,5 @@
-import React from "react";
-import { motion } from "framer-motion";
-import MenuBookIcon from "@mui/icons-material/MenuBook";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import "./BlogCard.css";
+import React from "react";
 
 const BlogCard = ({
   blog,
@@ -10,44 +7,71 @@ const BlogCard = ({
   showQuickView = false,
   onQuickView,
 }) => {
-  // Remove HTML tags from description for clean preview
   const getPlainText = (html) => {
     const div = document.createElement("div");
     div.innerHTML = html || "";
     return div.textContent || div.innerText || "";
   };
 
+  const formatDate = (dateString) => {
+    if (!dateString) return "";
+    return new Date(dateString).toLocaleDateString("en-GB", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    });
+  };
+
   return (
-    <motion.div
-      initial={{ opacity: 1, y: 0 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3 }}
-      className="modern-blog-card"
+    <div
+      className="group relative overflow-hidden rounded-xl cursor-pointer aspect-[4/5] bg-[#0f0f0f]"
+      onClick={() => onReadMore(blog._id)}
     >
-      <div className="mb-card-image" onClick={() => onReadMore(blog._id)}>
-        <img src={blog.imageUrl} alt={blog.title} />
+      {/* Full-bleed cover image */}
+      {blog.imageUrl && (
+        <img
+          src={blog.imageUrl}
+          alt={blog.title}
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+        />
+      )}
+
+      {/* Gradient overlay — strong dark at bottom, fades to transparent */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent" />
+
+      {/* Top tag */}
+      <div className="absolute top-3 left-3 z-10">
+        <span className="px-2.5 py-1 bg-[#ff1837] text-white text-[9px] font-black uppercase tracking-[0.2em] rounded-md">
+          Story
+        </span>
       </div>
 
-      <div className="mb-card-content">
-        <h3 className="mb-card-title">{blog.title}</h3>
-        <p className="mb-card-desc">
-          {getPlainText(blog.subtitle || blog.description).substring(0, 100)}...
+      {/* Bottom content */}
+      <div className="absolute bottom-0 left-0 right-0 p-4 z-10">
+        {/* Date */}
+        {blog.createdAt && (
+          <span className="text-white/50 text-[9px] font-bold uppercase tracking-[0.2em] block mb-2">
+            {formatDate(blog.createdAt)}
+          </span>
+        )}
+
+        {/* Title */}
+        <h3 className="text-white font-extrabold text-[15px] leading-snug uppercase tracking-tight line-clamp-2 mb-2 group-hover:text-white/90 transition-colors">
+          {blog.title}
+        </h3>
+
+        {/* Excerpt */}
+        <p className="text-white/60 text-[11px] leading-relaxed line-clamp-2 mb-3 font-medium">
+          {getPlainText(blog.subtitle || blog.description).substring(0, 90)}...
         </p>
 
-        <div className="mb-card-footer">
-          <button className="mb-btn-more group" onClick={() => onReadMore(blog._id)}>
-            Read Story
-            <ArrowForwardIcon sx={{ fontSize: 16 }} className="group-hover:translate-x-1 transition-transform" />
-          </button>
-
-          {showQuickView && (
-            <button className="mb-btn-quick" onClick={() => onQuickView(blog)}>
-              <MenuBookIcon sx={{ fontSize: 20 }} />
-            </button>
-          )}
-        </div>
+        {/* CTA */}
+        <span className="inline-flex items-center gap-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-[#ff1837] group-hover:gap-3 transition-all duration-300">
+          Read Story
+          <ArrowForwardIcon sx={{ fontSize: 13 }} />
+        </span>
       </div>
-    </motion.div>
+    </div>
   );
 };
 

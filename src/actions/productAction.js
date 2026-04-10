@@ -41,7 +41,6 @@ export const getProducts =
     price = [0, 200000],
     ratings = 0,
     currentPage = 1,
-    rentOnly = false,
     brand
   ) =>
   async (dispatch) => {
@@ -60,9 +59,6 @@ export const getProducts =
 
       if (validCategory) {
         url += `&category=${validCategory}`;
-      }
-      if (rentOnly) {
-        url += `&rentOnly=true`;
       }
       if (validBrand) {
         url += `&brand=${validBrand}`;

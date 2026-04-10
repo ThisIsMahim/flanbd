@@ -23,7 +23,7 @@ const OrderConfirm = () => {
         }
       />
 
-      <main className="w-full mt-20">
+      <main className="w-full mt-32">
         <div className="flex flex-col sm:flex-row gap-3.5 w-full sm:w-11/12 mt-0 sm:mt-4 m-auto sm:mb-7">
           <div className="flex-1">
             <Stepper activeStep={2}>
@@ -41,7 +41,7 @@ const OrderConfirm = () => {
                 </p>
                 <button
                   onClick={() => navigate("/process/payment")}
-                  className="bg-[var(--button-bg)] hover:bg-[var(--button-hover)] px-6 py-2 text-white font-medium rounded-sm shadow hover:shadow-lg uppercase transition-colors duration-300"
+                  className="bg-red-500 hover:bg-red-600 px-6 py-2 text-white font-medium rounded-sm shadow hover:shadow-lg uppercase transition-colors duration-300"
                 >
                   {language === "english" ? "CONTINUE" : "চালিয়ে যান"}
                 </button>

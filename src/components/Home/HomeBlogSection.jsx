@@ -68,62 +68,49 @@ const HomeBlogSection = () => {
   return isLoading ? (
     <Loader title={t.title + " Loading..."} />
   ) : (
-    <section className=" md:py-12 2xl:mx-60">
-      <div className="home-text-center mb-10 flex flex-col items-center justify-center">
-        <div className="flex flex-col items-center justify-center gap-2 mb-2">
-          <div className="flex items-center justify-center gap-2">
-            {/* <MenuBookIcon
-              style={{ fontSize: 36, color: "var(--primary-blue-dark)" }}
-            />
-            <EditIcon
-              style={{ fontSize: 30, color: "var(--primary-blue-light)" }}
-            /> */}
+    <section className="bg-white py-10 md:py-14 border-t border-gray-100">
+      <div className="max-w-7xl mx-auto px-4 md:px-8">
+        {/* Section Header */}
+        <div className="text-center mb-10 md:mb-16">
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <span className="w-8 h-[2px] bg-[#ff1837]"></span>
+            <span className="text-[10px] text-[#ff1837] font-black uppercase tracking-[0.25em]">Stories</span>
+            <span className="w-8 h-[2px] bg-[#ff1837]"></span>
           </div>
-          {/* <div className="title-decoration visible" /> */}
+          <h2
+            ref={titleRef}
+            className="text-4xl sm:text-5xl md:text-6xl font-black text-[#0f0f0f] tracking-tighter uppercase leading-[1.1]"
+          >
+            Flan <span className="text-gray-400">Blog</span>
+          </h2>
+          <p
+            ref={subtitleRef}
+            className="text-sm font-medium text-gray-500 max-w-xl mx-auto mt-4"
+          >
+            {t.subtitle}
+          </p>
         </div>
-        <h2
-          ref={titleRef}
-          className="text-4xl font-bold mb-2 home-blog-title"
-          style={{ color: 'var(--primary-blue-dark)' }}
-        >
-          {t.title}
-        </h2>
-        <p
-          ref={subtitleRef}
-          className="text-lg text-primary-blue-light max-w-xl mx-auto home-blog-subtitle"
-        >
-          {t.subtitle}
-        </p>
-      </div>
 
-      {!isLoading && blogs.length > 0 && (
-        <div className="home-blog-grid">
-          {blogs.map((blog) => (
-            <BlogCard
-              key={blog._id}
-              blog={blog}
-              t={t}
-              onReadMore={openBlogInNewPage}
-              showQuickView={false}
-            />
-          ))}
-        </div>
-      )}
+        {!isLoading && blogs.length > 0 && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+            {blogs.map((blog) => (
+              <BlogCard
+                key={blog._id}
+                blog={blog}
+                t={t}
+                onReadMore={openBlogInNewPage}
+                showQuickView={false}
+              />
+            ))}
+          </div>
+        )}
 
-      <div className="flex justify-center mt-10">
-        <div className="relative group">
+        <div className="flex justify-center mt-10">
           <button
-            className="relative group overflow-hidden px-10 py-3 text-lg flex items-center gap-3 font-semibold notebook-viewall-btn"
-            style={{ minWidth: 220 }}
+            className="group px-8 py-3.5 bg-[#0f0f0f] hover:bg-[#ff1837] text-white text-[10.5px] font-extrabold uppercase tracking-[0.2em] rounded-lg transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_8px_20px_-8px_rgba(255,24,55,0.5)]"
             onClick={() => navigate("/showblogs")}
           >
-            <span className="relative z-10 flex items-center">
-              <span className="tracking-wide drop-shadow-sm">
-                {t.viewAllBlogs}
-              </span>
-            </span>
-            {/* Animated background shine */}
-            <span className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none notebook-viewall-btn-shine"></span>
+            {t.viewAllBlogs}
           </button>
         </div>
       </div>

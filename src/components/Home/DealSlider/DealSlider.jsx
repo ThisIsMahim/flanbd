@@ -8,8 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { LanguageContext } from "../../../utils/LanguageContext";
 import "../home.css";
 import "./dealslider.css";
-import MenuBookIcon from "@mui/icons-material/MenuBook";
-import EditIcon from "@mui/icons-material/Edit";
+
 import DealProductCard from "./DealProductCard";
 import useScrollReveal from "../hooks/useScrollReveal";
 
@@ -353,13 +352,21 @@ const DealSlider = () => {
   }
 
   return (
-    <section className="deal-slider-section" ref={contentSectionRef}>
-      <div className="home-section-header px-4 sm:px-6 lg:px-8" ref={titleSectionRef}>
-        <span className="section-subtitle">Flash Sale</span>
-        <h2 className="section-title">{t.title}</h2>
+    <section className="bg-white py-10 md:py-14 border-t border-gray-100" ref={contentSectionRef}>
+      {/* Section Header */}
+      <div className="text-center mb-10 md:mb-16" ref={titleSectionRef}>
+        <div className="flex items-center justify-center gap-3 mb-4">
+          <span className="w-8 h-[2px] bg-[#ff1837]"></span>
+          <span className="text-[10px] text-[#ff1837] font-black uppercase tracking-[0.25em]">Flash Sale</span>
+          <span className="w-8 h-[2px] bg-[#ff1837]"></span>
+        </div>
+        <h2 className="text-4xl sm:text-5xl md:text-6xl font-black text-[#0f0f0f] tracking-tighter uppercase leading-[1.1]">
+          Hot <span className="text-gray-400">Deals</span>
+        </h2>
+        <p className="text-sm font-medium text-gray-500 mt-3 max-w-md mx-auto">{t.subtitle}</p>
       </div>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-[1400px]">
+      <div className="max-w-7xl mx-auto px-4 md:px-8">
         <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4 md:gap-6">
           {currentProducts.map((product) => (
             <DealProductCard
@@ -372,34 +379,34 @@ const DealSlider = () => {
         </div>
 
         {totalPages > 1 && (
-          <div className="pagination-container" ref={paginationRef}>
+          <div className="flex items-center justify-center gap-3 mt-10" ref={paginationRef}>
             <button
-              className="pagination-control"
               onClick={goToPrevPage}
               disabled={currentPage === 0}
               aria-label="Previous page"
+              className="w-9 h-9 rounded-lg border border-gray-200 flex items-center justify-center text-gray-500 hover:border-[#ff1837] hover:text-[#ff1837] transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed"
             >
-              <ChevronLeftIcon />
+              <ChevronLeftIcon style={{ fontSize: 18 }} />
             </button>
 
-            <div className="pagination-dots">
+            <div className="flex items-center gap-2">
               {Array.from({ length: totalPages }).map((_, idx) => (
                 <button
                   key={idx}
-                  className={`pagination-dot ${currentPage === idx ? "active" : ""}`}
                   onClick={() => goToPage(idx)}
                   aria-label={`Go to page ${idx + 1}`}
+                  className={`w-2 h-2 rounded-full transition-all duration-300 ${currentPage === idx ? 'bg-[#ff1837] w-5' : 'bg-gray-300 hover:bg-gray-400'}`}
                 />
               ))}
             </div>
 
             <button
-              className="pagination-control"
               onClick={goToNextPage}
               disabled={currentPage === totalPages - 1}
               aria-label="Next page"
+              className="w-9 h-9 rounded-lg border border-gray-200 flex items-center justify-center text-gray-500 hover:border-[#ff1837] hover:text-[#ff1837] transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed"
             >
-              <ChevronRightIcon />
+              <ChevronRightIcon style={{ fontSize: 18 }} />
             </button>
           </div>
         )}

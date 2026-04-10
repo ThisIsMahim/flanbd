@@ -1,28 +1,27 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import HomeIcon from "@mui/icons-material/Home";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
 const Breadcrumb = ({ product, items }) => {
   const location = useLocation();
 
+  const separator = <span className="text-gray-300 mx-2">{">"}</span>;
+
   // If items are provided directly (e.g. from Products.jsx)
   if (items && items.length > 0) {
     return (
-      <nav className="flex items-center gap-2 py-4 text-sm">
-        <Link to="/" className="text-secondary hover:text-accent flex items-center gap-1 transition-colors">
-          <HomeIcon sx={{ fontSize: 16 }} />
-          <span>Home</span>
+      <nav className="flex items-center flex-wrap text-[10px] sm:text-[11px] uppercase tracking-widest font-bold mb-6">
+        <Link to="/" className="text-gray-400 hover:text-black transition-colors">
+          Home
         </Link>
         {items.map((item, i) => (
           <React.Fragment key={i}>
-            <ChevronRightIcon sx={{ fontSize: 14, color: 'var(--text-muted)' }} />
+            {separator}
             {item.link ? (
-              <Link to={item.link} className="text-secondary hover:text-accent transition-colors">
+              <Link to={item.link} className="text-gray-400 hover:text-black transition-colors">
                 {item.text}
               </Link>
             ) : (
-              <span className="text-primary font-semibold truncate max-w-[200px]">
+              <span className="text-black truncate max-w-[200px]">
                 {item.text}
               </span>
             )}
@@ -37,31 +36,30 @@ const Breadcrumb = ({ product, items }) => {
     const mainCategory = product.categories?.[0] || { name: product.category };
 
     return (
-      <nav className="flex items-center gap-2 py-4 text-sm">
-        <Link to="/" className="text-secondary hover:text-accent flex items-center gap-1 transition-colors">
-          <HomeIcon sx={{ fontSize: 16 }} />
-          <span>Home</span>
+      <nav className="flex items-center flex-wrap text-[10px] sm:text-[11px] uppercase tracking-widest font-bold mb-6">
+        <Link to="/" className="text-gray-400 hover:text-black transition-colors">
+          Home
         </Link>
 
-        <ChevronRightIcon sx={{ fontSize: 14, color: 'var(--text-muted)' }} />
-        <Link to="/products" className="text-secondary hover:text-accent transition-colors">
+        {separator}
+        <Link to="/products" className="text-gray-400 hover:text-black transition-colors">
           Shop
         </Link>
 
         {mainCategory?.name && (
           <>
-            <ChevronRightIcon sx={{ fontSize: 14, color: 'var(--text-muted)' }} />
+            {separator}
             <Link
               to={`/products?category=${encodeURIComponent(mainCategory.name)}`}
-              className="text-secondary hover:text-accent transition-colors"
+              className="text-gray-400 hover:text-black transition-colors"
             >
               {mainCategory.name}
             </Link>
           </>
         )}
 
-        <ChevronRightIcon sx={{ fontSize: 14, color: 'var(--text-muted)' }} />
-        <span className="text-primary font-semibold truncate max-w-[200px]">
+        {separator}
+        <span className="text-black truncate max-w-[200px]">
           {product.name}
         </span>
       </nav>
@@ -71,10 +69,9 @@ const Breadcrumb = ({ product, items }) => {
   // Generic fallback based on path
   const pathSegments = location.pathname.split("/").filter(Boolean);
   return (
-    <nav className="flex items-center gap-2 py-4 text-sm">
-      <Link to="/" className="text-secondary hover:text-accent flex items-center gap-1 transition-colors">
-        <HomeIcon sx={{ fontSize: 16 }} />
-        <span>Home</span>
+    <nav className="flex items-center flex-wrap text-[10px] sm:text-[11px] uppercase tracking-widest font-bold mb-6">
+      <Link to="/" className="text-gray-400 hover:text-black transition-colors">
+        Home
       </Link>
       {pathSegments.map((segment, i) => {
         const path = `/${pathSegments.slice(0, i + 1).join("/")}`;
@@ -86,11 +83,11 @@ const Breadcrumb = ({ product, items }) => {
 
         return (
           <React.Fragment key={path}>
-            <ChevronRightIcon sx={{ fontSize: 14, color: 'var(--text-muted)' }} />
+            {separator}
             {isLast ? (
-              <span className="text-primary font-semibold">{name}</span>
+              <span className="text-black">{name}</span>
             ) : (
-              <Link to={path} className="text-secondary hover:text-accent transition-colors">
+              <Link to={path} className="text-gray-400 hover:text-black transition-colors">
                 {name}
               </Link>
             )}

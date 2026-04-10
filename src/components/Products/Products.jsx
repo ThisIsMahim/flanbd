@@ -2,6 +2,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import FilterListIcon from "@mui/icons-material/FilterList";
+import GridViewIcon from "@mui/icons-material/GridView";
 import StarIcon from "@mui/icons-material/Star";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
@@ -15,15 +16,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { addItemsToCart } from "../../actions/cartAction";
 import { clearErrors, getProducts } from "../../actions/productAction";
-import DealSlider from "../Home/DealSlider/DealSlider";
-import HomeContactSection from "../Home/HomeContactSection";
-import ProductCard from "../Home/ProductSlider/components/ProductCard";
-import QuickViewDialog from "../Home/ProductSlider/components/QuickViewDialog";
+import DealSlider from "../home/DealSlider/DealSlider";
+import HomeContactSection from "../home/HomeContactSection";
+import ProductCard from "../home/ProductSlider/components/ProductCard";
+import QuickViewDialog from "../home/ProductSlider/components/QuickViewDialog";
 import Breadcrumb from "../Layouts/Breadcrumb";
 import MetaData from "../Layouts/MetaData";
 import SkeletonProduct from "./SkeletonProduct";
 import "./Products.css";
-import "../Home/SliderStyles.css"; // Card styles
+import "../home/SliderStyles.css"; // Card styles
 
 const PRICE_STEP = 10;
 const FIXED_RESULT_PER_PAGE = 9;
@@ -32,7 +33,9 @@ const Products = () => {
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
-  const params = useParams();
+  const { products, loading, error } = useSelector((state) => state.products);
+  const { cartItems } = useSelector((state) => state.cart);
+  const { keyword, categoryName, subCategoryName } = useParams();
   const location = useLocation();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
@@ -44,13 +47,8 @@ const Products = () => {
   const [brand, setBrand] = useState(
     location.search ? new URLSearchParams(location.search).get("brand") || "" : ""
   );
-  const [ratings, setRatings] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
-
-  const { products, loading, error } = useSelector((state) => state.products);
-  const { cartItems } = useSelector((state) => state.cart);
-  const keyword = params.keyword || "";
 
   const [categoriesData, setCategoriesData] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
@@ -85,7 +83,7 @@ const Products = () => {
   useEffect(() => {
     if (!loading) setHasFetched(true);
     else setHasFetched(false);
-  }, [loading, category, brand, keyword, priceRange, ratings, currentPage]);
+  }, [loading, category, brand, keyword, priceRange, currentPage]);
 
   // Fetch categories
   useEffect(() => {
@@ -129,24 +127,38 @@ const Products = () => {
 
     // Normalized filter
     if (selectedSubCategory) {
+      // Specific sub-category selected: match that sub-category only
       const subCat = categoriesData.find(c => c._id === selectedSubCategory);
       if (subCat) {
-        filtered = filtered.filter(p => p.categories?.some(c => (typeof c === 'string' ? c : c.name) === subCat.name));
+        const subCatName = subCat.name.toLowerCase();
+        filtered = filtered.filter(p => p.categories?.some(c => (typeof c === 'string' ? c : c.name).toLowerCase() === subCatName));
+      }
+    } else if (selectedParentId) {
+      // Parent category selected: match products in ANY sub-category of this parent, or the parent itself
+      const allChildNames = categoriesData
+        .filter(c => c.parent && (c.parent._id === selectedParentId || c.parent === selectedParentId))
+        .map(c => c.name.toLowerCase());
+      const parentCat = categoriesData.find(c => c._id === selectedParentId);
+      if (parentCat) allChildNames.push(parentCat.name.toLowerCase());
+
+      if (allChildNames.length > 0) {
+        filtered = filtered.filter(p => p.categories?.some(c => allChildNames.includes((typeof c === 'string' ? c : c.name).toLowerCase())));
       }
     } else if (selectedCategories.length > 0) {
-      filtered = filtered.filter(p => p.categories?.some(c => selectedCategories.includes(typeof c === 'string' ? c : c.name)));
+      const lowerSelected = selectedCategories.map(c => c.toLowerCase());
+      filtered = filtered.filter(p => p.categories?.some(c => lowerSelected.includes((typeof c === 'string' ? c : c.name).toLowerCase())));
     } else if (category) {
-      filtered = filtered.filter(p => p.categories?.some(c => (typeof c === 'string' ? c : c.name) === category));
+      const lowerCat = category.toLowerCase();
+      filtered = filtered.filter(p => p.categories?.some(c => (typeof c === 'string' ? c : c.name).toLowerCase() === lowerCat));
     }
 
     filtered = filtered.filter(p => p.price >= priceRange[0] && p.price <= priceRange[1]);
-    if (ratings > 0) filtered = filtered.filter(p => p.ratings >= ratings);
     filtered = filtered.filter(p => p.stock > 0);
 
     setFilteredProducts(filtered);
-  }, [products, brand, keyword, selectedSubCategory, selectedCategories, priceRange, ratings, categoriesData, category]);
+  }, [products, brand, keyword, selectedSubCategory, selectedCategories, priceRange, categoriesData, category]);
 
-  useEffect(() => { setCurrentPage(1); }, [brand, category, keyword, selectedSubCategory, selectedCategories, priceRange, ratings]);
+  useEffect(() => { setCurrentPage(1); }, [brand, category, keyword, selectedSubCategory, selectedCategories, priceRange]);
 
   useEffect(() => {
     setIsSliderMounted(true);
@@ -182,22 +194,20 @@ const Products = () => {
   const handlePriceInputBlur = () => {
     let min = Math.max(priceMin, Math.min(localPriceRange[0], priceMax));
     let max = Math.max(priceMin, Math.min(localPriceRange[1], priceMax));
-    
+
     if (min > max) {
       const temp = min;
       min = max;
       max = temp;
     }
-    
+
     setLocalPriceRange([min, max]);
     setPriceRange([min, max]);
   };
 
   const clearFilters = useCallback(() => {
-    setPriceRange([priceMin, priceMax]);
     setCategory("");
     setBrand("");
-    setRatings(0);
     setSelectedParentId(null);
     setSelectedSubCategory(null);
     setSelectedCategories([]);
@@ -209,8 +219,15 @@ const Products = () => {
     const searchParams = new URLSearchParams(location.search);
     const catParam = searchParams.get("category");
     const brandParam = searchParams.get("brand");
-    if (catParam !== category) setCategory(catParam || "");
-    if (brandParam !== brand) setBrand(brandParam || "");
+
+    // Only update category from query param if it exists, 
+    // to avoid clearing path-based category state
+    if (catParam && catParam !== category) {
+      setCategory(catParam);
+    }
+    if (brandParam !== brand) {
+      setBrand(brandParam || "");
+    }
   }, [location.search, category, brand]);
 
   useEffect(() => {
@@ -218,11 +235,11 @@ const Products = () => {
       enqueueSnackbar(error, { variant: "error" });
       dispatch(clearErrors());
     }
-    dispatch(getProducts(keyword, category, priceRange, ratings, currentPage, false, brand));
-  }, [dispatch, keyword, category, priceRange, ratings, currentPage, error, enqueueSnackbar, brand]);
+    dispatch(getProducts(keyword, category, priceRange, 0, currentPage, brand));
+  }, [dispatch, keyword, category, priceRange, currentPage, error, enqueueSnackbar, brand]);
 
-  const addToCartHandler = (id, isRent) => {
-    dispatch(addItemsToCart(id, isRent));
+  const addToCartHandler = (id) => {
+    dispatch(addItemsToCart(id, 1));
     enqueueSnackbar("Product Added To Cart", { variant: "success" });
   };
 
@@ -234,16 +251,42 @@ const Products = () => {
 
   const handleCategoryTreeSelect = (parentId, subId = null, parentName = "", subName = "") => {
     if (subId) {
-      setSelectedParentId(parentId);
-      setSelectedSubCategory(subId);
-      setCategory(subName);
+      navigate(`/product-category/${encodeURIComponent(parentName)}/${encodeURIComponent(subName)}`);
     } else {
-      setSelectedParentId(parentId);
-      setSelectedSubCategory(null);
-      setCategory(parentName);
+      navigate(`/product-category/${encodeURIComponent(parentName)}`);
     }
     setBrand("");
   };
+
+  useEffect(() => {
+    if (categoriesData.length === 0) return;
+
+    if (subCategoryName) {
+      const decodedCat = decodeURIComponent(categoryName).toLowerCase();
+      const decodedSub = decodeURIComponent(subCategoryName).toLowerCase();
+
+      const parentCat = categoriesData.find(c => c.name.toLowerCase() === decodedCat);
+      const subCat = categoriesData.find(c => c.name.toLowerCase() === decodedSub);
+
+      if (parentCat && subCat) {
+        setSelectedParentId(parentCat._id);
+        setSelectedSubCategory(subCat._id);
+        setCategory(subCat.name);
+      }
+    } else if (categoryName) {
+      const decodedCat = decodeURIComponent(categoryName).toLowerCase();
+      const cat = categoriesData.find(c => c.name.toLowerCase() === decodedCat);
+      if (cat) {
+        setSelectedParentId(cat._id);
+        setSelectedSubCategory(null);
+        setCategory(cat.name);
+      }
+    } else if (!keyword && !brand) {
+      setSelectedParentId(null);
+      setSelectedSubCategory(null);
+      setCategory("");
+    }
+  }, [categoryName, subCategoryName, categoriesData]);
 
   const handlePageChange = (e, val) => {
     setCurrentPage(val);
@@ -270,102 +313,74 @@ const Products = () => {
     }
   }, [category, categoriesData]);
 
+  const buildBreadcrumbs = () => {
+    const items = [{ text: "Shop", link: "/products" }];
+
+    if (selectedSubCategory) {
+      const subCat = categoriesData.find(c => c._id === selectedSubCategory);
+      if (subCat) {
+        const pId = typeof subCat.parent === 'object' ? subCat.parent._id : subCat.parent;
+        const parentCat = categoriesData.find(c => c._id === (pId || selectedParentId));
+        if (parentCat) {
+          items.push({
+            text: parentCat.name,
+            link: `/product-category/${encodeURIComponent(parentCat.name)}`
+          });
+        }
+        items.push({ text: subCat.name });
+      }
+    } else if (category && selectedParentId) {
+      items.push({ text: category });
+    } else if (category) {
+      items.push({ text: category });
+    } else {
+      items.push({ text: "All Products" });
+    }
+
+    if (keyword) items.push({ text: `Search: "${keyword}"` });
+    if (brand) items.push({ text: `Brand: ${brand}` });
+
+    return items;
+  };
+
+  const breadcrumbItems = buildBreadcrumbs();
+
   const sidebarContent = (
     <div className="filter-card">
       <div className="filter-header">
-        <h2 className="filter-title">Filters</h2>
-        <button className="filter-clear-btn" onClick={clearFilters}>Clear All</button>
+        <h2 className="filter-title">Filter By</h2>
       </div>
-      <div className="filter-body">
-        {/* Price Range */}
-        <div className="filter-section">
-          <span className="filter-group-title">Price Range</span>
-          <Box sx={{ px: 1 }}>
-            <Slider
-              value={localPriceRange}
-              onChange={priceHandler}
-              onChangeCommitted={handlePriceCommitted}
-              valueLabelDisplay="auto"
-              min={priceMin}
-              max={priceMax}
-              step={PRICE_STEP}
-              size="small"
-              sx={{
-                color: "#FF1837",
-                '& .MuiSlider-thumb': {
-                  backgroundColor: "#fff",
-                  border: "2px solid #FF1837",
-                  width: 14,
-                  height: 14,
-                  '&:hover, &.Mui-focusVisible': {
-                    boxShadow: '0px 0px 0px 8px rgba(255, 24, 55, 0.16)',
-                  },
-                },
-                '& .MuiSlider-track': {
-                  backgroundColor: "#FF1837",
-                  border: 'none',
-                  height: 4,
-                },
-                '& .MuiSlider-rail': {
-                  backgroundColor: "#E2E2E2",
-                  opacity: 1,
-                  height: 4,
-                },
-                '& .MuiSlider-valueLabel': {
-                  backgroundColor: '#333',
-                  fontSize: '10px',
-                  fontWeight: 700,
-                  borderRadius: '4px',
-                },
-              }}
-            />
-          </Box>
-          <div className="price-input-row">
-            <input 
-              type="number" 
-              value={localPriceRange[0]} 
-              onChange={handleMinPriceChange} 
-              onBlur={handlePriceInputBlur}
-              onKeyDown={(e) => e.key === 'Enter' && handlePriceInputBlur()}
-              className="price-field" 
-              placeholder="Min" 
-            />
-            <span style={{ color: "var(--text-muted)", fontSize: "0.8rem" }}>to</span>
-            <input 
-              type="number" 
-              value={localPriceRange[1]} 
-              onChange={handleMaxPriceChange} 
-              onBlur={handlePriceInputBlur}
-              onKeyDown={(e) => e.key === 'Enter' && handlePriceInputBlur()}
-              className="price-field" 
-              placeholder="Max" 
-            />
-          </div>
-        </div>
 
+      <div className="filter-body">
         {/* Categories */}
         <div className="filter-section">
-          <span className="filter-group-title">Categories</span>
+          {/* <span className="filter-group-title">Categories</span> */}
           <div className="filter-category-list">
             <button
               className={`filter-category-item ${!selectedParentId && !selectedSubCategory && category === "" ? "active" : ""}`}
               onClick={() => { setSelectedParentId(null); setSelectedSubCategory(null); setCategory(""); }}
             >
-              All Categories
+              <span className="flex items-center gap-3">
+                <GridViewIcon sx={{ fontSize: "1.1rem" }} />
+                All Products
+              </span>
             </button>
             {categoriesData.filter(c => !c.parent).map(parent => {
               const subcats = categoriesData.filter(c => c.parent && (c.parent._id === parent._id || c.parent === parent._id));
               const isExpanded = expandedParent === parent._id;
               const isSelected = selectedParentId === parent._id && !selectedSubCategory;
               return (
-                <div key={parent._id}>
+                <div key={parent._id} className="category-group">
                   <button
                     className={`filter-category-item ${isSelected ? "active" : ""}`}
                     onClick={() => handleCategoryTreeSelect(parent._id, null, parent.name)}
                   >
-                    {parent.name}
+                    <span className="flex items-center gap-3">
+                      <div className="category-dot" />
+                      {parent.name}
+                    </span>
                     {subcats.length > 0 && (
-                      <span onClick={(e) => { e.stopPropagation(); handleParentToggle(parent._id); }}>
+                      <span className="expand-icon-wrap" onClick={(e) => { e.stopPropagation(); handleParentToggle(parent._id); }}>
                         {isExpanded ? <ExpandLessIcon fontSize="small" /> : <ExpandMoreIcon fontSize="small" />}
                       </span>
                     )}
@@ -375,7 +390,7 @@ const Products = () => {
                       {subcats.map(sub => (
                         <button
                           key={sub._id}
-                          className={`filter-category-item ${selectedSubCategory === sub._id ? "active" : ""}`}
+                          className={`filter-category-item sub-item ${selectedSubCategory === sub._id ? "active" : ""}`}
                           onClick={() => handleCategoryTreeSelect(parent._id, sub._id, parent.name, sub.name)}
                         >
                           {sub.name}
@@ -389,35 +404,67 @@ const Products = () => {
           </div>
         </div>
 
-        {/* Ratings */}
+        {/* Price Range */}
         <div className="filter-section">
-          <span className="filter-group-title">Ratings</span>
-          <div className="filter-category-list">
-            <button className={`filter-rating-btn ${ratings === 0 ? "active" : ""}`} onClick={() => setRatings(0)}>
-              All Ratings
-            </button>
-            {[4, 3, 2, 1].map(el => (
-              <button key={el} className={`filter-rating-btn ${ratings === el ? "active" : ""}`} onClick={() => setRatings(el)}>
-                <span className="flex items-center gap-1">
-                  {el} <StarIcon sx={{ fontSize: "14px", color: ratings === el ? "white" : "var(--accent)" }} /> and up
-                </span>
-              </button>
-            ))}
+          <span className="filter-group-title">Price Range</span>
+          <Box sx={{ px: 2, mt: 1 }}>
+            <Slider
+              value={localPriceRange}
+              onChange={priceHandler}
+              onChangeCommitted={handlePriceCommitted}
+              valueLabelDisplay="off"
+              min={priceMin}
+              max={priceMax}
+              step={PRICE_STEP}
+              size="small"
+              sx={{
+                color: "#FF1837",
+                height: 2,
+                '& .MuiSlider-thumb': {
+                  backgroundColor: "#FF1837",
+                  width: 10,
+                  height: 10,
+                  '&:hover, &.Mui-focusVisible': {
+                    boxShadow: '0px 0px 0px 8px rgba(255, 24, 55, 0.16)',
+                  },
+                },
+                '& .MuiSlider-track': {
+                  backgroundColor: "#FF1837",
+                  height: 2,
+                },
+                '& .MuiSlider-rail': {
+                  backgroundColor: "#E2E2E2",
+                  opacity: 1,
+                  height: 2,
+                },
+              }}
+            />
+          </Box>
+          <div className="price-range-labels">
+            <span>৳{localPriceRange[0]}</span>
+            <span>৳{localPriceRange[1]}+</span>
           </div>
+        </div>
+
+        <div className="filter-footer">
+          <button className="reset-filters-btn" onClick={clearFilters}>Reset Filters</button>
         </div>
       </div>
     </div>
   );
 
-  const breadcrumbItems = [{ text: "Products", link: "/products" }];
-  if (category) breadcrumbItems.push({ text: category });
-  if (keyword) breadcrumbItems.push({ text: `Search: "${keyword}"` });
-  if (brand) breadcrumbItems.push({ text: `Brand: ${brand}` });
+
 
   return (
     <>
       <MetaData title="All Products | FlanBD" />
       <main className="bg-[var(--bg-primary)] mt-24">
+        <div className="products-hero-section">
+          <Breadcrumb items={breadcrumbItems.slice(0, -1)} />
+          <h1 className="products-hero-title">
+            {breadcrumbItems[breadcrumbItems.length - 1].text}
+          </h1>
+        </div>
         <div className="products-page-container">
           {/* Desktop Sidebar */}
           {!isMobile && (
@@ -457,13 +504,12 @@ const Products = () => {
             )}
 
             {loading ? (
-              <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
+              <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-3 gap-y-8 sm:gap-x-4 sm:gap-y-10">
                 {[...Array(12)].map((_, i) => <SkeletonProduct key={i} />)}
               </div>
             ) : (
-              <div className="products-grid-section">
-                 <Breadcrumb items={breadcrumbItems} />
-                <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
+              <>
+                <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-3 gap-y-8 sm:gap-x-5 sm:gap-y-12">
                   {filteredProducts
                     .slice((currentPage - 1) * FIXED_RESULT_PER_PAGE, currentPage * FIXED_RESULT_PER_PAGE)
                     .map((product) => (
@@ -494,14 +540,13 @@ const Products = () => {
                     />
                   </div>
                 )}
-              </div>
+              </>
             )}
           </div>
         </div>
-      </main>
+      </main >
 
       <DealSlider title="Best Offers" />
-      <HomeContactSection />
 
       <QuickViewDialog
         open={quickViewOpen}
@@ -512,12 +557,14 @@ const Products = () => {
       />
 
       {/* Floating Mobile Filter Trigger */}
-      {isMobile && (
-        <button className="mobile-filter-trigger" onClick={() => setMobileFiltersOpen(true)}>
-          <FilterListIcon />
-          <span>Filters</span>
-        </button>
-      )}
+      {
+        isMobile && (
+          <button className="mobile-filter-trigger" onClick={() => setMobileFiltersOpen(true)}>
+            <FilterListIcon />
+            <span>Filters</span>
+          </button>
+        )
+      }
     </>
   );
 };

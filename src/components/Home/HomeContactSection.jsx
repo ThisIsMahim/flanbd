@@ -1,8 +1,4 @@
-import EditIcon from "@mui/icons-material/Edit";
 import EmailIcon from "@mui/icons-material/Email";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
-import MenuBookIcon from "@mui/icons-material/MenuBook";
-import PhoneIcon from "@mui/icons-material/Phone";
 import axios from "axios";
 import React, { useContext, useState } from "react";
 import { LanguageContext } from "../../utils/LanguageContext";
@@ -137,54 +133,49 @@ const HomeContactSection = () => {
   };
 
   return (
-    <section className="py-16 md:py-24 relative overflow-hidden bg-gray-50">
-      <div className="container mx-auto z-10 relative max-w-6xl px-4">
-        <div className="text-center mb-16 flex flex-col items-center justify-center">
-          <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4 transition-transform hover:scale-105 duration-300">
-            {t.title}
+    <section className="bg-white py-10 md:py-14 border-t border-gray-100 relative overflow-hidden">
+      <div className="max-w-6xl mx-auto px-4 md:px-8 relative z-10">
+        {/* Section Header */}
+        <div className="text-center mb-12">
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <span className="w-8 h-[2px] bg-[#ff1837]"></span>
+            <span className="text-[10px] text-[#ff1837] font-black uppercase tracking-[0.25em]">Reach Out</span>
+            <span className="w-8 h-[2px] bg-[#ff1837]"></span>
+          </div>
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-black text-[#0f0f0f] tracking-tighter uppercase leading-[1.1]">
+            Get in <span className="text-gray-400">Touch</span>
           </h2>
-          <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-sm font-medium text-gray-500 max-w-lg mx-auto mt-4">
             {t.subtitle}
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-5 gap-10">
+        <div className="grid lg:grid-cols-5 gap-8">
           {/* Contact Info */}
-          <div className="lg:col-span-2 space-y-8">
-            <div className="bg-white p-8 md:p-10 rounded-3xl shadow-xl border border-gray-100 h-full hover:shadow-2xl transition-shadow duration-300">
-              <h3 className="text-2xl font-bold text-gray-900 mb-8 border-b pb-4">
+          <div className="lg:col-span-2">
+            <div className="bg-white p-6 md:p-8 rounded-xl border border-gray-100 h-full">
+              <h3 className="text-xs font-black text-gray-400 uppercase tracking-[0.2em] mb-8">
                 {t.contactInfo}
               </h3>
-              
-              <div className="space-y-8 mt-6">
-                <div className="flex items-start group">
-                  <div className="w-14 h-14 bg-red-50 group-hover:bg-red-500 group-hover:text-white rounded-full flex items-center justify-center text-red-500 transition-all duration-300 flex-shrink-0 shadow-sm">
-                    <LocationOnIcon fontSize="medium" />
-                  </div>
-                  <div className="ml-5 mt-1">
-                    <p className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-1">Address</p>
-                    <p className="text-gray-800 font-medium text-lg">{t.address}</p>
-                  </div>
+
+              <div className="space-y-7 border-l-2 border-gray-100 pl-6">
+                <div className="group flex flex-col gap-1 cursor-default">
+                  <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] group-hover:text-gray-600 transition-colors">Address</p>
+                  <p className="text-[14px] font-extrabold text-gray-900 tracking-tight group-hover:translate-x-1 group-hover:text-[#ff1837] transition-all duration-300">{t.address}</p>
                 </div>
 
-                <div className="flex items-start group">
-                  <div className="w-14 h-14 bg-red-50 group-hover:bg-red-500 group-hover:text-white rounded-full flex items-center justify-center text-red-500 transition-all duration-300 flex-shrink-0 shadow-sm">
-                    <PhoneIcon fontSize="medium" />
-                  </div>
-                  <div className="ml-5 mt-1">
-                    <p className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-1">Phone</p>
-                    <p className="text-gray-800 font-medium text-lg">{t.phone}</p>
-                  </div>
+                <div className="group flex flex-col gap-1">
+                  <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] group-hover:text-gray-600 transition-colors">Phone</p>
+                  <a href={`tel:${t.phone}`} className="text-[14px] font-extrabold text-gray-900 tracking-tight w-fit group-hover:translate-x-1 group-hover:text-[#ff1837] transition-all duration-300">
+                    {t.phone}
+                  </a>
                 </div>
 
-                <div className="flex items-start group">
-                  <div className="w-14 h-14 bg-red-50 group-hover:bg-red-500 group-hover:text-white rounded-full flex items-center justify-center text-red-500 transition-all duration-300 flex-shrink-0 shadow-sm">
-                    <EmailIcon fontSize="medium" />
-                  </div>
-                  <div className="ml-5 mt-1">
-                    <p className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-1">Email</p>
-                    <p className="text-gray-800 font-medium text-lg">{t.email}</p>
-                  </div>
+                <div className="group flex flex-col gap-1">
+                  <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] group-hover:text-gray-600 transition-colors">Email</p>
+                  <a href={`mailto:${t.email}`} className="text-[14px] font-extrabold text-gray-900 tracking-tight w-fit group-hover:translate-x-1 group-hover:text-[#ff1837] transition-all duration-300">
+                    {t.email}
+                  </a>
                 </div>
               </div>
             </div>
@@ -192,14 +183,11 @@ const HomeContactSection = () => {
 
           {/* Contact Form */}
           <div className="lg:col-span-3">
-            <div className="bg-white p-8 md:p-10 rounded-3xl shadow-xl border border-gray-100 hover:shadow-2xl transition-shadow duration-300 relative">
-               {/* Decorative abstract shape */}
-              <div className="absolute top-0 right-0 -mt-4 -mr-4 w-20 h-20 bg-red-100 rounded-full blur-xl opacity-50 z-0"></div>
-              
-              <form onSubmit={handleSubmit} className="relative z-10">
-                <div className="grid md:grid-cols-2 gap-6 mb-6">
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-gray-700 ml-1">{t.formName}</label>
+            <div className="bg-white p-6 md:p-8 rounded-xl border border-gray-100">
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div className="space-y-1.5">
+                    <label className="text-[8.5px] font-black text-gray-400 uppercase tracking-[0.15em] ml-1">{t.formName}</label>
                     <input
                       type="text"
                       name="name"
@@ -207,55 +195,53 @@ const HomeContactSection = () => {
                       onChange={handleChange}
                       placeholder={language === 'bangla' ? "আপনার নাম" : "John Doe"}
                       required
-                      className="w-full px-5 py-3.5 bg-gray-50/50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500 transition-all duration-300 text-gray-800 placeholder-gray-400"
+                      className="w-full px-3.5 py-3 bg-[#f9f9f9] text-black font-semibold text-xs placeholder-gray-300 border border-gray-100 rounded-lg focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#ff1837]/20 focus:border-[#ff1837]/30 transition-all duration-300"
                     />
                   </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium text-gray-700 ml-1">{t.formEmail}</label>
+                  <div className="space-y-1.5">
+                    <label className="text-[8.5px] font-black text-gray-400 uppercase tracking-[0.15em] ml-1">{t.formEmail}</label>
                     <input
                       type="email"
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
-                      placeholder={language === 'bangla' ? "john@example.com" : "john@example.com"}
+                      placeholder="john@example.com"
                       required
-                      className="w-full px-5 py-3.5 bg-gray-50/50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500 transition-all duration-300 text-gray-800 placeholder-gray-400"
+                      className="w-full px-3.5 py-3 bg-[#f9f9f9] text-black font-semibold text-xs placeholder-gray-300 border border-gray-100 rounded-lg focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#ff1837]/20 focus:border-[#ff1837]/30 transition-all duration-300"
                     />
                   </div>
                 </div>
-                <div className="space-y-2 mb-6">
-                  <label className="text-sm font-medium text-gray-700 ml-1">{t.formSubject} ({language === 'bangla' ? 'ঐচ্ছিক' : 'Optional'})</label>
+                <div className="space-y-1.5">
+                  <label className="text-[8.5px] font-black text-gray-400 uppercase tracking-[0.15em] ml-1">{t.formSubject} ({language === 'bangla' ? 'ঐচ্ছিক' : 'Optional'})</label>
                   <input
                     type="text"
                     name="subject"
                     value={formData.subject}
                     onChange={handleChange}
                     placeholder={language === 'bangla' ? "আমরা কিভাবে সাহায্য করতে পারি?" : "How can we help?"}
-                    className="w-full px-5 py-3.5 bg-gray-50/50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500 transition-all duration-300 text-gray-800 placeholder-gray-400"
+                    className="w-full px-3.5 py-3 bg-[#f9f9f9] text-black font-semibold text-xs placeholder-gray-300 border border-gray-100 rounded-lg focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#ff1837]/20 focus:border-[#ff1837]/30 transition-all duration-300"
                   />
                 </div>
-                <div className="space-y-2 mb-8">
-                  <label className="text-sm font-medium text-gray-700 ml-1">{t.formMessage}</label>
+                <div className="space-y-1.5">
+                  <label className="text-[8.5px] font-black text-gray-400 uppercase tracking-[0.15em] ml-1">{t.formMessage}</label>
                   <textarea
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
                     placeholder={language === 'bangla' ? "এখানে আপনার বার্তা লিখুন..." : "Write your message here..."}
                     required
-                    rows="5"
-                    className="w-full px-5 py-3.5 bg-gray-50/50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500 transition-all duration-300 text-gray-800 placeholder-gray-400 resize-none"
+                    rows="4"
+                    className="w-full px-3.5 py-3 bg-[#f9f9f9] text-black font-semibold text-xs placeholder-gray-300 border border-gray-100 rounded-lg focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#ff1837]/20 focus:border-[#ff1837]/30 transition-all duration-300 resize-none"
                   ></textarea>
                 </div>
-                <div>
+                <div className="flex justify-end pt-1">
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full md:w-auto px-10 py-4 bg-red-500 hover:bg-red-600 text-white font-bold rounded-xl shadow-lg shadow-red-500/30 transition-all duration-300 flex items-center justify-center group disabled:opacity-70 disabled:cursor-not-allowed"
+                    className="group px-8 py-3 bg-[#0f0f0f] hover:bg-[#ff1837] text-white text-[10px] font-extrabold uppercase tracking-[0.2em] rounded-lg transition-all duration-500 hover:-translate-y-0.5 hover:shadow-[0_8px_20px_-8px_rgba(255,24,55,0.5)] disabled:opacity-70 disabled:cursor-not-allowed flex items-center gap-2"
                   >
                     <span>{isSubmitting ? t.sending : t.sendButton}</span>
-                    {!isSubmitting && (
-                      <EmailIcon className="ml-2 group-hover:translate-x-1 transition-transform" fontSize="small" />
-                    )}
+                    {!isSubmitting && <EmailIcon style={{ fontSize: '12px' }} className="group-hover:translate-x-0.5 transition-transform" />}
                   </button>
                 </div>
               </form>
@@ -263,17 +249,17 @@ const HomeContactSection = () => {
           </div>
         </div>
       </div>
+
       {/* Toast Notification */}
       {showToast && (
         <div
-          className={`fixed bottom-8 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-lg shadow-lg z-50 ${
-            showToast === "success"
-              ? "bg-green-100 text-green-800 border border-green-200"
-              : "bg-red-100 text-red-800 border border-red-200"
-          }`}
+          className={`fixed bottom-8 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-lg shadow-lg z-50 ${showToast === "success"
+            ? "bg-green-100 text-green-800 border border-green-200"
+            : "bg-red-100 text-red-800 border border-red-200"
+            }`}
         >
           <div className="flex items-center">
-            <span className="font-medium">{toastMessage}</span>
+            <span className="font-medium text-xs">{toastMessage}</span>
             <button
               onClick={() => setShowToast(false)}
               className="ml-4 text-lg font-bold opacity-70 hover:opacity-100 transition-opacity"

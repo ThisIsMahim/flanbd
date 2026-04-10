@@ -121,7 +121,7 @@ const GuestOrderTracking = () => {
 
   const handleSearch = async (e) => {
     e.preventDefault();
-    
+
     if (!email.trim() || !phone.trim()) {
       setError(language === "english" ? "Please enter both email and phone number" : "অনুগ্রহ করে ইমেইল এবং ফোন নম্বর উভয়ই দিন");
       return;
@@ -189,7 +189,7 @@ const GuestOrderTracking = () => {
                       variant="contained"
                       fullWidth
                       disabled={loading}
-                      className="bg-[var(--button-bg)] hover:bg-[var(--button-hover)] h-full"
+                      sx={{ backgroundColor: '#111827', height: '100%', '&:hover': { backgroundColor: '#ff0022' } }}
                     >
                       {loading ? (
                         <CircularProgress size={24} color="inherit" />
@@ -341,7 +341,7 @@ const GuestOrderTracking = () => {
                         color="primary"
                         component={Link}
                         to="/contact"
-                        className="bg-[var(--button-bg)] hover:bg-[var(--button-hover)]"
+                        sx={{ backgroundColor: '#111827', '&:hover': { backgroundColor: '#ff0022' } }}
                       >
                         {language === "english" ? "Contact Support" : "সাপোর্টে যোগাযোগ"}
                       </Button>
