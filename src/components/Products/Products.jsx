@@ -62,11 +62,11 @@ const Products = () => {
   const [quickViewOpen, setQuickViewOpen] = useState(false);
   const [expandedParent, setExpandedParent] = useState(null);
 
-  // Fetch price range
   useEffect(() => {
     const fetchPriceRange = async () => {
       try {
-        const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/v1/products/price-range`);
+        const baseUrl = (process.env.REACT_APP_BACKEND_URL || "").replace(/\/$/, "");
+        const res = await fetch(`${baseUrl}/api/v1/products/price-range`);
         const data = await res.json();
         if (data?.success) {
           const min = Number(data.minPrice) || 0;
@@ -89,7 +89,8 @@ const Products = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/v1/categories`);
+        const baseUrl = (process.env.REACT_APP_BACKEND_URL || "").replace(/\/$/, "");
+        const response = await fetch(`${baseUrl}/api/v1/categories`);
         const data = await response.json();
         if (data.success) setCategoriesData(data.categories);
       } catch (error) {

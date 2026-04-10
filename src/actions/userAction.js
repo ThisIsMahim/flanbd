@@ -103,7 +103,8 @@ export const loadUser = () => async (dispatch) => {
     try {
         dispatch({ type: LOAD_USER_REQUEST });
 
-        const { data } = await axios.get('/api/v1/me', {
+        const baseUrl = (process.env.REACT_APP_BACKEND_URL || "").replace(/\/$/, "");
+        const { data } = await axios.get(`${baseUrl}/api/v1/me`, {
             withCredentials: true
         });
 
@@ -244,8 +245,9 @@ export const forgotPassword = (emailData) => async (dispatch) => {
             },
         };
 
+        const baseUrl = (process.env.REACT_APP_BACKEND_URL || "").replace(/\/$/, "");
         const { data } = await axios.post(
-            '/api/v1/password/forgot',
+            `${baseUrl}/api/v1/password/forgot`,
             emailData,
             config
         );

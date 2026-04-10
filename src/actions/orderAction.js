@@ -12,7 +12,8 @@ export const newOrder = (order) => async (dispatch) => {
             },
         };
 
-        const { data } = await axios.post('/api/v1/order/new', order, config);
+        const baseUrl = (process.env.REACT_APP_BACKEND_URL || "").replace(/\/$/, "");
+        const { data } = await axios.post(`${baseUrl}/api/v1/order/new`, order, config);
 
         dispatch({
             type: NEW_ORDER_SUCCESS,
@@ -32,7 +33,8 @@ export const myOrders = () => async (dispatch) => {
     try {
         dispatch({ type: MY_ORDERS_REQUEST });
 
-        const { data } = await axios.get('/api/v1/orders/me');
+        const baseUrl = (process.env.REACT_APP_BACKEND_URL || "").replace(/\/$/, "");
+        const { data } = await axios.get(`${baseUrl}/api/v1/orders/me`);
 
         dispatch({
             type: MY_ORDERS_SUCCESS,
@@ -52,7 +54,8 @@ export const getOrderDetails = (id) => async (dispatch) => {
     try {
         dispatch({ type: ORDER_DETAILS_REQUEST });
 
-        const { data } = await axios.get(`/api/v1/order/${id}`);
+        const baseUrl = (process.env.REACT_APP_BACKEND_URL || "").replace(/\/$/, "");
+        const { data } = await axios.get(`${baseUrl}/api/v1/order/${id}`);
 
         dispatch({
             type: ORDER_DETAILS_SUCCESS,
@@ -72,7 +75,8 @@ export const getPaymentStatus = (id) => async (dispatch) => {
     try {
         dispatch({ type: PAYMENT_STATUS_REQUEST });
 
-        const { data } = await axios.get(`/api/v1/payment/status/${id}`);
+        const baseUrl = (process.env.REACT_APP_BACKEND_URL || "").replace(/\/$/, "");
+        const { data } = await axios.get(`${baseUrl}/api/v1/payment/status/${id}`);
 
         dispatch({
             type: PAYMENT_STATUS_SUCCESS,
@@ -92,7 +96,8 @@ export const getAllOrders = () => async (dispatch) => {
     try {
         dispatch({ type: ALL_ORDERS_REQUEST });
 
-        const { data } = await axios.get('/api/v1/admin/orders');
+        const baseUrl = (process.env.REACT_APP_BACKEND_URL || "").replace(/\/$/, "");
+        const { data } = await axios.get(`${baseUrl}/api/v1/admin/orders`);
 
         dispatch({
             type: ALL_ORDERS_SUCCESS,
@@ -162,7 +167,8 @@ export const clearErrors = () => (dispatch) => {
 export const myOrdersSummary = () => async (dispatch) => {
     try {
         dispatch({ type: MY_ORDERS_SUMMARY_REQUEST });
-        const { data } = await axios.get('/api/v1/orders/me/summary');
+        const baseUrl = (process.env.REACT_APP_BACKEND_URL || "").replace(/\/$/, "");
+        const { data } = await axios.get(`${baseUrl}/api/v1/orders/me/summary`);
         dispatch({ type: MY_ORDERS_SUMMARY_SUCCESS, payload: data.summary });
     } catch (error) {
         dispatch({ type: MY_ORDERS_SUMMARY_FAIL, payload: error.response?.data?.message || 'Failed to load summary' });

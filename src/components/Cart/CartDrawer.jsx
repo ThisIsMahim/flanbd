@@ -57,8 +57,10 @@ const CartDrawer = ({ open, onClose }) => {
     const totalSavings = (totalDiscount || 0) + (goldDiscount || 0) + (couponDiscount || 0);
 
     useEffect(() => {
-        dispatch(myOrdersSummary());
-    }, [dispatch]);
+        if (isAuthenticated) {
+            dispatch(myOrdersSummary());
+        }
+    }, [dispatch, isAuthenticated]);
 
     // Close on backdrop click
     useEffect(() => {

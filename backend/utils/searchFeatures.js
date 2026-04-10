@@ -34,6 +34,16 @@ class SearchFeatures {
     const removeFields = ["keyword", "page", "limit"];
     removeFields.forEach((key) => delete queryCopy[key]);
 
+    // Handle price and ratings conversion to numbers
+    if (queryCopy.price) {
+      if (queryCopy.price.gte) queryCopy.price.gte = Number(queryCopy.price.gte);
+      if (queryCopy.price.lte) queryCopy.price.lte = Number(queryCopy.price.lte);
+    }
+    if (queryCopy.ratings) {
+      if (queryCopy.ratings.gte) queryCopy.ratings.gte = Number(queryCopy.ratings.gte);
+      if (queryCopy.ratings.lte) queryCopy.ratings.lte = Number(queryCopy.ratings.lte);
+    }
+
     // Handle category filtering with ObjectIds
     if (queryCopy.categories) {
       // If categories is a string, make it an array

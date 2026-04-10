@@ -55,7 +55,8 @@ export const getProducts =
       const validRatings = typeof ratings === 'number' ? ratings : 0;
       const validCurrentPage = typeof currentPage === 'number' && currentPage > 0 ? currentPage : 1;
 
-      let url = `${process.env.REACT_APP_BACKEND_URL}/api/v1/products?keyword=${validKeyword}&price[gte]=${validPrice[0]}&price[lte]=${validPrice[1]}&ratings[gte]=${validRatings}&page=${validCurrentPage}`;
+      const baseUrl = (process.env.REACT_APP_BACKEND_URL || "").replace(/\/$/, "");
+      let url = `${baseUrl}/api/v1/products?keyword=${validKeyword}&price[gte]=${validPrice[0]}&price[lte]=${validPrice[1]}&ratings[gte]=${validRatings}&page=${validCurrentPage}`;
 
       if (validCategory) {
         url += `&category=${validCategory}`;
@@ -84,8 +85,9 @@ export const getSimilarProducts = (category) => async (dispatch) => {
   try {
     dispatch({ type: ALL_PRODUCTS_REQUEST });
 
+    const baseUrl = (process.env.REACT_APP_BACKEND_URL || "").replace(/\/$/, "");
     const { data } = await axios.get(
-      `${process.env.REACT_APP_BACKEND_URL}/api/v1/products?category=${category}`
+      `${baseUrl}/api/v1/products?category=${category}`
     );
 
     dispatch({
@@ -105,8 +107,9 @@ export const getProductDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_DETAILS_REQUEST });
 
+    const baseUrl = (process.env.REACT_APP_BACKEND_URL || "").replace(/\/$/, "");
     const { data } = await axios.get(
-      `${process.env.REACT_APP_BACKEND_URL}/api/v1/product/${id}`,
+      `${baseUrl}/api/v1/product/${id}`,
       { withCredentials: true }
     );
 
@@ -153,8 +156,9 @@ export const getSliderProducts = () => async (dispatch) => {
   try {
     dispatch({ type: SLIDER_PRODUCTS_REQUEST });
 
+    const baseUrl = (process.env.REACT_APP_BACKEND_URL || "").replace(/\/$/, "");
     const { data } = await axios.get(
-      `${process.env.REACT_APP_BACKEND_URL}/api/v1/products/all`
+      `${baseUrl}/api/v1/products/all`
     );
 
     dispatch({
