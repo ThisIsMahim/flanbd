@@ -26,7 +26,6 @@ exports.getPriceRange = asyncErrorHandler(async (req, res, next) => {
     const result = await Product.aggregate([
       {
         $match: {
-          stock: { $gt: 0 },
           price: { $type: "number" },
         },
       },

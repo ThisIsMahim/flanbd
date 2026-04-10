@@ -154,7 +154,6 @@ const Products = () => {
     }
 
     filtered = filtered.filter(p => p.price >= priceRange[0] && p.price <= priceRange[1]);
-    filtered = filtered.filter(p => p.stock > 0);
 
     setFilteredProducts(filtered);
   }, [products, brand, keyword, selectedSubCategory, selectedCategories, priceRange, categoriesData, category]);
