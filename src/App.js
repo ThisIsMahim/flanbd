@@ -49,7 +49,7 @@ import MyOrders from "./components/Order/MyOrders";
 import OrderDetails from "./components/Order/OrderDetails";
 import OrderHistory from "./components/User/OrderHistory";
 import ProductDetails from "./components/ProductDetails/ProductDetails";
-import Products from "./components/Products/Products";
+import Products from "./components/Products/Products.jsx";
 import Account from "./components/User/Account";
 import ForgotPassword from "./components/User/ForgotPassword";
 import Login from "./components/User/Login";

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { useStaggerAnimation } from '../../hooks/useScrollTrigger';
-import ProductCard from '../products/ProductCard';
+import ProductCard from './ProductSlider/components/ProductCard';
 import './FeaturedProducts.css';
 
 const FeaturedProducts = () => {
