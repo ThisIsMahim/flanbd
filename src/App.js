@@ -69,8 +69,8 @@ import MobileBottomNav from "./components/Layouts/Header/MobileBottomNav";
 
 // Configure axios defaults
 axios.defaults.withCredentials = true;
-// Use backend URL from env if provided, otherwise default to local backend in dev
-axios.defaults.baseURL = process.env.REACT_APP_BACKEND_URL || "http://localhost:5000";
+// In production, we use the provided backend URL. In development, we fallback to localhost.
+axios.defaults.baseURL = process.env.REACT_APP_BACKEND_URL || (process.env.NODE_ENV === 'production' ? "" : "http://localhost:5000");
 
 // Enhanced inspection prevention
 // const disableInspection = (e) => {
