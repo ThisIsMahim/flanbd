@@ -1,11 +1,35 @@
-import { Button, Modal, Table, Tag, message } from 'antd';
+import React, { useContext, useEffect, useState } from 'react';
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Chip,
+  Typography,
+  Grid,
+  IconButton,
+  Tooltip,
+  Paper
+} from '@mui/material';
+import { DataGrid } from '@mui/x-data-grid';
+import {
+  Visibility as VisibilityIcon,
+  Delete as DeleteIcon,
+  Archive as ArchiveIcon,
+  Unarchive as UnarchiveIcon,
+  Close as CloseIcon
+} from '@mui/icons-material';
 import axios from 'axios';
 import moment from 'moment';
-import React, { useContext, useEffect, useState } from 'react';
+import { useSnackbar } from 'notistack';
 import { LanguageContext } from '../../utils/LanguageContext';
+import BackdropLoader from '../Layouts/BackdropLoader';
 
 const UserMessagesPage = () => {
   const { language } = useContext(LanguageContext);
+  const { enqueueSnackbar } = useSnackbar();
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selectedMessage, setSelectedMessage] = useState(null);
@@ -62,94 +86,13 @@ const UserMessagesPage = () => {
     },
   };
 
-  const t = translations[language];
+  const t = translations[language] || translations.english;
 
   const statusColors = {
-    unread: 'red',
-    read: 'blue',
-    archived: 'gray',
+    unread: 'error',
+    read: 'info',
+    archived: 'default',
   };
-
-  const columns = [
-    {
-      title: t.name,
-      dataIndex: 'name',
-      key: 'name',
-    },
-    {
-      title: t.email,
-      dataIndex: 'email',
-      key: 'email',
-    },
-    {
-      title: t.phone,
-      dataIndex: 'phone',
-      key: 'phone',
-      render: (phone) => phone || '-',
-    },
-    {
-      title: t.subject,
-      dataIndex: 'subject',
-      key: 'subject',
-    },
-    {
-      title: t.date,
-      dataIndex: 'createdAt',
-      key: 'date',
-      render: (date) => moment(date).format('lll'),
-      sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
-    },
-    {
-      title: t.status,
-      dataIndex: 'status',
-      key: 'status',
-      render: (status) => (
-        <Tag color={statusColors[status]}>
-          {t[status]}
-        </Tag>
-      ),
-      filters: [
-        { text: t.unread, value: 'unread' },
-        { text: t.read, value: 'read' },
-        { text: t.archived, value: 'archived' },
-      ],
-      onFilter: (value, record) => record.status === value,
-    },
-    {
-      title: t.actions,
-      key: 'actions',
-      render: (_, record) => (
-        <div className="flex gap-2">
-          <Button
-            type="primary"
-            className='!bg-blue-500'
-            onClick={() => {
-              setSelectedMessage(record);
-              setIsModalVisible(true);
-              if (record.status === 'unread') {
-                markAsRead(record._id);
-              }
-            }}
-          >
-            {t.view}
-          </Button>
-          <Button
-            danger
-            onClick={() => handleDelete(record._id)}
-          >
-            {t.delete}
-          </Button>
-          <Button
-            onClick={() => updateStatus(record._id, 
-              record.status === 'archived' ? 'read' : 'archived'
-            )}
-          >
-            {record.status === 'archived' ? t.read : t.archived}
-          </Button>
-        </div>
-      ),
-    },
-  ];
 
   const fetchMessages = async () => {
     setLoading(true);
@@ -157,7 +100,7 @@ const UserMessagesPage = () => {
       const { data } = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/usermessages`);
       setMessages(data.data);
     } catch (error) {
-      message.error(t.fetchError);
+      enqueueSnackbar(t.fetchError, { variant: 'error' });
       console.error('Error fetching messages:', error);
     } finally {
       setLoading(false);
@@ -165,35 +108,15 @@ const UserMessagesPage = () => {
   };
 
   const handleDelete = async (id) => {
-    Modal.confirm({
-      title: t.deleteConfirm,
-      onOk: async () => {
-        try {
-          await axios.delete(`${process.env.REACT_APP_BACKEND_URL}/api/usermessages/${id}`);
-          message.success(t.deleteSuccess);
-          fetchMessages();
-        } catch (error) {
-          message.error(t.deleteError);
-          console.error('Error deleting message:', error);
-        }
-      },
-    });
-  };
-
-  const markAsRead = async (id) => {
-    try {
-      await axios.put(
-        `${process.env.REACT_APP_BACKEND_URL}/api/usermessages/${id}/status`,
-        { status: 'read' }
-      );
-      // Optimistically update the local state
-      setMessages(messages.map(msg => 
-        msg._id === id ? { ...msg, status: 'read' } : msg
-      ));
-      message.success(t.statusUpdateSuccess);
-    } catch (error) {
-      message.error(t.statusUpdateError);
-      console.error('Error updating status:', error);
+    if (window.confirm(t.deleteConfirm)) {
+      try {
+        await axios.delete(`${process.env.REACT_APP_BACKEND_URL}/api/usermessages/${id}`);
+        enqueueSnackbar(t.deleteSuccess, { variant: 'success' });
+        fetchMessages();
+      } catch (error) {
+        enqueueSnackbar(t.deleteError, { variant: 'error' });
+        console.error('Error deleting message:', error);
+      }
     }
   };
 
@@ -203,13 +126,12 @@ const UserMessagesPage = () => {
         `${process.env.REACT_APP_BACKEND_URL}/api/usermessages/${id}/status`,
         { status: newStatus }
       );
-      // Optimistically update the local state
-      setMessages(messages.map(msg => 
+      setMessages(messages.map(msg =>
         msg._id === id ? { ...msg, status: newStatus } : msg
       ));
-      message.success(t.statusUpdateSuccess);
+      enqueueSnackbar(t.statusUpdateSuccess, { variant: 'success' });
     } catch (error) {
-      message.error(t.statusUpdateError);
+      enqueueSnackbar(t.statusUpdateError, { variant: 'error' });
       console.error('Error updating status:', error);
     }
   };
@@ -218,75 +140,199 @@ const UserMessagesPage = () => {
     fetchMessages();
   }, []);
 
-  return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-6">{t.title}</h1>
-      
-      <Table
-        columns={columns}
-        dataSource={messages}
-        rowKey="_id"
-        loading={loading}
-        pagination={{ pageSize: 10 }}
-        locale={{ emptyText: t.noMessages }}
-        scroll={{ x: true }}
-      />
+  const columns = [
+    {
+      field: 'name',
+      headerName: t.name,
+      minWidth: 150,
+      flex: 0.5,
+    },
+    {
+      field: 'email',
+      headerName: t.email,
+      minWidth: 200,
+      flex: 1,
+    },
+    {
+      field: 'subject',
+      headerName: t.subject,
+      minWidth: 200,
+      flex: 1,
+    },
+    {
+      field: 'createdAt',
+      headerName: t.date,
+      minWidth: 180,
+      flex: 0.8,
+      renderCell: (params) => moment(params.value).format('lll'),
+    },
+    {
+      field: 'status',
+      headerName: t.status,
+      minWidth: 120,
+      flex: 0.5,
+      renderCell: (params) => (
+        <Chip
+          label={t[params.value] || params.value}
+          color={statusColors[params.value]}
+          size="small"
+          variant="outlined"
+        />
+      ),
+    },
+    {
+      field: 'actions',
+      headerName: t.actions,
+      minWidth: 200,
+      flex: 1,
+      sortable: false,
+      renderCell: (params) => {
+        const record = params.row;
+        return (
+          <Box className="flex gap-2">
+            <Tooltip title={t.view}>
+              <IconButton
+                color="primary"
+                onClick={() => {
+                  setSelectedMessage(record);
+                  setIsModalVisible(true);
+                  if (record.status === 'unread') {
+                    updateStatus(record._id, 'read');
+                  }
+                }}
+              >
+                <VisibilityIcon fontSize="small" />
+              </IconButton>
+            </Tooltip>
 
-      <Modal
-        title={selectedMessage?.subject}
-        visible={isModalVisible}
-        onCancel={() => setIsModalVisible(false)}
-        footer={[
-          <Button key="back" onClick={() => setIsModalVisible(false)}>
-            {t.close}
-          </Button>,
-        ]}
-        width={800}
+            <Tooltip title={record.status === 'archived' ? t.read : t.archived}>
+              <IconButton
+                onClick={() => updateStatus(record._id, record.status === 'archived' ? 'read' : 'archived')}
+              >
+                {record.status === 'archived' ? <UnarchiveIcon fontSize="small" /> : <ArchiveIcon fontSize="small" />}
+              </IconButton>
+            </Tooltip>
+
+            <Tooltip title={t.delete}>
+              <IconButton
+                color="error"
+                onClick={() => handleDelete(record._id)}
+              >
+                <DeleteIcon fontSize="small" />
+              </IconButton>
+            </Tooltip>
+          </Box>
+        );
+      },
+    },
+  ];
+
+  return (
+    <Box className="p-6">
+      <Typography variant="h4" className="font-bold mb-6">
+        {t.title}
+      </Typography>
+
+      <Paper elevation={0} variant="outlined">
+        <DataGrid
+          rows={messages}
+          columns={columns}
+          getRowId={(row) => row._id}
+          pageSize={10}
+          rowsPerPageOptions={[10, 20, 50]}
+          autoHeight
+          loading={loading}
+          disableSelectionOnClick
+          sx={{
+            border: 'none',
+            '& .MuiDataGrid-cell:focus': { outline: 'none' },
+          }}
+          localeText={{
+            noRowsLabel: t.noMessages,
+          }}
+        />
+      </Paper>
+
+      <Dialog
+        open={isModalVisible}
+        onClose={() => setIsModalVisible(false)}
+        maxWidth="md"
+        fullWidth
+        PaperProps={{
+          sx: { borderRadius: 4 }
+        }}
       >
-        {selectedMessage && (
-          <div className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <p className="font-semibold">{t.name}</p>
-                <p>{selectedMessage.name}</p>
-              </div>
-              <div>
-                <p className="font-semibold">{t.email}</p>
-                <p>{selectedMessage.email}</p>
-              </div>
-              {selectedMessage.phone && (
-                <div>
-                  <p className="font-semibold">{t.phone}</p>
-                  <p>{selectedMessage.phone}</p>
-                </div>
-              )}
-              <div>
-                <p className="font-semibold">{t.status}</p>
-                <p>
-                  <Tag color={statusColors[selectedMessage.status]}>
-                    {t[selectedMessage.status]}
-                  </Tag>
-                </p>
-              </div>
-              <div>
-                <p className="font-semibold">{t.date}</p>
-                <p>{moment(selectedMessage.createdAt).format('lll')}</p>
-              </div>
-            </div>
-            <div>
-              <p className="font-semibold">{t.subject}</p>
-              <p>{selectedMessage.subject}</p>
-            </div>
-            <div>
-              <p className="font-semibold">{t.message}</p>
-              <p className="whitespace-pre-line bg-gray-50 p-4 rounded">
-                {selectedMessage.message}
-              </p>
-            </div>
-          </div>
-        )}
-      </Modal>
-    </div>
+        <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          {selectedMessage?.subject}
+          <IconButton onClick={() => setIsModalVisible(false)} size="small">
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
+        <DialogContent dividers>
+          {selectedMessage && (
+            <Box className="space-y-6 py-2">
+              <Grid container spacing={3}>
+                <Grid item xs={12} sm={6}>
+                  <Typography variant="caption" color="textSecondary" className="uppercase font-bold tracking-wider">
+                    {t.name}
+                  </Typography>
+                  <Typography variant="body1">{selectedMessage.name}</Typography>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Typography variant="caption" color="textSecondary" className="uppercase font-bold tracking-wider">
+                    {t.email}
+                  </Typography>
+                  <Typography variant="body1">{selectedMessage.email}</Typography>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Typography variant="caption" color="textSecondary" className="uppercase font-bold tracking-wider">
+                    {t.phone}
+                  </Typography>
+                  <Typography variant="body1">{selectedMessage.phone || '-'}</Typography>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Typography variant="caption" color="textSecondary" className="uppercase font-bold tracking-wider">
+                    {t.status}
+                  </Typography>
+                  <Box mt={0.5}>
+                    <Chip
+                      label={t[selectedMessage.status]}
+                      color={statusColors[selectedMessage.status]}
+                      size="small"
+                    />
+                  </Box>
+                </Grid>
+                <Grid item xs={12}>
+                  <Typography variant="caption" color="textSecondary" className="uppercase font-bold tracking-wider">
+                    {t.date}
+                  </Typography>
+                  <Typography variant="body1">{moment(selectedMessage.createdAt).format('LLLL')}</Typography>
+                </Grid>
+              </Grid>
+
+              <Box>
+                <Typography variant="caption" color="textSecondary" className="uppercase font-bold tracking-wider">
+                  {t.message}
+                </Typography>
+                <Paper variant="outlined" sx={{ p: 2, mt: 1, bgcolor: 'grey.50', whiteSpace: 'pre-line' }}>
+                  {selectedMessage.message}
+                </Paper>
+              </Box>
+            </Box>
+          )}
+        </DialogContent>
+        <DialogActions sx={{ p: 2.5 }}>
+          <Button
+            onClick={() => setIsModalVisible(false)}
+            variant="contained"
+            disableElevation
+            sx={{ borderRadius: 2 }}
+          >
+            {t.close}
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </Box>
   );
 };
 

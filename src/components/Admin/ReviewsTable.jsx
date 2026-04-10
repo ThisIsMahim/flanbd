@@ -164,7 +164,7 @@ const ReviewsTable = () => {
         <>
             <MetaData title="Admin Reviews | EyeGears" />
             {(loading || reviewsLoading) && <BackdropLoader />}
-            
+
             <Box sx={{ mb: 3 }} className="bg-gradient-to-br from-gray-50 to-gray-100 p-6 rounded-xl">
                 <Typography variant="h5" gutterBottom className="text-gray-800 font-medium mb-4">
                     Product Reviews
@@ -200,8 +200,8 @@ const ReviewsTable = () => {
                             }
                         }}
                         disabled={reviewsLoading || productId.length !== 24}
-                        sx={{ 
-                            borderRadius: '8px', 
+                        sx={{
+                            borderRadius: '8px',
                             background: 'linear-gradient(45deg, #9333ea 30%, #8A39E1 90%)',
                             boxShadow: '0 3px 10px rgba(138, 57, 225, 0.3)',
                             '&:hover': {
@@ -247,8 +247,8 @@ const ReviewsTable = () => {
             </Box>
 
             {/* Edit Review Dialog */}
-            <Dialog 
-                open={editOpen} 
+            <Dialog
+                open={editOpen}
                 onClose={handleEditClose}
                 PaperProps={{
                     sx: {
@@ -292,11 +292,11 @@ const ReviewsTable = () => {
                     <Button onClick={handleEditClose} sx={{ color: 'gray', borderRadius: '8px' }}>
                         Cancel
                     </Button>
-                    <Button 
-                        onClick={handleEditSubmit} 
-                        variant="contained" 
-                        sx={{ 
-                            borderRadius: '8px', 
+                    <Button
+                        onClick={handleEditSubmit}
+                        variant="contained"
+                        sx={{
+                            borderRadius: '8px',
                             background: 'linear-gradient(45deg, #9333ea 30%, #8A39E1 90%)',
                             boxShadow: '0 3px 10px rgba(138, 57, 225, 0.3)',
                             '&:hover': {

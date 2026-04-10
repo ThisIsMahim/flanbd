@@ -12,12 +12,11 @@
 - **DevTools**: Redux DevTools Extension
 
 ## Styling & UI Libraries
-- **Tailwind CSS**: Utility-first styling (v3.0.15)
-- **Material UI (MUI)**: Layouts, icons, and data grids
-- **Ant Design (antd)**: Used for UI components (v5.24.9)
-- **Styled Components**: Component-level styling
-- **React Bootstrap**: Core UI layouts
+- **Tailwind CSS**: Utility-first styling (v3.0.15) - **Primary Standard**
+- **Material UI (MUI)**: Layouts, icons, and data grids - **Core Component Library**
 - **Emotion**: Dependency for MUI and CSS-in-JS
+- **Styled Components**: Legacy component-level styling (to be migrated to Tailwind)
+- **Deprioritized/Removed**: Ant Design (antd), React Bootstrap (removed to reduce bloat)
 
 ## Navigation & Routing
 - **React Router DOM**: Client-side routing (v6.2.1)

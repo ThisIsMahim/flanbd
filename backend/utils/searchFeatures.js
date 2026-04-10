@@ -36,12 +36,22 @@ class SearchFeatures {
 
     // Handle price and ratings conversion to numbers
     if (queryCopy.price) {
-      if (queryCopy.price.gte) queryCopy.price.gte = Number(queryCopy.price.gte);
-      if (queryCopy.price.lte) queryCopy.price.lte = Number(queryCopy.price.lte);
+      if (queryCopy.price.gte !== undefined) queryCopy.price.gte = Number(queryCopy.price.gte);
+      if (queryCopy.price.lte !== undefined) queryCopy.price.lte = Number(queryCopy.price.lte);
+      
+      // If price gte is 0 and no lte, we can remove the price filter to include items with missing price
+      if (queryCopy.price.gte === 0 && queryCopy.price.lte === undefined) {
+        delete queryCopy.price;
+      }
     }
     if (queryCopy.ratings) {
-      if (queryCopy.ratings.gte) queryCopy.ratings.gte = Number(queryCopy.ratings.gte);
-      if (queryCopy.ratings.lte) queryCopy.ratings.lte = Number(queryCopy.ratings.lte);
+      if (queryCopy.ratings.gte !== undefined) queryCopy.ratings.gte = Number(queryCopy.ratings.gte);
+      if (queryCopy.ratings.lte !== undefined) queryCopy.ratings.lte = Number(queryCopy.ratings.lte);
+
+      // If ratings gte is 0 and no lte, remove the filter to include items with no ratings
+      if (queryCopy.ratings.gte === 0 && queryCopy.ratings.lte === undefined) {
+        delete queryCopy.ratings;
+      }
     }
 
     // Handle category filtering with ObjectIds

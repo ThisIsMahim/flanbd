@@ -237,7 +237,7 @@ const ProductTable = () => {
 
   return (
     <>
-              <MetaData title="Admin Products | EyeGears" />
+      <MetaData title="Admin Products | EyeGears" />
 
       {loading && <BackdropLoader />}
 
@@ -252,32 +252,32 @@ const ProductTable = () => {
           >
             New Product
           </Link>
-         
-            <button
-              onClick={async () => {
-                const orders = Object.entries(orderEdits).map(([id, sortOrder]) => ({ id, sortOrder }));
-                if (orders.length === 0) return;
-                const { bulkUpdateProductSort } = await import("../../actions/productAction");
-                try {
-                  await dispatch(bulkUpdateProductSort(orders));
-                  enqueueSnackbar("Product order updated", { variant: "success" });
-                  setOrderEdits({});
-                  dispatch(getAdminProducts());
-                } catch (e) {
-                  enqueueSnackbar(e?.response?.data?.message || e.message, { variant: "error" });
-                }
-              }}
-              className="py-2 px-4 rounded-lg font-medium nav-button"
-            >
-              Save Order
-            </button>
-          
+
+          <button
+            onClick={async () => {
+              const orders = Object.entries(orderEdits).map(([id, sortOrder]) => ({ id, sortOrder }));
+              if (orders.length === 0) return;
+              const { bulkUpdateProductSort } = await import("../../actions/productAction");
+              try {
+                await dispatch(bulkUpdateProductSort(orders));
+                enqueueSnackbar("Product order updated", { variant: "success" });
+                setOrderEdits({});
+                dispatch(getAdminProducts());
+              } catch (e) {
+                enqueueSnackbar(e?.response?.data?.message || e.message, { variant: "error" });
+              }
+            }}
+            className="py-2 px-4 rounded-lg font-medium nav-button"
+          >
+            Save Order
+          </button>
+
         </div>
         <div
           className="bg-white rounded-xl shadow-lg w-full overflow-hidden"
           style={{ height: 470 }}
         >
-          
+
           <DataGrid
             rows={rows}
             columns={columns}

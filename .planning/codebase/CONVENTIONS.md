@@ -6,8 +6,10 @@
 - **Feature Grouping**: Components are grouped into directories by feature/module rather than by type.
 
 ## Styling
-- **Utility-First**: Strong preference for Tailwind CSS for layout and responsiveness.
-- **Component Libraries**: MUI and AntD used for complex UI elements like DataGrids and Modals.
+- **Utility-First**: **Tailwind CSS** is the standard for layout, spacing, and all primitive styling.
+- **Component Library**: **Material UI (MUI)** is the standard for complex components (Tables, Modals, Sliders).
+- **Icons**: Standardize on `@mui/icons-material` or `react-icons`.
+- **Consolidation**: `antd` and `react-bootstrap` are deprecated. Avoid CSS-in-JS style injection patterns.
 - **Case Sensitivity**: Explicit focus on standardized casing for imports (Home/Products) to ensure Linux/Vercel compatibility.
 
 ## State Management
