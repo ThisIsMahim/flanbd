@@ -7,7 +7,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useSnackbar } from "notistack";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import "./home.css";
+import "./Home.css";
 
 // Fallback seed reviews
 const reviews = [
@@ -269,17 +269,16 @@ const Testimonial = () => {
             return (
               <div
                 key={index}
-                className={`testimonial-card-modern ${
-                  isActive ? "active" : isPrev ? "prev" : isNext ? "next" : "hidden"
-                }`}
+                className={`testimonial-card-modern ${isActive ? "active" : isPrev ? "prev" : isNext ? "next" : "hidden"
+                  }`}
                 style={{
                   transform: isActive
                     ? "translateX(0) scale(1)"
                     : isPrev
-                    ? "translateX(-100%) scale(0.9)"
-                    : isNext
-                    ? "translateX(100%) scale(0.9)"
-                    : "translateX(0) scale(0.8)",
+                      ? "translateX(-100%) scale(0.9)"
+                      : isNext
+                        ? "translateX(100%) scale(0.9)"
+                        : "translateX(0) scale(0.8)",
                   opacity: isActive ? 1 : isPrev || isNext ? 0.6 : 0,
                 }}
               >
@@ -360,9 +359,8 @@ const Testimonial = () => {
         {approved.map((_, index) => (
           <button
             key={index}
-            className={`testimonial-dot-modern ${
-              index === current ? "active" : ""
-            }`}
+            className={`testimonial-dot-modern ${index === current ? "active" : ""
+              }`}
             onClick={() => setCurrent(index)}
             aria-label={`Go to testimonial ${index + 1}`}
           />
@@ -375,31 +373,31 @@ const Testimonial = () => {
           <div className="w-11/12 max-w-lg rounded-xl shadow-2xl overflow-hidden my-8" style={{ background: '#ffffff', maxHeight: '85vh' }}>
             <div className="flex items-center justify-between px-5 py-4 border-b" style={{ borderColor: '#e2e8f0' }}>
               <h3 className="text-xl font-semibold" style={{ color: '#1e293b' }}>Share your experience</h3>
-              <button aria-label="Close" className="p-2 rounded hover:bg-gray-100" onClick={()=>setOpen(false)}>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#334155" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+              <button aria-label="Close" className="p-2 rounded hover:bg-gray-100" onClick={() => setOpen(false)}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#334155" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
               </button>
             </div>
 
             <div className="px-5 py-4 grid grid-cols-1 gap-3 overflow-y-auto" style={{ maxHeight: 'calc(85vh - 160px)' }}>
               <div className="grid grid-cols-1 gap-2">
                 <label className="text-sm font-medium" style={{ color: '#334155' }}>Full Name</label>
-                <input className="border rounded px-3 py-2 focus:outline-none focus:ring" style={{ borderColor: '#e2e8f0' }} placeholder="John Doe" value={form.name} onChange={(e)=>setForm({...form,name:e.target.value})} />
+                <input className="border rounded px-3 py-2 focus:outline-none focus:ring" style={{ borderColor: '#e2e8f0' }} placeholder="John Doe" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
               </div>
               <div className="grid grid-cols-1 gap-2">
                 <label className="text-sm font-medium" style={{ color: '#334155' }}>Email</label>
-                <input className="border rounded px-3 py-2 focus:outline-none focus:ring" style={{ borderColor: '#e2e8f0' }} placeholder="you@example.com" type="email" value={form.email} onChange={(e)=>setForm({...form,email:e.target.value})} />
+                <input className="border rounded px-3 py-2 focus:outline-none focus:ring" style={{ borderColor: '#e2e8f0' }} placeholder="you@example.com" type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
               </div>
               <div className="grid grid-cols-1 gap-2">
                 <label className="text-sm font-medium" style={{ color: '#334155' }}>Designation (optional)</label>
-                <input className="border rounded px-3 py-2 focus:outline-none focus:ring" style={{ borderColor: '#e2e8f0' }} placeholder="e.g., Researcher & Advisor" value={form.role} onChange={(e)=>setForm({...form,role:e.target.value})} />
+                <input className="border rounded px-3 py-2 focus:outline-none focus:ring" style={{ borderColor: '#e2e8f0' }} placeholder="e.g., Researcher & Advisor" value={form.role} onChange={(e) => setForm({ ...form, role: e.target.value })} />
               </div>
               <div className="grid grid-cols-1 gap-2">
                 <label className="text-sm font-medium" style={{ color: '#334155' }}>Rating (1-5)</label>
-                <input className="border rounded px-3 py-2 focus:outline-none focus:ring" style={{ borderColor: '#e2e8f0' }} placeholder="5" type="number" min="1" max="5" value={form.rating} onChange={(e)=>setForm({...form,rating: Number(e.target.value) || 5})} />
+                <input className="border rounded px-3 py-2 focus:outline-none focus:ring" style={{ borderColor: '#e2e8f0' }} placeholder="5" type="number" min="1" max="5" value={form.rating} onChange={(e) => setForm({ ...form, rating: Number(e.target.value) || 5 })} />
               </div>
               <div className="grid grid-cols-1 gap-2">
                 <label className="text-sm font-medium" style={{ color: '#334155' }}>Your Review</label>
-                <textarea className="border rounded px-3 py-2 focus:outline-none focus:ring" style={{ borderColor: '#e2e8f0' }} placeholder="Write a few words about your experience" rows="4" value={form.message} onChange={(e)=>setForm({...form,message:e.target.value})} />
+                <textarea className="border rounded px-3 py-2 focus:outline-none focus:ring" style={{ borderColor: '#e2e8f0' }} placeholder="Write a few words about your experience" rows="4" value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} />
               </div>
 
               {/* Internal Image Uploader with preview */}
@@ -417,16 +415,17 @@ const Testimonial = () => {
                     </div>
                   )}
                   <label className="px-3 py-2 border rounded cursor-pointer text-sm" style={{ borderColor: '#cbd5e1', color: '#1e293b', background: '#f8fafc' }}>
-                    <input type="file" accept="image/*" className="hidden" onChange={async(e)=>{
+                    <input type="file" accept="image/*" className="hidden" onChange={async (e) => {
                       const file = e.target.files && e.target.files[0];
-                      if(!file) return;
+                      if (!file) return;
                       const fd = new FormData();
                       fd.append('image', file);
                       setUploading(true);
-                      try{
-                        const { data } = await axios.post('/api/v1/testimonial/upload', fd, { headers: { 'Content-Type':'multipart/form-data' } });
-                        if(data?.url){ setForm(prev=>({...prev, imageUrl: data.url })); }
-                      }catch(err){}finally{ setUploading(false);} }} />
+                      try {
+                        const { data } = await axios.post('/api/v1/testimonial/upload', fd, { headers: { 'Content-Type': 'multipart/form-data' } });
+                        if (data?.url) { setForm(prev => ({ ...prev, imageUrl: data.url })); }
+                      } catch (err) { } finally { setUploading(false); }
+                    }} />
                     {uploading ? 'Uploading…' : 'Upload Image'}
                   </label>
                 </div>
@@ -437,26 +436,26 @@ const Testimonial = () => {
               <button
                 className="px-4 py-2 rounded-full border text-sm shadow-sm hover:shadow transition-all"
                 style={{ borderColor: '#cbd5e1', color: '#334155', background: '#ffffff' }}
-                onClick={()=>setOpen(false)}
+                onClick={() => setOpen(false)}
               >
                 Cancel
               </button>
               <button
-                className={`px-4 py-2 rounded-full text-sm font-semibold transition-colors ${ (submitting || uploading) ? 'opacity-60 cursor-not-allowed' : 'shadow-sm hover:shadow' }`}
+                className={`px-4 py-2 rounded-full text-sm font-semibold transition-colors ${(submitting || uploading) ? 'opacity-60 cursor-not-allowed' : 'shadow-sm hover:shadow'}`}
                 style={{ background: 'var(--brand-yellow)', color: '#ffffff' }}
                 disabled={submitting || uploading}
-                onClick={async()=>{
-                  if(!form.name || !form.email || !form.message) return;
+                onClick={async () => {
+                  if (!form.name || !form.email || !form.message) return;
                   setSubmitting(true);
-                  try{
+                  try {
                     await axios.post('/api/v1/testimonial', form, { headers: { 'Content-Type': 'application/json' } });
                     setOpen(false);
-                    setForm({ name:'', email:'', rating:5, message:'', imageUrl:'', role:'' });
+                    setForm({ name: '', email: '', rating: 5, message: '', imageUrl: '', role: '' });
                     // Do not refresh approved list now; new review is pending. Keep current UI unchanged.
                     enqueueSnackbar('Thank you! Your review was submitted.', { variant: 'success' });
-                  }catch(e){
+                  } catch (e) {
                     enqueueSnackbar(e?.response?.data?.message || 'Failed to submit review', { variant: 'error' });
-                  }finally{
+                  } finally {
                     setSubmitting(false);
                   }
                 }}

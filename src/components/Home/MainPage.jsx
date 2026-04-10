@@ -4,7 +4,7 @@ import Banner from "./Banner/Banner";
 import Categories from "./Categories/Categories";
 import CompanySlider from "./CompanySlider/CompanySlider";
 import DealSlider from "./DealSlider/DealSlider";
-import "./home.css";
+import "./Home.css";
 import ProductSlider from "./ProductSlider/ProductSlider";
 
 const MainPage = () => {
@@ -121,7 +121,7 @@ const MainPage = () => {
 
   return (
     <>
-              <MetaData title="FlanBD - Premium Anime Merchandise Giftshop" />
+      <MetaData title="FlanBD - Premium Anime Merchandise Giftshop" />
       <div className="page-water-bg">
         <Banner />
         <main className="flex flex-col gap-3 px-2 mt-16 sm:mt-2">

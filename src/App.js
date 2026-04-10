@@ -64,7 +64,7 @@ import Shipping from "./components/Cart/Shipping";
 import CancellationReturn from "./components/Layouts/Footer/CancellationReturn";
 import TermsConditions from "./components/Layouts/Footer/TermsConditions";
 import ShippingPolicies from "./components/Layouts/Footer/Shipping";
-import HomeBlogSection from "./components/home/HomeBlogSection";
+import HomeBlogSection from "./components/Home/HomeBlogSection";
 import MobileBottomNav from "./components/Layouts/Header/MobileBottomNav";
 
 // Configure axios defaults

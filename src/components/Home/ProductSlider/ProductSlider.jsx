@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { addItemsToCart } from "../../../actions/cartAction";
 import Loader from "../../Layouts/Loader";
 import "../SliderStyles.css";
-import "../home.css";
+import "../Home.css";
 import CategorySection from "./components/CategorySection";
 import QuickViewDialog from "./components/QuickViewDialog";
 import useAnimations from "./hooks/useAnimations";

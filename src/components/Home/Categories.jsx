@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Loader from "../Layouts/Loader";
-import "./home.css";
+import "./Home.css";
 
 const Categories = () => {
   const [categories, setCategories] = useState([]);
@@ -15,7 +15,7 @@ const Categories = () => {
   const headerRef = useRef(null);
   const cardsRef = useRef([]);
 
-      // Personalized translation content
+  // Personalized translation content
   const translations = {
     english: {
       title: "Explore the Collection",
@@ -32,7 +32,7 @@ const Categories = () => {
       (cat) =>
         cat.parent &&
         (typeof cat.parent === "object" ? cat.parent._id : cat.parent) ===
-          parentId
+        parentId
     );
 
     children.forEach((child) => {

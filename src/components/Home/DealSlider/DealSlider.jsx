@@ -6,7 +6,7 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useNavigate } from "react-router-dom";
 import { LanguageContext } from "../../../utils/LanguageContext";
-import "../home.css";
+import "../Home.css";
 import "./dealslider.css";
 
 import DealProductCard from "./DealProductCard";
