@@ -39,6 +39,7 @@ const Header = () => {
   const [cartDrawerOpen, setCartDrawerOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("All categories");
   const [categoryMenuOpen, setCategoryMenuOpen] = useState(false);
+  const [bannerText, setBannerText] = useState("");
   const dropdownRef = useRef(null);
   const categoryRef = useRef(null);
 
@@ -51,6 +52,14 @@ const Header = () => {
   useEffect(() => {
     axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/v1/categories`)
       .then(res => setCategories(res.data.categories))
+      .catch(() => { });
+
+    axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/v1/banner-text`)
+      .then(res => {
+        if (res.data.success && res.data.bannerText) {
+          setBannerText(res.data.bannerText.text);
+        }
+      })
       .catch(() => { });
 
     const handleClickOutside = (event) => {
@@ -69,6 +78,12 @@ const Header = () => {
     setCategoryMenuOpen(false);
     setMobileMenuOpen(false);
   }, [location]);
+
+  useEffect(() => {
+    const handleOpenCart = () => setCartDrawerOpen(true);
+    window.addEventListener("openCartDrawer", handleOpenCart);
+    return () => window.removeEventListener("openCartDrawer", handleOpenCart);
+  }, []);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -92,6 +107,11 @@ const Header = () => {
   return (
     <>
       <header className={`header-wrapper ${isScrolled ? 'scrolled' : ''} ${location.pathname === '/' ? 'home-page' : ''}`}>
+        {!isScrolled && bannerText && (
+          <div className="bg-white text-[#111] text-center py-[5px] px-4 text-[9px] sm:text-[10px] font-semibold tracking-[0.2em] uppercase w-full transition-all duration-300 border-b border-black/5 flex items-center justify-center">
+            {bannerText}
+          </div>
+        )}
         <div className="header-container">
           <button className="header-icon-btn mobile-menu-btn" onClick={() => setMobileMenuOpen(true)}>
             <MenuIcon />
