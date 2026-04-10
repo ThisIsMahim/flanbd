@@ -30,9 +30,9 @@ app.use(
     origin: [
       "http://localhost:3000",
       "http://localhost:3001",
-      // "https://demo.eyegearsbd.com",
       "https://flanbd.store",
-      
+      "https://flanbd.vercel.app",
+      "https://flanbd-backend.vercel.app",
     ],
     credentials: true,
   })
