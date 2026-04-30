@@ -38,8 +38,8 @@ class SearchFeatures {
     const removeFields = ["keyword", "page", "limit"];
     removeFields.forEach((key) => delete queryCopy[key]);
 
-    // Filter for Price and Ratings
-    let filter = {};
+    // Array of conditions for $and
+    let andConditions = [];
 
     // Handle price conversion to numbers and range logic
     if (queryCopy.price) {
@@ -53,14 +53,24 @@ class SearchFeatures {
         if (!isNaN(lte)) priceFilter.$lte = lte;
       }
       
-      // Only apply price filter if it's not the default "everything" range
-      // or if it has meaningful values
       if (Object.keys(priceFilter).length > 0) {
-        // If it's [0, 200000] (common default), we might want to skip it to be safe
-        // but let's keep it if specifically requested. 
-        // However, if gte is 0 and lte is very high, it's effectively "all".
         if (!(priceFilter.$gte === 0 && priceFilter.$lte >= 200000)) {
-           filter.price = priceFilter;
+           // Support both Number and String types in DB for resilience
+           const priceQueries = [];
+           if (priceFilter.$gte !== undefined && priceFilter.$lte !== undefined) {
+             priceQueries.push({ price: { $gte: priceFilter.$gte, $lte: priceFilter.$lte } });
+             priceQueries.push({ price: { $gte: String(priceFilter.$gte), $lte: String(priceFilter.$lte) } });
+           } else if (priceFilter.$gte !== undefined) {
+             priceQueries.push({ price: { $gte: priceFilter.$gte } });
+             priceQueries.push({ price: { $gte: String(priceFilter.$gte) } });
+           } else if (priceFilter.$lte !== undefined) {
+             priceQueries.push({ price: { $lte: priceFilter.$lte } });
+             priceQueries.push({ price: { $lte: String(priceFilter.$lte) } });
+           }
+
+           if (priceQueries.length > 0) {
+             andConditions.push({ $or: priceQueries });
+           }
         }
       }
     }
@@ -77,7 +87,10 @@ class SearchFeatures {
       }
 
       if (Object.keys(ratingsFilter).length > 0) {
-        filter.ratings = ratingsFilter;
+        const ratingsQueries = [];
+        ratingsQueries.push({ ratings: ratingsFilter });
+        ratingsQueries.push({ ratings: { $gte: String(ratingsFilter.$gte || 0) } });
+        andConditions.push({ $or: ratingsQueries });
       }
     }
 
@@ -106,20 +119,30 @@ class SearchFeatures {
         }).filter(id => id !== null);
         
         if (validObjectIds.length > 0) {
-          filter.categories = { $in: validObjectIds };
+          const catQueries = [];
+          catQueries.push({ categories: { $in: validObjectIds } });
+          catQueries.push({ categories: { $in: categoriesArr.map(id => id.toString()) } });
+          andConditions.push({ $or: catQueries });
         }
       }
     }
 
-    // Handle any other fields that might be in queryCopy
+    // Handle any other fields (brand, etc.)
     const handledFields = ["price", "ratings", "categories"];
     Object.keys(queryCopy).forEach(key => {
       if (!handledFields.includes(key)) {
-        filter[key] = queryCopy[key];
+        if (key === "brand") {
+          andConditions.push({ "brand.name": queryCopy[key] });
+        } else {
+          andConditions.push({ [key]: queryCopy[key] });
+        }
       }
     });
 
-    this.query = this.query.find(filter);
+    if (andConditions.length > 0) {
+      this.query = this.query.find({ $and: andConditions });
+    }
+
     return this;
   }
 

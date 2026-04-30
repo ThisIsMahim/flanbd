@@ -78,6 +78,14 @@ exports.getAllProducts = asyncErrorHandler(async (req, res, next) => {
     .search()
     .filter();
 
+  // For debugging production filters
+  const queryLog = {
+    originalQuery: req.query,
+    processedQueryObj: queryObj,
+    // We can't easily get the final filter from the query object without internal access,
+    // but we can log the counts
+  };
+
   const products = await searchFeature.query.sort({ sortOrder: 1, createdAt: -1 }).populate(
     "categories",
     "name _id parent"
@@ -89,6 +97,7 @@ exports.getAllProducts = asyncErrorHandler(async (req, res, next) => {
     products,
     productsCount,
     filteredProductsCount,
+    debug: queryLog,
   });
 });
 
