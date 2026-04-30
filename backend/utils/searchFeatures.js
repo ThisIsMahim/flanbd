@@ -32,7 +32,20 @@ class SearchFeatures {
   }
 
   filter() {
-    const queryCopy = { ...this.queryStr };
+    // Standardize query string to handle bracketed parameters (price[gte])
+    // if they weren't already parsed into objects by the server.
+    const queryCopy = {};
+    Object.keys(this.queryStr).forEach(key => {
+      const bracketMatch = key.match(/^([^\[]+)\[([^\]]+)\]$/);
+      if (bracketMatch) {
+        const parentKey = bracketMatch[1];
+        const subKey = bracketMatch[2];
+        if (!queryCopy[parentKey]) queryCopy[parentKey] = {};
+        queryCopy[parentKey][subKey] = this.queryStr[key];
+      } else {
+        queryCopy[key] = this.queryStr[key];
+      }
+    });
 
     // Removing fields from the query
     const removeFields = ["keyword", "page", "limit"];
