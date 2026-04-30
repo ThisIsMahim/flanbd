@@ -67,9 +67,9 @@ const UpdateProfile = () => {
             navigate('/account');
             dispatch({ type: UPDATE_PROFILE_RESET });
         }
-    }, [dispatch, error, user, isUpdated, navigate, enqueueSnackbar]);
+    }, [dispatch, error, user, isUpdated, navigate, enqueueSnackbar, t]);
     return (
-        <div className="min-h-screen bg-gray-50 pt-44 md:pt-48 pb-16">
+        <div className="min-h-screen bg-gray-50 pb-16">
             <MetaData title={t("Update Profile | Flan", "প্রোফাইল আপডেট | Flan")} />
 
             <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -10,8 +10,11 @@ gsap.registerPlugin(ScrollTrigger);
  * @param {Object} options - Optional GSAP animation overrides
  */
 const useScrollReveal = (ref, options = {}) => {
+  const optionsString = JSON.stringify(options);
+
   useEffect(() => {
     if (!ref.current) return;
+    
     const anim = gsap.fromTo(
       ref.current,
       { opacity: 0, y: 30 },
@@ -32,7 +35,7 @@ const useScrollReveal = (ref, options = {}) => {
       if (anim.scrollTrigger) anim.scrollTrigger.kill();
       anim.kill();
     };
-  }, [ref, options]);
+  }, [ref, optionsString]); // Use optionsString instead of options object literal
 };
 
 export default useScrollReveal;

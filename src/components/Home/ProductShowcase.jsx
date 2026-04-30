@@ -3,6 +3,7 @@ import axios from "axios";
 import ProductCard from "./ProductSlider/components/ProductCard";
 import SkeletonProduct from "../Products/SkeletonProduct";
 import QuickViewDialog from "./ProductSlider/components/QuickViewDialog";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useSnackbar } from "notistack";
 import { addItemsToCart } from "../../actions/cartAction";
@@ -14,6 +15,7 @@ const ProductShowcase = () => {
   const [quickViewProduct, setQuickViewProduct] = useState(null);
   const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
 
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
   const { cartItems } = useSelector((state) => state.cart);
@@ -30,8 +32,9 @@ const ProductShowcase = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("/api/v1/products");
-        setProducts(response.data.products || []);
+        const baseUrl = (process.env.REACT_APP_BACKEND_URL || "").replace(/\/$/, "");
+        const response = await axios.get(`${baseUrl}/api/v1/products`);
+        setProducts(response?.data?.products || []);
         setLoading(false);
       } catch (err) {
         setError("Failed to load products");
@@ -119,10 +122,7 @@ const ProductShowcase = () => {
               className="relative group overflow-hidden px-10 py-3 text-lg flex items-center gap-3 font-semibold notebook-viewall-btn"
               style={{ minWidth: 220 }}
               onClick={() => {
-                // If using react-router-dom's useNavigate, otherwise use <Link>
-                if (typeof window !== "undefined") {
-                  window.location.href = "/products";
-                }
+                navigate("/products");
               }}
             >
               <span className="relative z-10 flex items-center">

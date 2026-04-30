@@ -1,5 +1,4 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import { BrowserRouter as Router } from "react-router-dom";
@@ -16,7 +15,9 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <SnackbarProvider
-        maxSnack={2}
+        maxSnack={1}
+        preventDuplicate
+        autoHideDuration={3000}
         anchorOrigin={{
           vertical: "bottom",
           horizontal: "center",

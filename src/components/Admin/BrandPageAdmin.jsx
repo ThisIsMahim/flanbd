@@ -264,7 +264,7 @@ const BrandPageAdmin = () => {
     const colorMap = {
       success: "bg-green-100 text-green-800 border-green-300",
       danger: "bg-red-100 text-red-800 border-red-300",
-      warning: "bg-red-100 text-red-800 border-yellow-300",
+      warning: "bg-red-100 text-red-800 border-gold-300",
     };
     const iconMap = {
       success: <BsCheckCircle className="mr-2" />,
@@ -759,4 +759,5 @@ const BrandPageAdmin = () => {
 };
 
 export default BrandPageAdmin;
+
 

@@ -103,7 +103,7 @@ const ContactUs = () => {
   }, []);
 
   return (
-    <div className="bg-white flex items-center justify-center pt-24 pb-8 sm:pt-32 sm:pb-12 px-5 font-sans min-h-[calc(100vh-80px)]">
+    <div className="bg-white flex items-center justify-center pt-8 pb-8 sm:pt-12 sm:pb-12 px-5 font-sans min-h-[calc(100vh-80px)]">
       <MetaData title="Contact Us | Flan" />
       
       <div className="w-full max-w-[850px] mx-auto">

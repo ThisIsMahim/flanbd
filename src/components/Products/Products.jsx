@@ -3,7 +3,6 @@ import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import GridViewIcon from "@mui/icons-material/GridView";
-import StarIcon from "@mui/icons-material/Star";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import Pagination from "@mui/material/Pagination";
@@ -129,7 +128,7 @@ const Products = () => {
       setSelectedSubCategory(null);
       setCategory("");
     }
-  }, [categoryName, subCategoryName, categoriesData]);
+  }, [categoryName, subCategoryName, categoriesData, brand, keyword]);
 
   useEffect(() => { setCurrentPage(1); }, [brand, category, keyword, selectedSubCategory, selectedCategories, priceRange]);
 
@@ -154,16 +153,6 @@ const Products = () => {
     setPriceRange([Math.max(priceMin, newPrice[0]), Math.min(priceMax, newPrice[1])]);
   };
 
-  const handleMinPriceChange = (e) => {
-    const val = e.target.value === "" ? 0 : Number(e.target.value);
-    setLocalPriceRange([val, localPriceRange[1]]);
-  };
-
-  const handleMaxPriceChange = (e) => {
-    const val = e.target.value === "" ? priceMax : Number(e.target.value);
-    setLocalPriceRange([localPriceRange[0], val]);
-  };
-
   const handlePriceInputBlur = () => {
     let min = Math.max(priceMin, Math.min(localPriceRange[0], priceMax));
     let max = Math.max(priceMin, Math.min(localPriceRange[1], priceMax));
@@ -186,7 +175,7 @@ const Products = () => {
     setSelectedCategories([]);
     if (isMobile) setMobileFiltersOpen(false);
     navigate("/products");
-  }, [isMobile, navigate, priceMin, priceMax]);
+  }, [isMobile, navigate]);
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
@@ -404,7 +393,7 @@ const Products = () => {
   return (
     <>
       <MetaData title="All Products | FlanBD" />
-      <main className="bg-[var(--bg-primary)] pt-44 md:pt-48 pb-16">
+      <main className="bg-[var(--bg-primary)] pb-16">
         <div className="products-hero-section">
           <Breadcrumb items={breadcrumbItems.slice(0, -1)} />
           <h1 className="products-hero-title">

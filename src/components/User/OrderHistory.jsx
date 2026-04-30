@@ -140,11 +140,11 @@ const OrderHistory = () => {
 
           {/* Gold User Benefits Section */}
           {summary?.isGold && (
-            <Card className="mb-8 bg-gradient-to-r from-yellow-50 to-amber-50 border-2 border-yellow-200">
+            <Card className="mb-8 bg-gradient-to-r from-gold-50 to-amber-50 border-2 border-gold-200">
               <CardContent>
                 <Box display="flex" alignItems="center" mb={2}>
-                  <GoldIcon className="text-yellow-600 mr-2" />
-                  <Typography variant="h6" className="text-yellow-800">
+                  <GoldIcon className="text-gold-600 mr-2" />
+                  <Typography variant="h6" className="text-gold-800">
                     {translations.goldUser}
                   </Typography>
                 </Box>
@@ -358,3 +358,4 @@ const OrderHistory = () => {
 };
 
 export default OrderHistory;
+

@@ -11,9 +11,17 @@ const TrustedCompaniesCarousel = () => {
   useScrollReveal(titleRef);
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_BACKEND_URL}/api/trusted-companies`)
-      .then((res) => res.json())
+    const baseUrl = (process.env.REACT_APP_BACKEND_URL || "").replace(/\/$/, "");
+    fetch(`${baseUrl}/api/trusted-companies`)
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to fetch");
+        return res.json();
+      })
       .then((data) => setCompanies(Array.isArray(data) ? data : []))
+      .catch((err) => {
+        console.error("Error fetching trusted companies:", err);
+        setCompanies([]);
+      })
       .finally(() => setLoading(false));
   }, []);
 

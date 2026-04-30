@@ -19,7 +19,7 @@ const AboutUs = () => {
   const t = (eng, ben) => (language === "english" ? eng : ben);
 
   return (
-    <div className="min-h-screen bg-white pt-32 pb-16 md:pt-40 md:pb-24 overflow-x-hidden">
+    <div className="min-h-screen bg-white pt-8 pb-16 md:pt-12 md:pb-24 overflow-x-hidden">
       <MetaData title={t("About Us | Flan", "আমাদের সম্পর্কে | Flan")} />
 
       <div className="container mx-auto px-4 max-w-6xl">

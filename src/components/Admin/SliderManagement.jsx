@@ -83,7 +83,7 @@ function DraggableTableRow({
       </td>
       <td className="p-2 border">
         <button
-          className="bg-yellow-400 px-2 py-1 mr-2 rounded"
+          className="bg-gold-400 px-2 py-1 mr-2 rounded"
           onClick={() => onEdit(slider)}
         >
           <Pencil size={14} />
@@ -514,3 +514,4 @@ const SliderManagement = () => {
 };
 
 export default SliderManagement;
+

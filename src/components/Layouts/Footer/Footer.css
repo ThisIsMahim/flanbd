@@ -1,225 +1,225 @@
 /* ===================================
-   REDESIGNED FOOTER — COMPACT & PREMIUM
+   FOOTER — PREMIUM & RHYTHMIC
    =================================== */
 
 .footer-container {
-  padding: 2rem 1rem 1rem;
-  background: transparent;
-  color: #ffffff;
-  font-family: 'Outfit', sans-serif; /* Using a modern sans-serif, fallback to global */
+  padding: var(--space-lg) var(--space-md) var(--space-md);
+  background: var(--brand-bg);
+  color: white;
+  font-family: var(--font-sans);
+  border-top: 1px solid var(--glass-border);
 }
 
 .footer-inner {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
-  background: #000000;
-  border-radius: 0px;
-  padding: 3rem 2.5rem;
+  padding: var(--space-lg) 0;
   position: relative;
-  overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-}
-
-/* Red top border highlight */
-.footer-inner::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: #ff1837;
 }
 
 .footer-grid {
   display: grid;
   grid-template-columns: 1.5fr 1fr 1fr 1.5fr;
-  gap: 2rem;
+  gap: var(--space-lg);
 }
 
 .footer-col-title {
-  color: #ff1837;
+  color: white;
   text-transform: uppercase;
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   font-weight: 800;
-  letter-spacing: 0.15em;
-  margin-bottom: 1.8rem;
+  letter-spacing: 0.2em;
+  margin-bottom: var(--space-md);
+  position: relative;
+  display: inline-block;
 }
 
-/* Support Column Styles */
+.footer-col-title::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 24px;
+  height: 2px;
+  background: var(--brand-primary);
+  box-shadow: 0 0 8px var(--brand-primary);
+}
+
+/* Support Buttons */
 .support-buttons {
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
-  margin-bottom: 1.5rem;
+  gap: 12px;
+  margin-bottom: var(--space-md);
 }
 
 .support-btn {
   display: flex;
   align-items: center;
-  gap: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  border-radius: 30px;
-  padding: 0.6rem 1.2rem;
-  color: #ffffff !important;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: 14px 20px;
+  color: white !important;
   text-decoration: none;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   font-weight: 600;
-  width: fit-content;
-  transition: all 0.3s ease;
+  transition: all 0.5s var(--spring);
 }
 
 .support-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: #ffffff;
-  transform: translateX(5px);
+  background: var(--brand-primary);
+  border-color: var(--brand-primary);
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 15px 30px rgba(255, 24, 55, 0.3);
 }
 
+.support-btn svg {
+  font-size: 20px;
+}
+
+/* Socials */
 .footer-socials {
   display: flex;
   gap: 12px;
 }
 
 .social-icon {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #ffffff !important;
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-border);
+  color: white !important;
+  transition: all 0.5s var(--spring);
 }
 
 .social-icon:hover {
-  transform: translateY(-3px);
-  opacity: 0.9;
+  transform: translateY(-10px) scale(1.15) rotate(5deg);
+  background: white;
+  color: var(--brand-bg) !important;
+  border-color: white;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
 }
 
-.social-icon.facebook { background: #1877F2; }
-.social-icon.instagram { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
-.social-icon.whatsapp { background: #25D366; }
+.social-icon.facebook:hover { background: #1877F2; color: white !important; }
+.social-icon.instagram:hover { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: white !important; }
+.social-icon.whatsapp:hover { background: #25D366; color: white !important; }
 
-/* Links Styling */
+/* Links */
 .footer-links {
   list-style: none;
   padding: 0;
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 12px;
 }
 
 .footer-links a {
-  color: rgba(255, 255, 255, 0.8) !important;
+  color: rgba(255, 255, 255, 0.5) !important;
   text-decoration: none;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   font-weight: 500;
-  transition: color 0.3s ease;
+  transition: all 0.3s var(--ease-out);
+  display: inline-block;
 }
 
 .footer-links a:hover {
-  color: #ffffff !important;
+  color: white !important;
+  transform: translateX(8px);
 }
 
-/* Stay Connected Styling */
+/* Stay Connected */
 .connection-info {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 16px;
 }
 
 .brand-name {
-  font-size: 1.1rem;
-  font-weight: 800;
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 400;
   margin: 0;
+  letter-spacing: 0.1em;
+  color: var(--brand-primary);
 }
 
 .warehouse-info, .note, .email-info {
-  font-size: 0.8rem;
-  line-height: 1.5;
-  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.5);
   margin: 0;
 }
 
 .warehouse-info strong, .note strong {
-  color: #ffffff;
+  color: white;
 }
 
 .email-info a {
-  color: #ff1837 !important;
-  text-decoration: none;
-  font-weight: 600;
+  color: white !important;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  font-weight: 700;
+  transition: color 0.3s var(--ease-out);
+}
+
+.email-info a:hover {
+  color: var(--brand-primary) !important;
 }
 
 /* Bottom Bar */
 .footer-bottom-bar {
-  max-width: 1200px;
-  margin: 1.5rem auto 0;
+  max-width: 1400px;
+  margin: var(--space-lg) auto 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 0.5rem;
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--glass-border);
 }
 
-.copyright-text {
-  font-size: 0.7rem;
+.copyright-text, .footer-bottom-credits {
+  font-size: 11px;
   letter-spacing: 0.1em;
-  color: #888888;
-  margin: 0;
+  color: rgba(255, 255, 255, 0.3);
   text-transform: uppercase;
   font-weight: 700;
 }
 
-.footer-bottom-credits {
-  font-size: 0.7rem;
-  color: #888888;
-  font-weight: 700;
-}
-
-.heart {
-  color: #ff1837;
-  margin: 0 2px;
-}
-
 .soft-engine-link {
-  color: #ff1837 !important;
+  color: rgba(255, 255, 255, 0.6) !important;
   text-decoration: none;
   font-weight: 800;
+  transition: color 0.3s ease;
 }
 
-/* Back to top (hidden as per user request for "compact like image" - also the image doesn't show it) */
-/* If the user wants to keep it, we can. The previous CSS had it. I'll keep the logic in JS but hide it if it's too intrusive. */
+.soft-engine-link:hover {
+  color: var(--brand-primary) !important;
+}
 
-/* Responsive Design */
+/* Responsive */
 @media (max-width: 1024px) {
   .footer-grid {
     grid-template-columns: 1fr 1fr;
-    gap: 3rem 2rem;
+    gap: var(--space-lg) var(--space-md);
   }
 }
 
 @media (max-width: 640px) {
-  .footer-inner {
-    padding: 2.5rem 1.25rem;
-  }
-  
   .footer-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 2.5rem 1rem;
-  }
-
-  .support-col, .stay-connected {
-    grid-column: span 2;
-  }
-
-  .footer-col-title {
-    margin-bottom: 1.2rem;
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
   }
   
   .footer-bottom-bar {
     flex-direction: column;
-    gap: 0.8rem;
+    gap: 16px;
     text-align: center;
   }
 }

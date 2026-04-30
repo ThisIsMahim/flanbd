@@ -42,7 +42,7 @@ const UnifiedProductCard = ({
   const inCart = typeof isProductInCart === 'function' ? isProductInCart(product._id) : false;
 
   return (
-    <div className="bg-white border-none shadow-[0_4px_12px_rgba(0,0,0,0.06)] p-3 transition-all duration-200 relative flex flex-col h-full rounded-xl min-h-[350px] hover:shadow-[0_8px_20px_rgba(0,0,0,0.08)] hover:-translate-y-0.5 group/card md:p-4 lg:p-[18px] md:h-[400px] lg:h-[390px]">
+    <div className="bg-white border-none shadow-[0_4px_12px_rgba(0,0,0,0.06)] p-3 transition-all duration-500 ease-[var(--ease-out-expo)] relative flex flex-col h-full rounded-xl min-h-[350px] hover:shadow-[0_12px_30px_rgba(0,0,0,0.1)] hover:-translate-y-1.5 hover:scale-[1.01] group/card md:p-4 lg:p-[18px] md:h-[400px] lg:h-[390px]">
       {/* Image Section */}
       <div
         className="relative w-full h-[200px] flex items-center justify-center bg-[#f8fafc] p-2 rounded-xl overflow-hidden m-2 mx-auto md:h-[220px] lg:max-h-[230px] md:rounded-[14px] lg:rounded-2xl"
@@ -53,7 +53,7 @@ const UnifiedProductCard = ({
           <OptimizedImg
             src={isHovered && hoverImage && !selectedImageUrl ? hoverImage : mainImage}
             alt={product.name}
-            className="w-full h-full object-contain transition-transform duration-300 md:scale-[0.9] group-hover/card:scale-[1.02]"
+            className="w-full h-full object-contain transition-transform duration-700 ease-[var(--ease-out-expo)] md:scale-[0.9] group-hover/card:scale-[1.05]"
             quality="80"
             format="auto"
             placeholder="blur"
@@ -162,9 +162,9 @@ const UnifiedProductCard = ({
                     <div key={idx} className="relative group/color flex-shrink-0">
                       <button
                         onClick={(e) => { e.preventDefault(); setSelectedImageUrl(img.url); }}
-                        className={`relative w-12 h-12 rounded-full overflow-hidden transition-all duration-200 sm:w-14 sm:h-14 ${selectedImageUrl === img.url
-                            ? 'ring-2 ring-[#fde047] shadow-md'
-                            : 'ring-1 ring-gray-200 hover:ring-[#4f46e5]'
+                        className={`relative w-12 h-12 rounded-full overflow-hidden transition-all duration-500 ease-[var(--spring)] sm:w-14 sm:h-14 ${selectedImageUrl === img.url
+                            ? 'ring-2 ring-[#fde047] shadow-md scale-110'
+                            : 'ring-1 ring-gray-200 hover:ring-[#4f46e5] hover:scale-105'
                           }`}
                         aria-label={`Color ${idx + 1}`}
                       >
@@ -186,7 +186,7 @@ const UnifiedProductCard = ({
           <Link
             to={`/product/${product._id}`}
             state={selectedImageUrl ? { selectedImageUrl } : undefined}
-            className="w-full mt-[10px] text-[1rem] font-semibold border-2 border-[#f3e955] bg-[#f3e955] text-[#0f172a] py-2 rounded-xl transition-all duration-200 cursor-pointer flex items-center justify-center no-underline hover:bg-[#FF1837] hover:border-[#FF1837] hover:text-white hover:-translate-y-[1px] hover:shadow-[0_4px_12px_rgba(255,24,55,0.25)] md:py-3 lg:py-4 md:rounded-2xl lg:rounded-2xl md:text-[1.1rem]"
+            className="w-full mt-[10px] text-[1rem] font-semibold border-2 border-[#f3e955] bg-[#f3e955] text-[#0f172a] py-2 rounded-xl transition-all duration-500 ease-[var(--ease-out-expo)] cursor-pointer flex items-center justify-center no-underline hover:bg-[#FF1837] hover:border-[#FF1837] hover:text-white hover:-translate-y-1 hover:shadow-[0_8px_25px_rgba(255,24,55,0.35)] md:py-3 lg:py-4 md:rounded-2xl lg:rounded-2xl md:text-[1.1rem]"
           >
             Buy Now
           </Link>

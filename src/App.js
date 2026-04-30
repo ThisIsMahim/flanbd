@@ -1,71 +1,76 @@
 import axios from "axios";
-import { useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
+import "./styles/globals.css";
 import { HelmetProvider } from "react-helmet-async";
 import { useDispatch } from "react-redux";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import WebFont from "webfontloader";
-import BlogTable from "./Blogs/BlogTable";
-import BlogDetail from "./Blogs/ShowBlogs/BlogDetails";
-import ShowBlogs from "./Blogs/ShowBlogs/ShowBlogs";
-import ProtectedRoute from "./Routes/ProtectedRoute";
+import Loader from "./components/Layouts/Loader";
 import { loadUser } from "./actions/userAction";
-import BannerTextAdmin from "./components/Admin/BannerTextAdmin";
-import BrandPageAdmin from "./components/Admin/BrandPageAdmin";
-import CategoryAdminPage from "./components/Admin/CategoryAdminPage";
-import Dashboard from "./components/Admin/Dashboard";
-import MainData from "./components/Admin/MainData";
-import NewProduct from "./components/Admin/NewProduct";
-import OrderTable from "./components/Admin/OrderTable";
-import ProductTable from "./components/Admin/ProductTable";
-import ReviewScreenshotsAdmin from "./components/Admin/ReviewScreenshots/ReviewScreenshotsAdmin";
-import ReviewsTable from "./components/Admin/ReviewsTable";
-import CouponAdmin from "./components/Admin/CouponAdmin";
-import SliderManagement from "./components/Admin/SliderManagement";
-import TrustedCompaniesAdmin from "./components/Admin/TrustedCompanies/TrustedCompaniesAdmin";
-import TestimonialTable from "./components/Admin/TestimonialTable";
-import UpdateOrder from "./components/Admin/UpdateOrder";
-import UpdateProduct from "./components/Admin/UpdateProduct";
-import UpdateUser from "./components/Admin/UpdateUser";
-import UserMessagesPage from "./components/Admin/UserMessagesPage";
-import UserTable from "./components/Admin/UserTable";
-import VideoGallery from "./components/Admin/VideoGallery";
-import Cart from "./components/Cart/Cart";
-import OrderConfirm from "./components/Cart/OrderConfirm";
-import OrderStatus from "./components/Cart/OrderStatus";
-import OrderSuccess from "./components/Cart/OrderSuccess";
-import Payment from "./components/Cart/Payment";
-import GuestCheckout from "./components/Cart/GuestCheckout";
-import GuestOrderTracking from "./components/Cart/GuestOrderTracking";
-
-import Home from "./components/Home/Home.jsx";
-import Footer from "./components/Layouts/Footer/Footer";
-import Header from "./components/Layouts/Header/Header";
-import AboutUs from "./components/Layouts/aboutUsPage/AboutUs";
-import ContactUs from "./components/Layouts/contactUsPage/ContactUs";
-import ExplorePage from "./components/Layouts/explorePage/ExplorePage";
-import ServicesPage from "./components/Layouts/servicesPage/ServicesPage";
-import NotFound from "./components/NotFound";
-import MyOrders from "./components/Order/MyOrders";
-import OrderDetails from "./components/Order/OrderDetails";
-import OrderHistory from "./components/User/OrderHistory";
-import ProductDetails from "./components/ProductDetails/ProductDetails";
-import Products from "./components/Products/Products.jsx";
-import Account from "./components/User/Account";
-import ForgotPassword from "./components/User/ForgotPassword";
-import Login from "./components/User/Login";
-import Register from "./components/User/Register";
-import ResetPassword from "./components/User/ResetPassword";
-import UpdatePassword from "./components/User/UpdatePassword";
-import UpdateProfile from "./components/User/UpdateProfile";
-import Wishlist from "./components/Wishlist/Wishlist";
-import GoldDetails from "./components/Layouts/Gold/GoldDetails";
 import { LanguageProvider } from "./utils/LanguageContext";
-import Shipping from "./components/Cart/Shipping";
-import CancellationReturn from "./components/Layouts/Footer/CancellationReturn";
-import TermsConditions from "./components/Layouts/Footer/TermsConditions";
-import ShippingPolicies from "./components/Layouts/Footer/Shipping";
-import HomeBlogSection from "./components/Home/HomeBlogSection";
-import MobileBottomNav from "./components/Layouts/Header/MobileBottomNav";
+import HomeSkeleton from "./components/Home/HomeSkeleton";
+
+// Feature components (Lazy loaded)
+const BlogTable = lazy(() => import("./Blogs/BlogTable"));
+const BlogDetail = lazy(() => import("./Blogs/ShowBlogs/BlogDetails"));
+const ShowBlogs = lazy(() => import("./Blogs/ShowBlogs/ShowBlogs"));
+const ProtectedRoute = lazy(() => import("./Routes/ProtectedRoute"));
+const BannerTextAdmin = lazy(() => import("./components/Admin/BannerTextAdmin"));
+const BrandPageAdmin = lazy(() => import("./components/Admin/BrandPageAdmin"));
+const CategoryAdminPage = lazy(() => import("./components/Admin/CategoryAdminPage"));
+const Dashboard = lazy(() => import("./components/Admin/Dashboard"));
+const MainData = lazy(() => import("./components/Admin/MainData"));
+const NewProduct = lazy(() => import("./components/Admin/NewProduct"));
+const OrderTable = lazy(() => import("./components/Admin/OrderTable"));
+const ProductTable = lazy(() => import("./components/Admin/ProductTable"));
+const ReviewScreenshotsAdmin = lazy(() => import("./components/Admin/ReviewScreenshots/ReviewScreenshotsAdmin"));
+const ReviewsTable = lazy(() => import("./components/Admin/ReviewsTable"));
+const CouponAdmin = lazy(() => import("./components/Admin/CouponAdmin"));
+const SliderManagement = lazy(() => import("./components/Admin/SliderManagement"));
+const TrustedCompaniesAdmin = lazy(() => import("./components/Admin/TrustedCompanies/TrustedCompaniesAdmin"));
+const TestimonialTable = lazy(() => import("./components/Admin/TestimonialTable"));
+const UpdateOrder = lazy(() => import("./components/Admin/UpdateOrder"));
+const UpdateProduct = lazy(() => import("./components/Admin/UpdateProduct"));
+const UpdateUser = lazy(() => import("./components/Admin/UpdateUser"));
+const UserMessagesPage = lazy(() => import("./components/Admin/UserMessagesPage"));
+const UserTable = lazy(() => import("./components/Admin/UserTable"));
+const VideoGallery = lazy(() => import("./components/Admin/VideoGallery"));
+const Cart = lazy(() => import("./components/Cart/Cart"));
+const OrderConfirm = lazy(() => import("./components/Cart/OrderConfirm"));
+const OrderStatus = lazy(() => import("./components/Cart/OrderStatus"));
+const OrderSuccess = lazy(() => import("./components/Cart/OrderSuccess"));
+const Payment = lazy(() => import("./components/Cart/Payment"));
+const GuestCheckout = lazy(() => import("./components/Cart/GuestCheckout"));
+const GuestOrderTracking = lazy(() => import("./components/Cart/GuestOrderTracking"));
+
+const Home = lazy(() => import("./components/Home/Home.jsx"));
+const Footer = lazy(() => import("./components/Layouts/Footer/Footer"));
+const Header = lazy(() => import("./components/Layouts/Header/Header"));
+const AboutUs = lazy(() => import("./components/Layouts/aboutUsPage/AboutUs"));
+const ContactUs = lazy(() => import("./components/Layouts/contactUsPage/ContactUs"));
+const ExplorePage = lazy(() => import("./components/Layouts/explorePage/ExplorePage"));
+const ServicesPage = lazy(() => import("./components/Layouts/servicesPage/ServicesPage"));
+const NotFound = lazy(() => import("./components/NotFound"));
+const MyOrders = lazy(() => import("./components/Order/MyOrders"));
+const OrderDetails = lazy(() => import("./components/Order/OrderDetails"));
+const OrderHistory = lazy(() => import("./components/User/OrderHistory"));
+const ProductDetails = lazy(() => import("./components/ProductDetails/ProductDetails"));
+const Products = lazy(() => import("./components/Products/Products.jsx"));
+const Account = lazy(() => import("./components/User/Account"));
+const ForgotPassword = lazy(() => import("./components/User/ForgotPassword"));
+const Login = lazy(() => import("./components/User/Login"));
+const Register = lazy(() => import("./components/User/Register"));
+const ResetPassword = lazy(() => import("./components/User/ResetPassword"));
+const UpdatePassword = lazy(() => import("./components/User/UpdatePassword"));
+const UpdateProfile = lazy(() => import("./components/User/UpdateProfile"));
+const Wishlist = lazy(() => import("./components/Wishlist/Wishlist"));
+const GoldDetails = lazy(() => import("./components/Layouts/Gold/GoldDetails"));
+const Shipping = lazy(() => import("./components/Cart/Shipping"));
+const CancellationReturn = lazy(() => import("./components/Layouts/Footer/CancellationReturn"));
+const TermsConditions = lazy(() => import("./components/Layouts/Footer/TermsConditions"));
+const ShippingPolicies = lazy(() => import("./components/Layouts/Footer/Shipping"));
+const HomeBlogSection = lazy(() => import("./components/Home/HomeBlogSection"));
+const MobileBottomNav = lazy(() => import("./components/Layouts/Header/MobileBottomNav"));
 
 // Configure axios defaults
 axios.defaults.withCredentials = true;
@@ -240,7 +245,11 @@ function App() {
       <LanguageProvider>
         {!pathname.startsWith("/admin") && <Header />}
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={
+            <Suspense fallback={<HomeSkeleton />}>
+              <Home />
+            </Suspense>
+          } />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
 

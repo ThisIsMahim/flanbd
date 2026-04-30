@@ -101,7 +101,7 @@ const OrderTable = () => {
             case 'HIGH':
                 return 'bg-red-100 text-red-800';
             case 'MEDIUM':
-                return 'bg-yellow-100 text-yellow-800';
+                return 'bg-gold-100 text-gold-800';
             case 'LOW':
                 return 'bg-green-100 text-green-800';
             case 'NEW':
@@ -156,7 +156,7 @@ const OrderTable = () => {
                             params.row.status === "Delivered" ? (
                                 <span className="text-sm bg-green-100 p-1 px-2 font-medium rounded-full text-green-800">{params.row.status}</span>
                             ) : params.row.status === "Shipped" ? (
-                                <span className="text-sm bg-yellow-100 p-1 px-2 font-medium rounded-full text-yellow-800">{params.row.status}</span>
+                                <span className="text-sm bg-gold-100 p-1 px-2 font-medium rounded-full text-gold-800">{params.row.status}</span>
                             ) : (
                                 <span className="text-sm bg-purple-100 p-1 px-2 font-medium rounded-full text-purple-800">{params.row.status}</span>
                             )
@@ -407,7 +407,7 @@ const OrderTable = () => {
                                 <div>
                                     <h3 className="font-semibold text-gray-700">Success Ratio</h3>
                                     <p className={`text-lg font-bold ${selectedOrder.fraudCheck.successRatio >= 70 ? 'text-green-600' :
-                                        selectedOrder.fraudCheck.successRatio >= 40 ? 'text-yellow-600' : 'text-red-600'
+                                        selectedOrder.fraudCheck.successRatio >= 40 ? 'text-gold-600' : 'text-red-600'
                                         }`}>
                                         {selectedOrder.fraudCheck.successRatio}%
                                     </p>
@@ -475,9 +475,9 @@ const OrderTable = () => {
                                     <h3 className="font-semibold text-gray-700 mb-2">Errors</h3>
                                     <div className="space-y-2">
                                         {selectedOrder.fraudCheck.errors.map((error, index) => (
-                                            <div key={index} className="bg-yellow-50 p-3 rounded border-l-4 border-yellow-400">
-                                                <span className="font-medium text-yellow-800">{error.errorFrom}</span>
-                                                <p className="text-yellow-700 text-sm mt-1">{error.message}</p>
+                                            <div key={index} className="bg-gold-50 p-3 rounded border-l-4 border-gold-400">
+                                                <span className="font-medium text-gold-800">{error.errorFrom}</span>
+                                                <p className="text-gold-700 text-sm mt-1">{error.message}</p>
                                             </div>
                                         ))}
                                     </div>
@@ -492,3 +492,4 @@ const OrderTable = () => {
 };
 
 export default OrderTable;
+

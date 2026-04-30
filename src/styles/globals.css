@@ -3,57 +3,72 @@
    Clean Minimal Aesthetic
    =================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 /* ===================================
    DESIGN TOKENS
    =================================== */
 :root {
-  /* Brand - Refined Modern Palette */
-  --accent: #FF1837; /* Logo Red */
+  /* Brand - Refined Modern Palette (HEX) */
+  --accent: #FF1837;
   --accent-hover: #FF1837;
   --accent-subtle: rgba(255, 24, 55, 0.05);
+  --accent-glow: rgba(255, 24, 55, 0.3);
 
-  /* Neutrals - Warm & Modern */
-  --bg-primary: #FCFCFB;
-  --bg-surface: #FFFFFF;
-  --bg-subtle: #F5F5F3;
-  --bg-elevated: #FFFFFF;
+  /* Neutrals - Warm & Modern (HEX) */
+  --bg-primary: #0a0a0c;
+  --bg-surface: #121216;
+  --bg-subtle: #1a1a20;
+  --bg-elevated: #1a1a20;
 
-  --text-primary: #0A0A0A;
-  --text-secondary: #4A4A4A;
-  --text-muted: #8E8E8E;
-  --text-inverse: #FFFFFF;
+  --text-primary: #FFFFFF;
+  --text-secondary: rgba(255, 255, 255, 0.7);
+  --text-muted: rgba(255, 255, 255, 0.4);
+  --text-inverse: #0a0a0c;
+
+  /* Brand Semantic Colors */
+  --brand-primary: #FF1837;
+  --brand-primary-hover: #ff6e80;
+  --brand-bg: #0a0a0c;
+  --brand-bg-soft: #121216;
 
   /* Borders */
-  --border: #EEEEEC;
-  --border-subtle: #F5F5F3;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-subtle: rgba(255, 255, 255, 0.04);
+  --glass-border: rgba(255, 255, 255, 0.06);
+  --glass-bg: rgba(18, 18, 22, 0.7);
 
-  /* Shadows - Layered & Natural */
-  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.02);
-  --shadow-md: 0 8px 16px rgba(0, 0, 0, 0.04);
-  --shadow-lg: 0 16px 32px rgba(0, 0, 0, 0.06);
-  --shadow-xl: 0 32px 64px rgba(0, 0, 0, 0.08);
+  /* Shadows */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 8px 16px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 16px 32px rgba(0, 0, 0, 0.3);
+  --shadow-xl: 0 32px 64px rgba(0, 0, 0, 0.4);
 
   /* Typography — Font Families */
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-display: 'Bebas Neue', 'Oswald', 'Impact', sans-serif;
+  --font-body: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  --font-sans: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  --font-display: 'Bebas Neue', cursive;
 
-  /* Fluid Type Scale — Major Third (1.25) via Utopia.fyi */
-  --text-xs:   clamp(0.6944rem, 0.6727rem + 0.1087vw, 0.72rem);
-  --text-sm:   clamp(0.8333rem, 0.7976rem + 0.1786vw, 0.9rem);
-  --text-base: clamp(1rem, 0.9464rem + 0.2679vw, 1.125rem);
-  --text-lg:   clamp(1.2rem, 1.1214rem + 0.3929vw, 1.4063rem);
-  --text-xl:   clamp(1.44rem, 1.3286rem + 0.5571vw, 1.7578rem);
-  --text-2xl:  clamp(1.728rem, 1.5738rem + 0.7712vw, 2.1973rem);
-  --text-3xl:  clamp(2.0736rem, 1.8641rem + 1.0476vw, 2.7466rem);
-  --text-4xl:  clamp(2.4883rem, 2.2072rem + 1.4054vw, 3.4332rem);
-  --text-5xl:  clamp(2.986rem, 2.6116rem + 1.872vw, 4.2915rem);
+  /* Fluid Type Scale */
+  --text-xs:   0.75rem;
+  --text-sm:   0.875rem;
+  --text-base: 1rem;
+  --text-lg:   1.125rem;
+  --text-xl:   1.25rem;
+  --text-2xl:  1.5rem;
+  --text-3xl:  2rem;
+  --text-4xl:  3rem;
+  --text-5xl:  4rem;
 
-  /* Spacing - Fluid & Rhythmic */
+  /* Spacing */
   --container-max: 1440px;
-  --section-gap: clamp(2.5rem, 8vw, 8rem);
-  --section-px: clamp(1rem, 5vw, 6rem);
+  --section-gap: 5rem;
+  --section-px: 1.5rem;
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2rem;
+  --space-xl: 3rem;
 
   /* Radius */
   --radius-sm: 4px;
@@ -63,7 +78,10 @@
   --radius-full: 9999px;
 
   /* Transitions */
-  --ease-out: cubic-bezier(0.19, 1, 0.22, 1); /* Exponential Ease Out */
+  --ease-out: cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --spring: cubic-bezier(0.43, 0.13, 0.23, 0.96);
+  
   --transition-fast: 0.2s var(--ease-out);
   --transition-base: 0.4s var(--ease-out);
   --transition-slow: 0.7s var(--ease-out);
@@ -72,10 +90,6 @@
   --z-base: 1;
   --z-dropdown: 1000;
   --z-sticky: 1100;
-  --z-modal-backdrop: 1200;
-  --z-modal: 1300;
-  --z-popover: 1400;
-  --z-tooltip: 1500;
 }
 
 /* ===================================
@@ -90,15 +104,8 @@
 html {
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
 }
-
-/* Lenis Smooth Scroll */
-html.lenis { height: auto; }
-.lenis.lenis-smooth { scroll-behavior: auto; }
-.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
-.lenis.lenis-stopped { overflow: hidden; }
 
 body {
   font-family: var(--font-body);
@@ -107,354 +114,92 @@ body {
   color: var(--text-primary);
   background-color: var(--bg-primary);
   overflow-x: hidden;
-  min-height: 100vh;
 }
 
-::selection {
-  background-color: var(--accent);
-  color: var(--text-inverse);
-}
-
-::-moz-selection {
-  background-color: var(--accent);
-  color: var(--text-inverse);
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
 
 /* ===================================
-   TYPOGRAPHY
+   UTILITIES & COMPONENTS
    =================================== */
-/* Bebas Neue headings (h1–h4) — Editorial display */
-h1, h2, h3, h4 {
-  font-family: var(--font-display);
-  font-weight: 400; /* Bebas Neue only has 400 — its design IS bold */
-  color: var(--text-primary);
-  text-transform: uppercase;
-  text-wrap: balance;
-}
 
-/* Inter headings (h5–h6) — Component-level readability */
-h5, h6 {
-  font-family: var(--font-body);
-  font-weight: 600;
-  color: var(--text-primary);
-  text-wrap: balance;
-}
-
-/* Per-level sizing, line-height, and letter-spacing */
-/* Per-level sizing, line-height, and letter-spacing */
-h1 { font-size: var(--text-5xl); line-height: 1.05; letter-spacing: 0.02em; }
-h2 { font-size: var(--text-4xl); line-height: 1.0;  letter-spacing: 0.01em; }
-h3 { font-size: var(--text-3xl); line-height: 1.05; letter-spacing: 0.01em; }
-h4 { font-size: var(--text-2xl); line-height: 1.1;  letter-spacing: 0.01em; }
-h5 { font-size: var(--text-xl);  line-height: 1.2;  letter-spacing: -0.02em; }
-h6 { font-size: var(--text-lg);  line-height: 1.3;  letter-spacing: -0.01em; }
-
-p {
-  color: var(--text-secondary);
-  line-height: 1.6;
-  max-width: 65ch;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-  transition: color var(--transition-fast);
-}
-
-/* ===================================
-   LAYOUT
-   =================================== */
 .container {
   max-width: var(--container-max);
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: var(--section-px);
-  padding-right: var(--section-px);
+  margin: 0 auto;
+  padding: 0 var(--section-px);
 }
 
 .section {
-  padding-top: var(--section-gap);
-  padding-bottom: var(--section-gap);
+  padding: var(--section-gap) 0;
 }
 
-.grid-layout {
-  display: grid;
-  gap: clamp(1.5rem, 4vw, 3rem);
-}
-
-/* ===================================
-   BUTTONS
-   =================================== */
+/* Buttons */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem 2rem;
-  font-family: var(--font-body);
-  font-weight: 600;
-  font-size: var(--text-sm);
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
+  padding: 0.8rem 2rem;
   border-radius: var(--radius-full);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-decoration: none;
   transition: all var(--transition-base);
   cursor: pointer;
   border: 1px solid transparent;
-  white-space: nowrap;
+  font-size: 0.875rem;
 }
 
 .btn-primary {
-  background-color: var(--accent);
-  color: var(--text-inverse);
+  background: var(--brand-primary);
+  color: white;
+  box-shadow: 0 4px 15px var(--accent-glow);
 }
 
 .btn-primary:hover {
-  background-color: var(--accent);
+  background: var(--brand-primary-hover);
   transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
-  opacity: 0.9;
-}
-
-.btn-secondary {
-  background-color: var(--text-primary);
-  color: var(--text-inverse);
-}
-
-.btn-secondary:hover {
-  background-color: var(--accent);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 8px 25px var(--accent-glow);
 }
 
 .btn-outline {
-  background-color: transparent;
+  background: transparent;
   border-color: var(--border);
   color: var(--text-primary);
 }
 
 .btn-outline:hover {
-  border-color: var(--accent);
-  background-color: var(--accent);
-  color: var(--text-inverse);
+  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--text-primary);
 }
 
-/* ===================================
-   CARDS
-   =================================== */
-.card {
-  background: var(--bg-surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 1.5rem;
-  transition: all var(--transition-base);
+/* Spacing Utilities (Fallback for non-tailwind) */
+.mt-4 { margin-top: 1rem; }
+.mt-8 { margin-top: 2rem; }
+.mb-4 { margin-bottom: 1rem; }
+.mb-8 { margin-bottom: 2rem; }
+
+/* Flex Center */
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.card:hover {
-  border-color: transparent;
-  box-shadow: var(--shadow-xl);
-  transform: translateY(-4px);
-}
-
-/* ===================================
-   UTILITIES
-   =================================== */
-.text-balance { text-wrap: balance; }
-.text-gradient {
-  background: linear-gradient(to right, var(--text-primary), var(--accent));
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
+/* Glassmorphism */
 .glass {
-  background: rgba(255, 255, 255, 0.7);
+  background: var(--glass-bg);
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
 }
 
-.section-title {
-  font-size: var(--text-3xl);
-  margin-bottom: 2rem;
-  text-align: center;
-}
-
-.section-subtitle {
-  font-size: var(--text-sm);
-  color: var(--accent);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  margin-bottom: 1rem;
-  display: block;
-  text-align: center;
-}
-/* Removed broken CSS block */
-
-.btn-lg {
-  padding: 1rem 2.25rem;
-  font-size: var(--text-base);
-}
-
-/* ===================================
-   SCROLLBAR
-   =================================== */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--bg-subtle);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--border);
-  border-radius: var(--radius-full);
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--text-muted);
-}
-
-/* ===================================
-   ANIMATIONS
-   =================================== */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(12px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(24px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes scaleIn {
-  from { opacity: 0; transform: scale(0.97); }
-  to   { opacity: 1; transform: scale(1); }
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
-}
-
-@keyframes shimmer {
-  0% { background-position: -600px 0; }
-  100% { background-position: 600px 0; }
-}
-
-.animate-fade-in { animation: fadeIn 0.5s var(--ease-out); }
-.animate-fade-in-up { animation: fadeInUp 0.5s var(--ease-out); }
-.animate-scale-in { animation: scaleIn 0.3s var(--ease-out); }
-
-/* ===================================
-   LOADING STATE
-   =================================== */
-.skeleton {
-  background: linear-gradient(
-    90deg,
-    var(--bg-subtle) 0%,
-    var(--bg-surface) 50%,
-    var(--bg-subtle) 100%
-  );
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
-  border-radius: var(--radius-md);
-}
-
-/* ===================================
-   UTILITIES
-   =================================== */
-.text-center { text-align: center; }
-
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
-}
-
-/* ===================================
-   FOCUS
-   =================================== */
-*:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-
-button:focus-visible,
-a:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-}
-
-/* ===================================
-   RESPONSIVE
-   =================================== */
-@media (max-width: 1024px) {
-  :root {
-    --section-gap: clamp(3rem, 6vw, 5rem);
-    --section-px: clamp(1.25rem, 4vw, 3rem);
-  }
-}
-
-@media (max-width: 768px) {
-  /* Font sizes handled by clamp() — no overrides needed */
-  :root {
-    --section-gap: 3rem;
-    --section-px: 1rem;
-  }
-  
-  /* Slightly more open letter-spacing on small screens */
-  h1, h2, h3, h4 {
-    letter-spacing: 0.02em;
-  }
-
-  p {
-    line-height: 1.65;
-  }
-
-  .section-subtitle {
-    letter-spacing: 0.15em;
-  }
-
-  .container {
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-
-  .grid-layout {
-    gap: 1.5rem;
-  }
-
-  .section {
-    padding-top: 3rem;
-    padding-bottom: 3rem;
-  }
-}
-
-@media (max-width: 480px) {
-  /* Font sizes handled by clamp() — no overrides needed */
-
-  h1 {
-    letter-spacing: 0.01em;
-    word-spacing: 0.05em;
-  }
-
-  .btn {
-    padding: 0.75rem 1.25rem;
-    font-size: var(--text-sm);
-    width: 100%;
-    justify-content: center;
-  }
-
-  .grid-layout {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
+/* Text Gradients */
+.text-gradient {
+  background: linear-gradient(135deg, var(--text-primary), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }

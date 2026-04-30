@@ -15,7 +15,7 @@ const ReviewScreenshotsCarousel = () => {
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
   const [modalImage, setModalImage] = useState(null);
-  const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' ? window.innerWidth < 768 : false);
+  const [isMobile, setIsMobile] = useState(false);
   const [viewportKey, setViewportKey] = useState(0);
 
   const titleRef = useRef(null);
@@ -26,14 +26,23 @@ const ReviewScreenshotsCarousel = () => {
       setIsMobile(window.innerWidth < 768);
       setViewportKey((k) => k + 1);
     };
+    onResize(); // Initial check on mount to avoid hydration mismatch
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
   }, []);
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_BACKEND_URL}/api/review-screenshots`)
-      .then((res) => res.json())
+    const baseUrl = (process.env.REACT_APP_BACKEND_URL || "").replace(/\/$/, "");
+    fetch(`${baseUrl}/api/review-screenshots`)
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to fetch");
+        return res.json();
+      })
       .then((data) => setScreenshots(Array.isArray(data) ? data : []))
+      .catch((err) => {
+        console.error("Error fetching review screenshots:", err);
+        setScreenshots([]);
+      })
       .finally(() => setLoading(false));
   }, []);
 

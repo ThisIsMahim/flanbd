@@ -1,6 +1,7 @@
 import EmailIcon from "@mui/icons-material/Email";
 import axios from "axios";
 import React, { useContext, useState } from "react";
+import { motion } from "framer-motion";
 import { LanguageContext } from "../../utils/LanguageContext";
 
 const HomeContactSection = () => {
@@ -116,7 +117,7 @@ const HomeContactSection = () => {
       y: 0,
       opacity: 1,
       transition: {
-        duration: 0.3,
+        duration: 0.5,
         ease: "easeOut",
       },
     },
@@ -127,16 +128,22 @@ const HomeContactSection = () => {
     show: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.05,
+        staggerChildren: 0.1,
       },
     },
   };
 
   return (
     <section className="bg-white py-10 md:py-14 border-t border-gray-100 relative overflow-hidden">
-      <div className="max-w-6xl mx-auto px-4 md:px-8 relative z-10">
+      <motion.div 
+        variants={staggerContainer}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true }}
+        className="max-w-6xl mx-auto px-4 md:px-8 relative z-10"
+      >
         {/* Section Header */}
-        <div className="text-center mb-12">
+        <motion.div variants={fadeInUp} className="text-center mb-12">
           <div className="flex items-center justify-center gap-3 mb-4">
             <span className="w-8 h-[2px] bg-[#ff1837]"></span>
             <span className="text-[10px] text-[#ff1837] font-black uppercase tracking-[0.25em]">Reach Out</span>
@@ -148,11 +155,11 @@ const HomeContactSection = () => {
           <p className="text-sm font-medium text-gray-500 max-w-lg mx-auto mt-4">
             {t.subtitle}
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid lg:grid-cols-5 gap-8">
           {/* Contact Info */}
-          <div className="lg:col-span-2">
+          <motion.div variants={fadeInUp} className="lg:col-span-2">
             <div className="bg-white p-6 md:p-8 rounded-xl border border-gray-100 h-full">
               <h3 className="text-xs font-black text-gray-400 uppercase tracking-[0.2em] mb-8">
                 {t.contactInfo}
@@ -179,10 +186,10 @@ const HomeContactSection = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Contact Form */}
-          <div className="lg:col-span-3">
+          <motion.div variants={fadeInUp} className="lg:col-span-3">
             <div className="bg-white p-6 md:p-8 rounded-xl border border-gray-100">
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid md:grid-cols-2 gap-4">
@@ -195,7 +202,7 @@ const HomeContactSection = () => {
                       onChange={handleChange}
                       placeholder={language === 'bangla' ? "আপনার নাম" : "John Doe"}
                       required
-                      className="w-full px-3.5 py-3 bg-[#f9f9f9] text-black font-semibold text-xs placeholder-gray-300 border border-gray-100 rounded-lg focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#ff1837]/20 focus:border-[#ff1837]/30 transition-all duration-300"
+                      className="w-full px-3.5 py-3 bg-[#f9f9f9] text-black font-semibold text-xs placeholder-gray-300 border border-gray-100 rounded-lg focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#ff1837]/20 focus:border-[#ff1837]/30 transition-all duration-500 ease-[var(--ease-out-expo)]"
                     />
                   </div>
                   <div className="space-y-1.5">
@@ -207,7 +214,7 @@ const HomeContactSection = () => {
                       onChange={handleChange}
                       placeholder="john@example.com"
                       required
-                      className="w-full px-3.5 py-3 bg-[#f9f9f9] text-black font-semibold text-xs placeholder-gray-300 border border-gray-100 rounded-lg focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#ff1837]/20 focus:border-[#ff1837]/30 transition-all duration-300"
+                      className="w-full px-3.5 py-3 bg-[#f9f9f9] text-black font-semibold text-xs placeholder-gray-300 border border-gray-100 rounded-lg focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#ff1837]/20 focus:border-[#ff1837]/30 transition-all duration-500 ease-[var(--ease-out-expo)]"
                     />
                   </div>
                 </div>
@@ -231,14 +238,14 @@ const HomeContactSection = () => {
                     placeholder={language === 'bangla' ? "এখানে আপনার বার্তা লিখুন..." : "Write your message here..."}
                     required
                     rows="4"
-                    className="w-full px-3.5 py-3 bg-[#f9f9f9] text-black font-semibold text-xs placeholder-gray-300 border border-gray-100 rounded-lg focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#ff1837]/20 focus:border-[#ff1837]/30 transition-all duration-300 resize-none"
+                    className="w-full px-3.5 py-3 bg-[#f9f9f9] text-black font-semibold text-xs placeholder-gray-300 border border-gray-100 rounded-lg focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#ff1837]/20 focus:border-[#ff1837]/30 transition-all duration-500 ease-[var(--ease-out-expo)] resize-none"
                   ></textarea>
                 </div>
                 <div className="flex justify-end pt-1">
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="group px-8 py-3 bg-[#0f0f0f] hover:bg-[#ff1837] text-white text-[10px] font-extrabold uppercase tracking-[0.2em] rounded-lg transition-all duration-500 hover:-translate-y-0.5 hover:shadow-[0_8px_20px_-8px_rgba(255,24,55,0.5)] disabled:opacity-70 disabled:cursor-not-allowed flex items-center gap-2"
+                    className="group px-8 py-3 bg-[#0f0f0f] hover:bg-[#ff1837] text-white text-[10px] font-extrabold uppercase tracking-[0.2em] rounded-lg transition-all duration-500 ease-[var(--spring)] hover:-translate-y-1 hover:shadow-[0_12px_25px_-8px_rgba(255,24,55,0.5)] disabled:opacity-70 disabled:cursor-not-allowed flex items-center gap-2"
                   >
                     <span>{isSubmitting ? t.sending : t.sendButton}</span>
                     {!isSubmitting && <EmailIcon style={{ fontSize: '12px' }} className="group-hover:translate-x-0.5 transition-transform" />}
@@ -246,9 +253,9 @@ const HomeContactSection = () => {
                 </div>
               </form>
             </div>
-          </div>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Toast Notification */}
       {showToast && (

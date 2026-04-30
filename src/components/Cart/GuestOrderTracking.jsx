@@ -17,7 +17,6 @@ import CircularProgress from "@mui/material/CircularProgress";
 const GuestOrderTracking = () => {
   const { language } = useContext(LanguageContext);
   const location = useLocation();
-  const navigate = useNavigate();
 
   const { isAuthenticated } = useSelector((state) => state.user || {});
 
@@ -36,17 +35,17 @@ const GuestOrderTracking = () => {
 
   const getStatusIcon = (status) => {
     switch (status.toLowerCase()) {
-      case "processing": return <ProcessingIcon sx={{ fontSize: 18 }} className="text-yellow-500" />;
+      case "processing": return <ProcessingIcon sx={{ fontSize: 18 }} className="text-gold-500" />;
       case "shipped": return <ShippingIcon sx={{ fontSize: 18 }} className="text-blue-500" />;
       case "delivered": return <DeliveredIcon sx={{ fontSize: 18 }} className="text-green-500" />;
       case "cancelled": return <CancelledIcon sx={{ fontSize: 18 }} className="text-red-500" />;
-      default: return <ProcessingIcon sx={{ fontSize: 18 }} className="text-yellow-500" />;
+      default: return <ProcessingIcon sx={{ fontSize: 18 }} className="text-gold-500" />;
     }
   };
 
   const getStatusStyle = (status) => {
     switch (status.toLowerCase()) {
-      case "processing": return "bg-yellow-50 text-yellow-700 border-yellow-200";
+      case "processing": return "bg-gold-50 text-gold-700 border-gold-200";
       case "shipped": return "bg-blue-50 text-blue-700 border-blue-200";
       case "delivered": return "bg-green-50 text-green-700 border-green-200";
       case "cancelled": return "bg-red-50 text-red-700 border-red-200";
@@ -86,7 +85,7 @@ const GuestOrderTracking = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-40 pb-10">
+    <div className="min-h-screen bg-gray-50 pb-10">
       <MetaData title={t("Track Order | Flan", "অর্ডার ট্র্যাক | Flan")} />
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -290,3 +289,4 @@ const GuestOrderTracking = () => {
 };
 
 export default GuestOrderTracking;
+

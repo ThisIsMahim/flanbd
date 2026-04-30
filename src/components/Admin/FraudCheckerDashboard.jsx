@@ -82,7 +82,7 @@ const FraudCheckerDashboard = () => {
             case 'HIGH':
                 return 'bg-red-100 text-red-800';
             case 'MEDIUM':
-                return 'bg-yellow-100 text-yellow-800';
+                return 'bg-gold-100 text-gold-800';
             case 'LOW':
                 return 'bg-green-100 text-green-800';
             case 'NEW':
@@ -271,4 +271,5 @@ const FraudCheckerDashboard = () => {
 };
 
 export default FraudCheckerDashboard;
+
 

@@ -1,5 +1,5 @@
 import { useSnackbar } from "notistack";
-import { lazy, Suspense, useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { clearErrors, getSliderProducts } from "../../actions/productAction";
 import MetaData from "../Layouts/MetaData";
@@ -9,7 +9,6 @@ import "./Home.css";
 import ReviewScreenshotsCarousel from "./ReviewScreenshotsCarousel";
 import TrustedCompaniesCarousel from "./TrustedCompaniesCarousel";
 import GoldUserAnimation from "../common/GoldUserAnimation";
-import GoldUserBadge from "../common/GoldUserBadge";
 import HomeBlogSection from "./HomeBlogSection";
 import HomeContactSection from "./HomeContactSection";
 
@@ -53,8 +52,6 @@ const Home = () => {
     <>
       <MetaData title="FlanBD - The clan for the fans | Premium anime merchandise giftshop" />
 
-
-
       <main className="home-main">
         {/* Hero Banner */}
         <SimpleBanner />
@@ -94,6 +91,12 @@ const Home = () => {
           </section>
         </div>
       </main>
+
+      {/* Gold User Celebration Animation */}
+      <GoldUserAnimation 
+        isVisible={showGoldAnimation} 
+        onComplete={() => setShowGoldAnimation(false)} 
+      />
     </>
   );
 };
