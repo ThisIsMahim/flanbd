@@ -5,7 +5,7 @@ const { isAuthenticatedUser, authorizeRoles } = require('../middlewares/auth');
 const router = express.Router();
 const cache = require("../middlewares/cache");
 
-router.route('/products').get(cache({ ttlMs: 60_000 }), getAllProducts);
+router.route('/products').get(getAllProducts);
 router.route('/products/all').get(cache({ ttlMs: 60_000 }), getProducts);
 router.route('/products/price-range').get(cache({ ttlMs: 5 * 60_000 }), getPriceRange);
 router.route('/brands').get(cache({ ttlMs: 10 * 60_000 }), getAllBrands);

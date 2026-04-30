@@ -25,11 +25,6 @@ exports.getPriceRange = asyncErrorHandler(async (req, res, next) => {
   try {
     const result = await Product.aggregate([
       {
-        $match: {
-          price: { $type: "number" },
-        },
-      },
-      {
         $group: {
           _id: null,
           minPrice: { $min: "$price" },
@@ -59,7 +54,14 @@ exports.getAllProducts = asyncErrorHandler(async (req, res, next) => {
     if (mongoose.Types.ObjectId.isValid(queryObj.category)) {
       categoryDoc = await Category.findById(queryObj.category);
     } else {
-      categoryDoc = await Category.findOne({ name: queryObj.category });
+      if (queryObj.category === "All Products" || queryObj.category === "all") {
+        delete queryObj.category;
+      } else {
+        // Case-insensitive lookup
+        categoryDoc = await Category.findOne({ 
+          name: { $regex: new RegExp(`^${queryObj.category}$`, "i") } 
+        });
+      }
     }
     if (categoryDoc) {
       const allCatIds = await getAllDescendantCategoryIds(categoryDoc._id);
@@ -216,7 +218,14 @@ exports.getProducts = asyncErrorHandler(async (req, res, next) => {
     if (mongoose.Types.ObjectId.isValid(queryObj.category)) {
       categoryDoc = await Category.findById(queryObj.category);
     } else {
-      categoryDoc = await Category.findOne({ name: queryObj.category });
+      if (queryObj.category === "All Products" || queryObj.category === "all") {
+        delete queryObj.category;
+      } else {
+        // Case-insensitive lookup
+        categoryDoc = await Category.findOne({ 
+          name: { $regex: new RegExp(`^${queryObj.category}$`, "i") } 
+        });
+      }
     }
     if (categoryDoc) {
       const allCatIds = await getAllDescendantCategoryIds(categoryDoc._id);

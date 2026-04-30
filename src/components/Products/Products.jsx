@@ -100,63 +100,36 @@ const Products = () => {
     fetchCategories();
   }, []);
 
-  const [filteredProducts, setFilteredProducts] = useState([]);
-
-  // Filtering logic
+  // Category change handling
   useEffect(() => {
-    if (!Array.isArray(products)) {
-      setFilteredProducts([]);
-      return;
-    }
+    if (categoriesData.length === 0) return;
 
-    let filtered = [...products];
+    if (subCategoryName) {
+      const decodedCat = decodeURIComponent(categoryName).toLowerCase();
+      const decodedSub = decodeURIComponent(subCategoryName).toLowerCase();
 
-    if (brand) {
-      filtered = filtered.filter((product) => product.brand?.name === brand);
-    }
+      const parentCat = categoriesData.find(c => c.name.toLowerCase() === decodedCat);
+      const subCat = categoriesData.find(c => c.name.toLowerCase() === decodedSub);
 
-    if (keyword) {
-      const lowerKeyword = keyword.toLowerCase();
-      filtered = filtered.filter((p) => {
-        const nameMatch = p.name?.toLowerCase().includes(lowerKeyword);
-        const descMatch = p.description?.toLowerCase().includes(lowerKeyword);
-        const catMatch = p.categories?.some(c => (typeof c === 'string' ? c : c.name)?.toLowerCase().includes(lowerKeyword));
-        const brandMatch = p.brand?.name?.toLowerCase().includes(lowerKeyword);
-        return nameMatch || descMatch || catMatch || brandMatch;
-      });
-    }
-
-    // Normalized filter
-    if (selectedSubCategory) {
-      // Specific sub-category selected: match that sub-category only
-      const subCat = categoriesData.find(c => c._id === selectedSubCategory);
-      if (subCat) {
-        const subCatName = subCat.name.toLowerCase();
-        filtered = filtered.filter(p => p.categories?.some(c => (typeof c === 'string' ? c : c.name).toLowerCase() === subCatName));
+      if (parentCat && subCat) {
+        setSelectedParentId(parentCat._id);
+        setSelectedSubCategory(subCat._id);
+        setCategory(subCat.name);
       }
-    } else if (selectedParentId) {
-      // Parent category selected: match products in ANY sub-category of this parent, or the parent itself
-      const allChildNames = categoriesData
-        .filter(c => c.parent && (c.parent._id === selectedParentId || c.parent === selectedParentId))
-        .map(c => c.name.toLowerCase());
-      const parentCat = categoriesData.find(c => c._id === selectedParentId);
-      if (parentCat) allChildNames.push(parentCat.name.toLowerCase());
-
-      if (allChildNames.length > 0) {
-        filtered = filtered.filter(p => p.categories?.some(c => allChildNames.includes((typeof c === 'string' ? c : c.name).toLowerCase())));
+    } else if (categoryName) {
+      const decodedCat = decodeURIComponent(categoryName).toLowerCase();
+      const cat = categoriesData.find(c => c.name.toLowerCase() === decodedCat);
+      if (cat) {
+        setSelectedParentId(cat._id);
+        setSelectedSubCategory(null);
+        setCategory(cat.name);
       }
-    } else if (selectedCategories.length > 0) {
-      const lowerSelected = selectedCategories.map(c => c.toLowerCase());
-      filtered = filtered.filter(p => p.categories?.some(c => lowerSelected.includes((typeof c === 'string' ? c : c.name).toLowerCase())));
-    } else if (category) {
-      const lowerCat = category.toLowerCase();
-      filtered = filtered.filter(p => p.categories?.some(c => (typeof c === 'string' ? c : c.name).toLowerCase() === lowerCat));
+    } else if (!keyword && !brand) {
+      setSelectedParentId(null);
+      setSelectedSubCategory(null);
+      setCategory("");
     }
-
-    filtered = filtered.filter(p => p.price >= priceRange[0] && p.price <= priceRange[1]);
-
-    setFilteredProducts(filtered);
-  }, [products, brand, keyword, selectedSubCategory, selectedCategories, priceRange, categoriesData, category]);
+  }, [categoryName, subCategoryName, categoriesData]);
 
   useEffect(() => { setCurrentPage(1); }, [brand, category, keyword, selectedSubCategory, selectedCategories, priceRange]);
 
@@ -258,35 +231,8 @@ const Products = () => {
     setBrand("");
   };
 
-  useEffect(() => {
-    if (categoriesData.length === 0) return;
+  // This logic is now handled in the merged useEffect above
 
-    if (subCategoryName) {
-      const decodedCat = decodeURIComponent(categoryName).toLowerCase();
-      const decodedSub = decodeURIComponent(subCategoryName).toLowerCase();
-
-      const parentCat = categoriesData.find(c => c.name.toLowerCase() === decodedCat);
-      const subCat = categoriesData.find(c => c.name.toLowerCase() === decodedSub);
-
-      if (parentCat && subCat) {
-        setSelectedParentId(parentCat._id);
-        setSelectedSubCategory(subCat._id);
-        setCategory(subCat.name);
-      }
-    } else if (categoryName) {
-      const decodedCat = decodeURIComponent(categoryName).toLowerCase();
-      const cat = categoriesData.find(c => c.name.toLowerCase() === decodedCat);
-      if (cat) {
-        setSelectedParentId(cat._id);
-        setSelectedSubCategory(null);
-        setCategory(cat.name);
-      }
-    } else if (!keyword && !brand) {
-      setSelectedParentId(null);
-      setSelectedSubCategory(null);
-      setCategory("");
-    }
-  }, [categoryName, subCategoryName, categoriesData]);
 
   const handlePageChange = (e, val) => {
     setCurrentPage(val);
@@ -488,14 +434,14 @@ const Products = () => {
             {keyword && !category && (
               <div className="search-header">
                 <span>Showing results for <span className="search-keyword">"{keyword}"</span></span>
-                <span className="search-count">({filteredProducts.length} products found)</span>
+                <span className="search-count">({products?.length || 0} products found)</span>
                 <button onClick={() => navigate("/products")} className="ml-auto opacity-50 hover:opacity-100">
                   <CloseIcon fontSize="small" />
                 </button>
               </div>
             )}
 
-            {hasFetched && !loading && products.length > 0 && filteredProducts.length === 0 && (
+            {hasFetched && !loading && products?.length === 0 && (
               <div className="empty-products-state">
                 <h2 className="empty-state-title">No results found</h2>
                 <p className="text-secondary text-center">We couldn't find any products matching your filters.</p>
@@ -510,7 +456,7 @@ const Products = () => {
             ) : (
               <>
                 <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-3 gap-y-8 sm:gap-x-5 sm:gap-y-12">
-                  {filteredProducts
+                  {products
                     .slice((currentPage - 1) * FIXED_RESULT_PER_PAGE, currentPage * FIXED_RESULT_PER_PAGE)
                     .map((product) => (
                       <ProductCard
@@ -524,10 +470,10 @@ const Products = () => {
                     ))}
                 </div>
 
-                {filteredProducts.length > FIXED_RESULT_PER_PAGE && (
+                {products?.length > FIXED_RESULT_PER_PAGE && (
                   <div className="pagination-container">
                     <Pagination
-                      count={Math.ceil(filteredProducts.length / FIXED_RESULT_PER_PAGE)}
+                      count={Math.ceil((products?.length || 0) / FIXED_RESULT_PER_PAGE)}
                       page={currentPage}
                       onChange={handlePageChange}
                       sx={{

@@ -22,8 +22,12 @@ class SearchFeatures {
             },
           ],
         }
-      : {};
-    this.query = this.query.find({ ...keyword });
+      : null;
+
+    if (keyword) {
+      this.query = this.query.find(keyword);
+    }
+    
     return this;
   }
 
@@ -34,29 +38,51 @@ class SearchFeatures {
     const removeFields = ["keyword", "page", "limit"];
     removeFields.forEach((key) => delete queryCopy[key]);
 
-    // Handle price and ratings conversion to numbers
+    // Filter for Price and Ratings
+    let filter = {};
+
+    // Handle price conversion to numbers and range logic
     if (queryCopy.price) {
-      if (queryCopy.price.gte !== undefined) queryCopy.price.gte = Number(queryCopy.price.gte);
-      if (queryCopy.price.lte !== undefined) queryCopy.price.lte = Number(queryCopy.price.lte);
+      const priceFilter = {};
+      if (queryCopy.price.gte !== undefined) {
+        const gte = Number(queryCopy.price.gte);
+        if (!isNaN(gte)) priceFilter.$gte = gte;
+      }
+      if (queryCopy.price.lte !== undefined) {
+        const lte = Number(queryCopy.price.lte);
+        if (!isNaN(lte)) priceFilter.$lte = lte;
+      }
       
-      // If price gte is 0 and no lte, we can remove the price filter to include items with missing price
-      if (queryCopy.price.gte === 0 && queryCopy.price.lte === undefined) {
-        delete queryCopy.price;
+      // Only apply price filter if it's not the default "everything" range
+      // or if it has meaningful values
+      if (Object.keys(priceFilter).length > 0) {
+        // If it's [0, 200000] (common default), we might want to skip it to be safe
+        // but let's keep it if specifically requested. 
+        // However, if gte is 0 and lte is very high, it's effectively "all".
+        if (!(priceFilter.$gte === 0 && priceFilter.$lte >= 200000)) {
+           filter.price = priceFilter;
+        }
       }
     }
-    if (queryCopy.ratings) {
-      if (queryCopy.ratings.gte !== undefined) queryCopy.ratings.gte = Number(queryCopy.ratings.gte);
-      if (queryCopy.ratings.lte !== undefined) queryCopy.ratings.lte = Number(queryCopy.ratings.lte);
 
-      // If ratings gte is 0 and no lte, remove the filter to include items with no ratings
-      if (queryCopy.ratings.gte === 0 && queryCopy.ratings.lte === undefined) {
-        delete queryCopy.ratings;
+    if (queryCopy.ratings) {
+      const ratingsFilter = {};
+      if (queryCopy.ratings.gte !== undefined) {
+        const gte = Number(queryCopy.ratings.gte);
+        if (!isNaN(gte) && gte > 0) ratingsFilter.$gte = gte;
+      }
+      if (queryCopy.ratings.lte !== undefined) {
+        const lte = Number(queryCopy.ratings.lte);
+        if (!isNaN(lte)) ratingsFilter.$lte = lte;
+      }
+
+      if (Object.keys(ratingsFilter).length > 0) {
+        filter.ratings = ratingsFilter;
       }
     }
 
     // Handle category filtering with ObjectIds
     if (queryCopy.categories) {
-      // If categories is a string, make it an array
       let categoriesArr = queryCopy.categories;
       if (typeof categoriesArr === "string") {
         try {
@@ -65,45 +91,33 @@ class SearchFeatures {
           categoriesArr = [categoriesArr];
         }
       }
-      // Ensure it's an array
       if (!Array.isArray(categoriesArr)) {
         categoriesArr = [categoriesArr];
       }
       
-      // Only apply filter if we have valid categories
       if (categoriesArr.length > 0) {
-        // Convert to ObjectId if possible
         const mongoose = require("mongoose");
         const validObjectIds = categoriesArr.map((id) => {
           try {
-            return new mongoose.Types.ObjectId(id);
-          } catch (error) {
-            // If it's not a valid ObjectId, skip it
+            return mongoose.Types.ObjectId.isValid(id) ? new mongoose.Types.ObjectId(id) : null;
+          } catch {
             return null;
           }
-        }).filter(id => id !== null); // Remove null values
+        }).filter(id => id !== null);
         
-        // Only apply filter if we have valid ObjectIds
         if (validObjectIds.length > 0) {
-          queryCopy.categories = {
-            $in: validObjectIds,
-          };
-        } else {
-          // If no valid ObjectIds, remove categories from query
-          delete queryCopy.categories;
+          filter.categories = { $in: validObjectIds };
         }
-      } else {
-        // If empty array, remove categories from query
-        delete queryCopy.categories;
       }
     }
 
-    // Filter for Price and Ratings
-    let queryStr = JSON.stringify(queryCopy);
-    queryStr = queryStr.replace(/\b(gt|gte|lt|lte)\b/g, (key) => `$${key}`);
-
-    // Parse the query string to an object
-    const filter = JSON.parse(queryStr);
+    // Handle any other fields that might be in queryCopy
+    const handledFields = ["price", "ratings", "categories"];
+    Object.keys(queryCopy).forEach(key => {
+      if (!handledFields.includes(key)) {
+        filter[key] = queryCopy[key];
+      }
+    });
 
     this.query = this.query.find(filter);
     return this;
